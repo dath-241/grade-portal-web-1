@@ -1,13 +1,21 @@
 import logo from '../../assets/img/hcmut.png';
 import landingImg from '../../assets/img/landingPic.png';
+import { useNavigate } from 'react-router-dom';
 
 function Header() {
+    const navigate = useNavigate();
+    const handleLogin = () => {
+        navigate('/login');
+    };
     return (
         <div className="flex h-[60px] items-center justify-between rounded-full bg-primary px-12">
             <div className="flex items-center">
                 <img src={logo} alt="Logo" className="size-[35px]" />
             </div>
-            <button className="px-4 py-1 bg-white rounded-full shadow-inner  hover:shadow-secondary font-semibold ">
+            <button
+                className="px-4 py-1 bg-white rounded-full shadow-inner  hover:shadow-secondary font-semibold"
+                onClick={handleLogin}
+            >
                 Đăng nhập
             </button>
         </div>
