@@ -1,6 +1,6 @@
 import './Header.css';
 import HCMUT from '../../assets/img/HCMUT2.png';
-import React, { useState } from 'react';
+import React from 'react';
 
 const Header = () => {
     return (
