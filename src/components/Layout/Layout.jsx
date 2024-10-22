@@ -24,6 +24,9 @@ function Header() {
                     <Link to="">Trang chủ</Link>
                 </li>
                 <li className="rounded-lg px-4 py-1 text-white hover:bg-primary">
+                    <Link to="/controlstudents">Bảng điều khiển</Link>
+                </li>
+                <li className="rounded-lg px-4 py-1 text-white hover:bg-primary">
                     <Link to="">Khóa học của tôi</Link>
                 </li>
                 <li className="rounded-lg px-4 py-1 text-white hover:bg-primary">
@@ -43,7 +46,7 @@ function Header() {
 
 function Footer() {
     return (
-        <div className="flex h-20 items-center justify-center bg-primary text-white -mb-20">
+        <div className="-mb-20 flex h-20 items-center justify-center bg-primary text-white">
             <p className="text-center">© 2021 BK Tra cứu. All rights reserved.</p>
         </div>
     );
