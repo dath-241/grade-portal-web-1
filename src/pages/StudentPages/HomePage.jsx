@@ -1,5 +1,5 @@
 import landingImg from '../../assets/img/landingPic.png';
-function Home() {
+function HomePage() {
     return (
         <>
             <div className="mt-[20px] h-[194px] w-[772px] bg-black/25">
@@ -14,4 +14,4 @@ function Home() {
         </>
     );
 }
-export default Home;
+export default HomePage;
