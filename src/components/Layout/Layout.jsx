@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { useEffect } from 'react';
 import logo from '../../assets/img/hcmut.png';
+import 'flowbite';
 
 function Header() {
     useEffect(() => {
@@ -24,7 +25,24 @@ function Header() {
                     <Link to="">Trang chủ</Link>
                 </li>
                 <li className="rounded-lg px-4 py-1 text-white hover:bg-primary">
-                    <Link to="/controlstudents">Bảng điều khiển</Link>
+                    {/* <Link to="">Bảng điều khiển</Link> */}
+                    <button id="dropdownNavbarLink" data-dropdown-toggle="dropdownNavbar" class="flex items-center justify-between w-full py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:p-0 md:w-auto dark:text-white dark:focus:text-white dark:border-gray-700 dark:hover:bg-gray-700 md:dark:hover:bg-transparent">
+                        Bảng điều khiển
+                        <svg class="w-2.5 h-2.5 ms-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
+                        </svg>
+                    </button>
+                        {/* <!-- Dropdown menu --> */}
+                        <div id="dropdownNavbar" class="z-10 hidden font-normal bg-white divide-y divide-gray-100 rounded-lg shadow w-44 ">
+                            <ul class="py-2 text-sm text-gray-700 " aria-labelledby="dropdownLargeButton">
+                                <li>
+                                    <Link to="/controlteachers" class="block px-4 py-2 hover:bg-gray-100">Giảng viên</Link>
+                                </li>
+                                <li>
+                                    <Link to="/controlstudents" class="block px-4 py-2 hover:bg-gray-100">Sinh viên</Link>
+                                </li>
+                            </ul>
+                        </div>
                 </li>
                 <li className="rounded-lg px-4 py-1 text-white hover:bg-primary">
                     <Link to="">Khóa học của tôi</Link>
