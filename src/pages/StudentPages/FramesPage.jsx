@@ -1,8 +1,4 @@
-function FramesPage(){
-   return(
-      <>
-          FramePage
-      </>
-   )
+function FramesPage() {
+    return <>FramePage</>;
 }
-export default FramesPage
+export default FramesPage;

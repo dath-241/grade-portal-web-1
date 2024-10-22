@@ -3,36 +3,13 @@ import CourseItem from './components/course.component';
 import { Link } from 'react-router-dom';
 const courseList = [
     {
-        id: 'CO2017',
-        img: 'https://c4.wallpaperflare.com/wallpaper/821/698/393/anime-naruto-akatsuki-naruto-deidara-naruto-wallpaper-preview.jpg',
-        name: 'Database Sysytem',
-        teacher: 'Nguyen Thi Bao Thu',
-        semester: 'HK211',
-        group: 'L04',
-    },
-    {
-        id: 'CO3017',
-        img: 'https://c4.wallpaperflare.com/wallpaper/821/698/393/anime-naruto-akatsuki-naruto-deidara-naruto-wallpaper-preview.jpg',
-        name: 'Computer Networking',
-        teacher: 'Nguyen Phuong Duy',
+        id: 'CO2039',
+        img: 'https://via.assets.so/movie.png?id=1&q=95&w=190&h=120&fit=fill',
+        name: 'Lập trình nâng cao',
+        teacher: 'Lê Đình Thuận',
         semester: 'HK221',
-        group: 'L02',
-    },
-    {
-        id: 'CO3018',
-        img: 'https://c4.wallpaperflare.com/wallpaper/821/698/393/anime-naruto-akatsuki-naruto-deidara-naruto-wallpaper-preview.jpg',
-        name: 'Introduction to Artificial Intelligent',
-        teacher: 'Vuong Ba Thinh',
-        semester: 'HK231',
-        group: 'L01',
-    },
-    {
-        id: 'CO2018',
-        img: 'https://c4.wallpaperflare.com/wallpaper/821/698/393/anime-naruto-akatsuki-naruto-deidara-naruto-wallpaper-preview.jpg',
-        name: 'Computer Architecture',
-        teacher: 'Nguyen Thanh Binh',
-        semester: 'HK231',
-        group: 'L01',
+        group: 'L08',
+        status: 'Đang diễn ra',
     },
 ];
 
@@ -43,7 +20,9 @@ function CoursePage() {
         if (event.target.value === '') {
             setCourses(courseList);
         } else {
-            const courseFind = courseList.filter((course) => course.name.trim().includes(event.target.value.trim()));
+            const courseFind = courseList.filter((course) =>
+                course.name.trim().toLowerCase().includes(event.target.value.trim().toLowerCase()),
+            );
             setCourses(courseFind);
         }
     };
@@ -60,15 +39,15 @@ function CoursePage() {
         setCourses(courseList);
     };
     return (
-        <>
-            <h1 className="ml-[260px] mt-[10px] font-['Roboto'] text-[35px] font-semibold">Khoá học của tôi</h1>
-            <div className="flex justify-between">
-                <div>
+        <div className='mx-6 px-[200px]'>
+            <div className="ml-10 my-[10px]  text-[40px] font-semibold">Các khoá học của tôi</div>
+            <div className="flex justify-between ">
+                <div className='flex items-center'>
                     <input
                         type="text"
                         id="course"
                         placeholder="Tìm kiếm khoá học"
-                        className="ml-[160px] mt-[10px] h-[50px] w-[450px] rounded-[10px] border-[1px] bg-white p-[10px] text-[25px]"
+                        className="h-[50px] w-[450px] rounded-[10px] border-[1px] bg-white p-[10px] text-[25px]"
                         onChange={changeHandler}
                     />
                     <button className="h-[50px] w-[80px] rounded-[10px] bg-primary text-white" onClick={clickHandler}>
@@ -79,7 +58,7 @@ function CoursePage() {
                     <select
                         name="semester"
                         id=""
-                        className="mr-[155px] mt-[10px] h-[50px] w-[300px] rounded-[10px] border-[1px] bg-white p-[10px] text-[25px]"
+                        className="h-[50px] w-[300px] rounded-[10px] border-[1px] bg-white p-[10px] text-[25px]"
                         onChange={changeSemesterHandler}
                     >
                         {semeters.map((semeter, index) => {
@@ -93,7 +72,7 @@ function CoursePage() {
                 </div>
             </div>
             {courses.length === 0 ? (
-                <div className="mt-[10px] flex h-screen items-center justify-center border-[1px] bg-white text-[35px]">
+                <div className="mt-[10px] flex h-screen items-center justify-center border-[1px] bg-white text-[35px] rounded-[20px]">
                     Không tìm thấy khoá học
                 </div>
             ) : (
@@ -111,7 +90,7 @@ function CoursePage() {
                     );
                 })
             )}
-        </>
+        </div>
     );
 }
 export default CoursePage;
