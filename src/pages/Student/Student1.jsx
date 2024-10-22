@@ -216,131 +216,117 @@ const Student = () => {
             </nav>
           
             <h1 className="mb-4 text-2xl font-bold">Sinh viên</h1>
+            <button type="button" className="text-white bg-primary hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 focus:outline-none">
+              <i class="fa-solid fa-plus" style={{color: '#30d70f'}}></i>
+              Thêm SV
+            </button>
           </div>
-            {/* Search bar */}
-            <div className="container mx-auto flex justify-start">
-              <form className="max-w-md mx-auto ml-2">   
-                <label htmlFor="default-search" className="mb-2 text-sm font-medium sr-only text-gray-700">Search</label>
-                <div className="relative">
-                    <div className="absolute inset-y-0 start-0 flex items-center ps-3">
-                      <button type="button" class="focus:outline-none" cursor-pointer text-gray-300> 
-                        <i class="fa-solid fa-magnifying-glass text-gray-300 hover:text-gray-500"></i>
-                      </button>
-                    </div>
-                    <input 
-                      type="search" 
-                      id="default-search"
-                      value={searchTerm}
-                      onChange={handleSearch}
-                      className="block w-[350px] p-4 pl-10 text-sm text-gray-900 border border-gray-300 bg-white rounded-full focus:ring-blue-500 focus:border-blue-500 dark:bg-white dark:border-gray-300 dark:placeholder-gray-400 dark:text-gray-500 dark:focus:ring-blue-500 dark:focus:border-blue-500" 
-                      placeholder="Tìm kiếm..." required 
-                    />
-                </div>
-              </form>
-            </div>
+          {/* Search bar */}
+          <div className="container mx-auto flex justify-start">
+            <form className="max-w-md mx-auto ml-2">   
+              <label htmlFor="default-search" className="mb-2 text-sm font-medium sr-only text-gray-700">Search</label>
+              <div className="relative">
+                  <div className="absolute inset-y-0 start-0 flex items-center ps-3">
+                    <button type="button" class="focus:outline-none" cursor-pointer text-gray-300> 
+                      <i class="fa-solid fa-magnifying-glass text-gray-300 hover:text-gray-500"></i>
+                    </button>
+                  </div>
+                  <input 
+                    type="search" 
+                    id="default-search"
+                    value={searchTerm}
+                    onChange={handleSearch}
+                    className="block w-[350px] p-4 pl-10 text-sm text-gray-900 border border-gray-300 bg-white rounded-full focus:ring-blue-500 focus:border-blue-500 dark:bg-white dark:border-gray-300 dark:placeholder-gray-400 dark:text-gray-500 dark:focus:ring-blue-500 dark:focus:border-blue-500" 
+                    placeholder="Tìm kiếm..." required 
+                  />
+              </div>
+            </form>
+          </div>
 
-            {/* table */}
-            <div class="relative overflow-x-auto shadow-md sm:rounded-lg mt-4">
-                <table class="w-full text-left text-sm text-white rtl:text-right">
-                    <thead class="bg-[rgb(17,45,78)] text-xs uppercase text-white">
-                        <tr>
-                            <th scope="col" class="px-6 py-3">
-                                Mã số
-                            </th>
-                            <th scope="col" class="px-6 py-3">
-                                Tên
-                            </th>
-                            <th scope="col" class="px-6 py-3">
-                                Họ, Tên Đệm
-                            </th>
-                            <th scope="col" class="px-6 py-3">
-                                Email
-                            </th>
-                            <th scope="col" class="px-6 py-3">
-                                Khoa
-                            </th>
-                            <th scope="col" class="px-6 py-3">
-                                Khoá học
-                            </th>
-                            <th scope="col" class="px-6 py-3">
-                                Giảng viên
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                    {filteredStudents.length > 0 ? (
-                      filteredStudents.map(student => (
-                            <tr key={student.id} class="border-b bg-white dark:border-gray-300 ">
-                                <td
-                                    scope="row"
-                                    class="whitespace-nowrap px-6 py-4 font-medium text-gray-700"
-                                >
-                                    {student.id}
-                                </td>
-                                <td
-                                    scope="row"
-                                    class="whitespace-nowrap px-6 py-4 font-medium text-gray-700"
-                                >
-                                    {student.fname}
-                                </td>
-                                <td
-                                    scope="row"
-                                    class="whitespace-nowrap px-6 py-4 font-medium text-gray-700"
-                                >
-                                    {student.lname}
-                                </td>
-                                <td
-                                    scope="row"
-                                    class="whitespace-nowrap px-6 py-4 font-medium text-gray-700"
-                                >
-                                    {student.mail}
-                                </td>
-                                <td
-                                    scope="row"
-                                    class="whitespace-nowrap px-6 py-4 font-medium text-gray-700"
-                                >
-                                    {student.faculty}
-                                </td>
-                                <td
-                                    scope="row"
-                                    class="whitespace-nowrap px-6 py-4 font-medium text-gray-700"
-                                >
-                                    {student.course}
-                                </td>
-                                <td
-                                    scope="row"
-                                    class="whitespace-nowrap px-6 py-4 font-medium text-gray-700"
-                                >
-                                    {student.teacher}
-                                </td>
-                            </tr>
-                      ))
-                    ) : (
+          {/* table */}
+          <div class="relative overflow-x-auto shadow-md sm:rounded-lg mt-4">
+              <table class="w-full text-left text-sm text-white rtl:text-right">
+                  <thead class="bg-[rgb(17,45,78)] text-xs uppercase text-white">
                       <tr>
-                        <td colSpan="7" className="text-center py-4">Không tìm thấy kết quả nào.</td>
+                          <th scope="col" class="px-6 py-3">
+                              Mã số
+                          </th>
+                          <th scope="col" class="px-6 py-3">
+                              Tên
+                          </th>
+                          <th scope="col" class="px-6 py-3">
+                              Họ, Tên Đệm
+                          </th>
+                          <th scope="col" class="px-6 py-3">
+                              Email
+                          </th>
+                          <th scope="col" class="px-6 py-3">
+                              Khoa
+                          </th>
                       </tr>
-                    )}
-                    </tbody>
-                </table>
-            </div>
-      
-            <div className="mt-4">
-            {/* Pagination */}
-              <ReactPaginate
-                breakLabel="..."
-                nextLabel={<span className="flex items-center"><span className="sr-only">Next</span><svg className="w-2.5 h-2.5" fill="none" viewBox="0 0 6 10"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 9 4-4-4-4"/></svg></span>}
-                onPageChange={handlePageClick}
-                pageRangeDisplayed={5}
-                pageCount={pageCount}
-                previousLabel={<span className="flex items-center"><span className="sr-only">Previous</span><svg className="w-2.5 h-2.5" fill="none" viewBox="0 0 6 10"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 1 1 5l4 4"/></svg></span>}
-                renderOnZeroPageCount={null}
-                containerClassName="flex justify-center items-center -space-x-px h-8 text-sm"
-                pageClassName="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-blue-100 hover:text-blue-700"
-                activeClassName="z-10 flex items-center justify-center px-3 h-8 text-blue-600 border border-blue-300 bg-blue-50"
-                previousClassName="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-e-0 border-gray-300 rounded-s-lg"
-                nextClassName="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 rounded-e-lg"
-              />
-            </div>
+                  </thead>
+                  <tbody>
+                  {filteredStudents.length > 0 ? (
+                    filteredStudents.map(student => (
+                          <tr key={student.id} class="border-b bg-white dark:border-gray-300 ">
+                              <td
+                                  scope="row"
+                                  class="whitespace-nowrap px-6 py-4 font-medium text-gray-700"
+                              >
+                                  {student.id}
+                              </td>
+                              <td
+                                  scope="row"
+                                  class="whitespace-nowrap px-6 py-4 font-medium text-gray-700"
+                              >
+                                  {student.fname}
+                              </td>
+                              <td
+                                  scope="row"
+                                  class="whitespace-nowrap px-6 py-4 font-medium text-gray-700"
+                              >
+                                  {student.lname}
+                              </td>
+                              <td
+                                  scope="row"
+                                  class="whitespace-nowrap px-6 py-4 font-medium text-gray-700"
+                              >
+                                  {student.mail}
+                              </td>
+                              <td
+                                  scope="row"
+                                  class="whitespace-nowrap px-6 py-4 font-medium text-gray-700"
+                              >
+                                  {student.faculty}
+                              </td>
+                          </tr>
+                    ))
+                  ) : (
+                    <tr>
+                      <td colSpan="7" className="text-center py-4">Không tìm thấy kết quả nào.</td>
+                    </tr>
+                  )}
+                  </tbody>
+              </table>
+          </div>
+    
+          <div className="mt-4">
+          {/* Pagination */}
+            <ReactPaginate
+              breakLabel="..."
+              nextLabel={<span className="flex items-center"><span className="sr-only">Next</span><svg className="w-2.5 h-2.5" fill="none" viewBox="0 0 6 10"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 9 4-4-4-4"/></svg></span>}
+              onPageChange={handlePageClick}
+              pageRangeDisplayed={5}
+              pageCount={pageCount}
+              previousLabel={<span className="flex items-center"><span className="sr-only">Previous</span><svg className="w-2.5 h-2.5" fill="none" viewBox="0 0 6 10"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 1 1 5l4 4"/></svg></span>}
+              renderOnZeroPageCount={null}
+              containerClassName="flex justify-center items-center -space-x-px h-8 text-sm"
+              pageClassName="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-blue-100 hover:text-blue-700"
+              activeClassName="z-10 flex items-center justify-center px-3 h-8 text-blue-600 border border-blue-300 bg-blue-50"
+              previousClassName="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-e-0 border-gray-300 rounded-s-lg"
+              nextClassName="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 rounded-e-lg"
+            />
+          </div>
             
         </div>
     );
