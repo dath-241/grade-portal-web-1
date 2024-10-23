@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import './Login.css';
 import loginHCMUT from '../../assets/img/loginHCMUT.png';
 import { useNavigate } from 'react-router-dom';
+import LoginWithGoogle from './LoginWithGoogle';
+import LogoutWithGoogle from './LogoutWithGoogle';
 
 function Login() {
     const [accountTypeVerified, setAccountTypeVerified] = useState(false);
@@ -13,6 +15,7 @@ function Login() {
     const handleAdminAccount = () => {
         setAccountTypeVerified(true);
     };
+
     const handleLogin = () => {
         setAccountTypeVerified(false);
         navigate('/hof');
@@ -51,7 +54,7 @@ function Login() {
                     </div>
                 ) : (
                     <div>
-                        <h2 className="logintext-a">Đăng nhập vào tài khoản</h2>
+                        {/* <h2 className="logintext-a">Đăng nhập vào tài khoản</h2>
                         <div className="email-input-container-a">
                             <label htmlFor="email" className="email-label-a">
                                 Email:
@@ -69,7 +72,11 @@ function Login() {
                         </div>
                         <button className="login-button-a" onClick={handleLogin}>
                             Đăng nhập
-                        </button>
+                        </button> */}
+                        <div>
+                            <LoginWithGoogle />
+                            {/* <LogoutWithGoogle /> */}
+                        </div>
                     </div>
                 )}
             </div>
