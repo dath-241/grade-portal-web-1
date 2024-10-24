@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import 'flowbite';
 import React, { useEffect, useState, useRef } from 'react';
 import ReactPaginate from 'react-paginate';
 import { DataTable } from 'simple-datatables';
@@ -20,7 +21,7 @@ const Student = () => {
         },
         {
             id: 1001,
-            fname: 'A',
+            fname: 'B',
             lname: 'Nguyễn Văn',
             mail: 'nguyenvana2@hcmut.edu.vn',
             faculty: 'KH-KT Máy tính',
@@ -29,7 +30,7 @@ const Student = () => {
         },
         {
             id: 1002,
-            fname: 'A',
+            fname: 'C',
             lname: 'Nguyễn Văn',
             mail: 'nguyenvana@hcmut.edu.vn',
             faculty: 'KH-KT Máy tính',
@@ -38,7 +39,7 @@ const Student = () => {
         },
         {
           id: 1003,
-          fname: 'A',
+          fname: 'D',
           lname: 'Nguyễn Văn',
           mail: 'nguyenvana@hcmut.edu.vn',
           faculty: 'KH-KT Máy tính',
@@ -47,7 +48,7 @@ const Student = () => {
       },
       {
           id: 1004,
-          fname: 'A',
+          fname: 'E',
           lname: 'Nguyễn Văn',
           mail: 'nguyenvana3@hcmut.edu.vn',
           faculty: 'KH-KT Máy tính',
@@ -56,7 +57,7 @@ const Student = () => {
       },
       {
           id: 1005,
-          fname: 'A',
+          fname: 'F',
           lname: 'Nguyễn Văn',
           mail: 'nguyenvana3@hcmut.edu.vn',
           faculty: 'KH-KT Máy tính',
@@ -160,20 +161,50 @@ const Student = () => {
         student.fname.toLowerCase().includes(query) ||
         student.lname.toLowerCase().includes(query) ||
         student.mail.toLowerCase().includes(query) ||
-        student.faculty.toLowerCase().includes(query) ||
-        student.course.toLowerCase().includes(query) ||
-        student.teacher.toLowerCase().includes(query)
+        student.faculty.toLowerCase().includes(query)
       );
+
+      // const finalList = sortOrder === 'default' ? filtered : handleSort(filtered);
       setFilteredStudents(filtered);
     };
     useEffect(() => {
-      if (tableRef.current) { // Check if the ref is defined
+      if (tableRef.current) { 
         const dataTable = new DataTable(tableRef.current, {
             searchable: true,
             sortable: false,
         });
       }
     }, [filteredStudents]);
+    
+    //Sort
+    const [initialStudents, setInitialTeachers] = useState(students);
+    const [sortOrder, setSortOrder] = useState('default');
+
+    const handleSort = (studentsList) => {
+      const sortedStudents = [...studentsList];
+      if (sortOrder === 'down'){
+        sortedStudents.sort((a, b) => a.fname.localeCompare(b.fname));
+        setSortOrder('up');
+      } else if (sortOrder === 'up'){
+        sortedStudents.sort((a, b) => b.fname.localeCompare(a.fname));
+        setSortOrder('default');
+      } else {
+        setSortOrder('down');
+      }
+      return sortedStudents;
+    };
+
+    const handleSortChange = () => {
+      const sortedStudents = handleSort(filteredStudents);
+      setFilteredStudents(sortedStudents); 
+    };;
+
+    useEffect(() => {
+      if (searchTerm === '') {
+        setFilteredStudents(students);
+        setSortOrder('default');
+      }
+    }, [searchTerm]);
 
     // Pagination-logic
     const [currentPage, setCurrentPage] = useState(0);
@@ -217,32 +248,59 @@ const Student = () => {
           
             <h1 className="mb-4 text-2xl font-bold">Sinh viên</h1>
             <button type="button" className="text-white bg-primary hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 focus:outline-none">
-              <i class="fa-solid fa-plus" style={{color: '#30d70f'}}></i>
+              <i class="fa-solid fa-plus mr-2" style={{color: '#30d70f'}}></i>
               Thêm SV
             </button>
           </div>
-          {/* Search bar */}
-          <div className="container mx-auto flex justify-start">
-            <form className="max-w-md mx-auto ml-2">   
-              <label htmlFor="default-search" className="mb-2 text-sm font-medium sr-only text-gray-700">Search</label>
-              <div className="relative">
-                  <div className="absolute inset-y-0 start-0 flex items-center ps-3">
-                    <button type="button" class="focus:outline-none" cursor-pointer text-gray-300> 
-                      <i class="fa-solid fa-magnifying-glass text-gray-300 hover:text-gray-500"></i>
-                    </button>
-                  </div>
-                  <input 
-                    type="search" 
-                    id="default-search"
-                    value={searchTerm}
-                    onChange={handleSearch}
-                    className="block w-[350px] p-4 pl-10 text-sm text-gray-900 border border-gray-300 bg-white rounded-full focus:ring-blue-500 focus:border-blue-500 dark:bg-white dark:border-gray-300 dark:placeholder-gray-400 dark:text-gray-500 dark:focus:ring-blue-500 dark:focus:border-blue-500" 
-                    placeholder="Tìm kiếm..." required 
-                  />
-              </div>
-            </form>
-          </div>
 
+          <div>
+            {/* Search bar */}
+            <div className="container mx-auto flex justify-start">
+              <form className="max-w-md mx-auto ml-2">   
+                <label htmlFor="default-search" className="mb-2 text-sm font-medium sr-only text-gray-700">Search</label>
+                <div className="relative">
+                    <div className="absolute inset-y-0 start-0 flex items-center ps-3">
+                      <button type="button" class="focus:outline-none" cursor-pointer text-gray-300> 
+                        <i class="fa-solid fa-magnifying-glass text-gray-300 hover:text-gray-500"></i>
+                      </button>
+                    </div>
+                    <input 
+                      type="search" 
+                      id="default-search"
+                      value={searchTerm}
+                      onChange={handleSearch}
+                      className="block w-[350px] p-4 pl-10 text-sm text-gray-900 border border-gray-300 bg-white rounded-full focus:ring-blue-500 focus:border-blue-500 dark:bg-white dark:border-gray-300 dark:placeholder-gray-400 dark:text-gray-500 dark:focus:ring-blue-500 dark:focus:border-blue-500" 
+                      placeholder="Tìm kiếm..." required 
+                    />
+                </div>
+              </form>
+            </div>
+
+            <div className="flex items-center space-x-4 mt-4">
+              <i className="fa-solid fa-filter text-gray-700"></i>
+              <span className="text-gray-700">Filter by:</span>
+              {/* Filter by Khoa */}
+              <div>
+                <button id="dropdownRadioButton" data-dropdown-toggle="dropdownRadio" className="inline-flex items-center text-gray-500 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-lg text-sm px-3 py-1.5" type="button">
+                  Khoa
+                  <svg className="w-2.5 h-2.5 ms-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+                    <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m1 1 4 4 4-4"/>
+                  </svg>
+                </button>
+                {/* Dropdown menu */}
+                <div id="dropdownRadio" className="z-10 hidden w-48 bg-white divide-y divide-gray-100 rounded-lg shadow" style={{ position: 'absolute', inset: 'auto auto 0px 0px', margin: '0px', transform: 'translate3d(522.5px, 3847.5px, 0px)' }}>
+                  <ul className="p-3 space-y-1 text-sm text-gray-700" aria-labelledby="dropdownRadioButton">
+                    <li>
+                      <div className="flex items-center p-2 rounded hover:bg-gray-100">
+                        <input id="filter-radio-example-3" type="radio" value="" name="filter-radio" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 focus:ring-2" />
+                        <label htmlFor="filter-radio-example-3" className="w-full ms-2 text-sm font-medium text-gray-900 rounded">KH-KT Máy tính</label>
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
           {/* table */}
           <div class="relative overflow-x-auto shadow-md sm:rounded-lg mt-4">
               <table class="w-full text-left text-sm text-white rtl:text-right">
@@ -253,6 +311,9 @@ const Student = () => {
                           </th>
                           <th scope="col" class="px-6 py-3">
                               Tên
+                              <button onClick={handleSortChange}>
+                                <i className="fa-solid fa-sort white ml-4"></i>
+                              </button>
                           </th>
                           <th scope="col" class="px-6 py-3">
                               Họ, Tên Đệm
