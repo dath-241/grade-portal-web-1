@@ -6,14 +6,14 @@ function AddTeacher() {
         code: '',
         email: '',
         phone: '',
-        department: ''
+        department: '',
     });
 
     const handleInputChange = (e) => {
         const { id, value } = e.target;
         setFormData({
             ...formData,
-            [id]: value
+            [id]: value,
         });
         console.log(formData);
     };
@@ -21,7 +21,6 @@ function AddTeacher() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         console.log(formData);
-        
     };
 
     return (
@@ -82,7 +81,7 @@ function AddTeacher() {
                             placeholder="Nhập số điện thoại giảng viên"
                         />
                     </div>
-                    <div className="flex flex-col gap-2 ">
+                    <div className="flex flex-col gap-2">
                         <label htmlFor="department" className="font-medium">
                             Khoa
                         </label>
@@ -90,7 +89,7 @@ function AddTeacher() {
                             id="department"
                             value={formData.department}
                             onChange={handleInputChange}
-                            className="border-gray rounded-md border bg-gray-100 items-start p-2"
+                            className="border-gray items-start rounded-md border bg-gray-100 p-2"
                         >
                             <option value="">Chọn khoa</option>
                             <option value="computerScience">Khoa học máy tính</option>
@@ -100,10 +99,10 @@ function AddTeacher() {
                         </select>
                     </div>
 
-                    <div className="col-span-2 flex justify-center mt-8">
+                    <div className="col-span-2 mt-8 flex justify-center">
                         <button
                             type="submit"
-                            className="bg-[#112D4E] text-white px-6 py-2 rounded-md hover:bg-[#132438]"
+                            className="rounded-md bg-[#112D4E] px-6 py-2 text-white hover:bg-[#132438]"
                         >
                             Thêm giảng viên
                         </button>
