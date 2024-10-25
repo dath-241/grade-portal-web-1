@@ -1,0 +1,133 @@
+.home {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+    font-family: Roboto;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: linear-gradient(to right, #dbe2ef, #112d4ee0);
+    padding: 10px 20px;
+    flex-shrink: 0;
+}
+
+.logo {
+    font-weight: bold;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.logo img {
+    height: 50px;
+}
+
+.login-button {
+    background-color: #0e243d;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: transform 0.3s ease;
+}
+
+.login-button:hover {
+    background-color: #07111c;
+    transform: translateY(-5px);
+}
+
+.main-content {
+    flex-grow: 1;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 40px 20px;
+    height: 70vh;
+}
+
+.description {
+    max-width: 50%;
+}
+
+.highlight {
+    color: #0056d4;
+}
+
+.start-button {
+    background-color: #0e243d;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 20px;
+    transition: transform 0.3s ease;
+}
+
+.start-button:hover {
+    background-color: #07111c;
+    transform: translateY(-5px);
+}
+
+.homeImage {
+    margin-right: 30px;
+}
+
+.homeDescription1 {
+    font-size: 35px;
+}
+
+.homeDescription2 {
+    font-size: 20px;
+}
+
+.footer {
+    display: flex;
+    background-color: #112d4e;
+    color: white;
+    padding: 10px;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.left-footer {
+    display: flex;
+}
+
+.footerLogo {
+    padding: 10px;
+    margin-left: 50px;
+}
+
+.align-right {
+    margin-left: 50px;
+    text-decoration: underline;
+}
+
+.footer-links {
+    display: flex;
+    flex-direction: column;
+    font-size: 16px;
+}
+
+.copyright {
+    text-align: center;
+    width: 100%;
+    padding-top: 20px;
+}
+
+.footer-link-a {
+    color: white;
+    background-color: transparent;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+    text-decoration: none;
+}

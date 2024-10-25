@@ -2,15 +2,23 @@ import { Link } from 'react-router-dom';
 
 import logo from '../../assets/img/hcmut.png';
 import landingImg from '../../assets/img/landingPic.png';
+import { useNavigate } from 'react-router-dom';
 
 function Header() {
+    const navigate = useNavigate();
+    const handleLogin = () => {
+        navigate('/login');
+    };
     return (
         <div className="bg-li mx-6 flex h-[60px] items-center justify-between rounded-2xl bg-gradient-to-r from-[#DBE2EF] to-[#112D4E] px-6">
             <div className="flex items-center">
                 <img src={logo} alt="Logo" className="size-[45px]" />
                 <p className="ml-4 text-xl font-semibold">BK Tra cứu</p>
             </div>
-            <button className="rounded-xl bg-white px-4 py-1 font-semibold shadow-inner hover:shadow-primary">
+            <button
+                className="px-4 py-1 bg-white rounded-full shadow-inner  hover:shadow-secondary font-semibold"
+                onClick={handleLogin}
+            >
                 Đăng nhập
             </button>
         </div>
