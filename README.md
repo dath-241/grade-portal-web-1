@@ -1,13 +1,14 @@
 # Hệ thống tra cứu điểm
+
 Một hệ thống giúp sinh viên tra cứu điểm của mình một cách dễ dàng và thuận tiện thông qua giao diện web.
 
 ## Team grade-portal-web-1
 
-- Đề tài: Grade Portal
-- Nhiệm vụ: Web 1
-- Tên nhóm: `Gì cũng được`
+-   Đề tài: Grade Portal
+-   Nhiệm vụ: Web 1
+-   Tên nhóm: `Gì cũng được`
 
-- Danh sách thành viên:
+-   Danh sách thành viên:
 
 | MSSV    | Tên SV               | Role |
 | ------- | -------------------- | ---- |
@@ -20,14 +21,13 @@ Một hệ thống giúp sinh viên tra cứu điểm của mình một cách d�
 | 2210298 | Nguyễn Đinh Bằng     | Dev  |
 
 ## Cài Đặt node_modules
+
 ```bash
 npm install
 ```
-## Tài liệu tham khảo
 
 Tài liệu tham khảo ở [đây](./documents/)
 
 ## Báo cáo môn học
 
 Báo cáo môn học ở [đây](./src/reports/)
-
