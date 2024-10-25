@@ -7,41 +7,54 @@ function Header() {
         const items = document.querySelectorAll('.headerNav li');
         items.forEach((item) => {
             item.addEventListener('click', () => {
-                items.forEach((i) => i.classList.remove('bg-white'));
-                item.classList.add('bg-white');
+                items.forEach((i) => i.classList.remove('bg-primary'));
+                item.classList.add('bg-primary');
             });
         });
     }, []);
 
     return (
-        <div className="flex h-[60px] items-center justify-between rounded-full bg-primary px-12">
-            <div className="flex items-center">
-                <img src={logo} alt="Logo" className="size-[35px]" />
+        <div className="mx-6 flex h-[60px] items-center rounded-2xl bg-opacity-10 bg-gradient-to-r from-[#DBE2EF] to-[#64768C] px-6">
+            <div className="mr-auto flex items-center">
+                <img src={logo} alt="Logo" className="size-[45px]" />
+                <p className="ml-4 text-xl font-semibold">BK Tra cứu</p>
             </div>
-            <ul className="headerNav flex text-textColor gap-4 font-medium">
-                <li className="rounded-full bg-white px-4 py-1 hover:bg-white">
-                    <Link to="/">Trang chủ</Link>
+            <ul className="headerNav mr-6 flex gap-4 font-medium text-textColor">
+                <li className="rounded-lg bg-primary px-4 py-1 text-white hover:bg-primary">
+                    <Link to="">Trang chủ</Link>
                 </li>
-                <li className="rounded-full px-4 py-1 hover:bg-white">
-                    <Link to="/">Khóa học của tôi</Link>
+                <li className="rounded-lg px-4 py-1 text-white hover:bg-primary">
+                    <Link to="">Khóa học của tôi</Link>
                 </li>
-                <li className="rounded-full px-4 py-1 hover:bg-white">
-                    <Link to="/">Vinh danh</Link>
+                <li className="rounded-lg px-4 py-1 text-white hover:bg-primary">
+                    <Link to="">Vinh danh</Link>
                 </li>
             </ul>
             <div className="flex items-center">
-                <i class="fa-solid fa-bell mr-4 text-xl"></i>
-                <img src={logo} alt="logo" className="size-[35px]" />
+                <img
+                    src="https://c4.wallpaperflare.com/wallpaper/821/698/393/anime-naruto-akatsuki-naruto-deidara-naruto-wallpaper-preview.jpg"
+                    alt="avatar"
+                    className="size-[45px] rounded-full object-cover"
+                />
             </div>
+        </div>
+    );
+}
+
+function Footer() {
+    return (
+        <div className="flex h-20 items-center justify-center bg-primary text-white -mb-20">
+            <p className="text-center">© 2021 BK Tra cứu. All rights reserved.</p>
         </div>
     );
 }
 
 function Layout({ children }) {
     return (
-        <div className="bg-bgColor p-4">
+        <div className="flex h-20 min-h-screen flex-col bg-bgColor pt-6">
             <Header />
-            <main className="px-12">{children}</main>
+            <main className="flex-grow px-12">{children}</main>
+            <Footer />
         </div>
     );
 }
