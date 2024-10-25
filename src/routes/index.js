@@ -1,44 +1,42 @@
+import StudentLayout from '../components/Layout/StudentLayout/StudentLayout';
 import LandingPage from '../pages/LandingPage/LandingPage';
-import Login from '../components/Login/Login';
-import HOF from '../components/HOF/HOF';
-import Home from '../pages/Home/Home';
-import Controller from '../pages/Admin/Controller';
-import AddTeacher from '../pages/Admin/AddTeacher';
-import AddStudent from '../pages/Admin/AddStudent';
-
+import HomePage from '../pages/StudentPages/HomePage';
+import CoursePage from '../pages/StudentPages/CoursePage';
+import FramesPage from '../pages/StudentPages/FramesPage';
+import CourseInfo from '../pages/StudentPages/CourseInfo';
+import GradeInfo from '../pages/StudentPages/GradeInfo';
 const routes = [
     {
         path: '/',
         component: LandingPage,
     },
-    {
-        path: '/login',
-        component: Login,
-    },
-    {
-        path: '/hof',
-        component: HOF,
-    },
-    {
-        path: '/home',
-        component: Home,
-        layout: true,
-    },
-    {
-        path: '/controller',
-        component: Controller,
-        layout: true,
-    },
-    {
-        path: '/add-teacher',
-        component: AddTeacher,
-        layout: true,
-    },
-    {
-        path: '/add-student',
-        component: AddStudent,
-        layout: true,
-    },
 ];
 
-export default routes;
+const studentRoutes = [
+    {
+        path: '/home',
+        component: HomePage,
+        layout: StudentLayout,
+    },
+    {
+        path: '/course',
+        component: CoursePage,
+        layout: StudentLayout,
+    },
+    {
+        path: '/course/:id/info',
+        component: CourseInfo,
+        layout: StudentLayout,
+    },
+    {
+        path: '/course/:id/grade',
+        component: GradeInfo,
+        layout: StudentLayout,
+    },
+    {
+        path: '/frames',
+        component: FramesPage,
+        layout: StudentLayout,
+    },
+];
+export { routes, studentRoutes };

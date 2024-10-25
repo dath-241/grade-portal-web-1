@@ -21,13 +21,13 @@ function Header() {
             </div>
             <ul className="headerNav mr-6 flex gap-4 font-medium text-textColor">
                 <li className="rounded-lg bg-primary px-4 py-1 text-white hover:bg-primary">
-                    <Link to="">Trang chủ</Link>
+                    <Link to="/home">Trang chủ</Link>
                 </li>
                 <li className="rounded-lg px-4 py-1 text-white hover:bg-primary">
-                    <Link to="">Khóa học của tôi</Link>
+                    <Link to="/course">Khóa học của tôi</Link>
                 </li>
                 <li className="rounded-lg px-4 py-1 text-white hover:bg-primary">
-                    <Link to="">Vinh danh</Link>
+                    <Link to="/frames">Vinh danh</Link>
                 </li>
             </ul>
             <div className="flex items-center">
@@ -43,7 +43,7 @@ function Header() {
 
 function Footer() {
     return (
-        <div className="flex h-20 items-center justify-center bg-primary text-white -mb-20">
+        <div className="-mb-20 flex h-20 items-center justify-center bg-primary text-white">
             <p className="text-center">© 2021 BK Tra cứu. All rights reserved.</p>
         </div>
     );
@@ -53,7 +53,7 @@ function Layout({ children }) {
     return (
         <div className="flex h-20 min-h-screen flex-col bg-bgColor pt-6">
             <Header />
-            <main className="flex-grow px-12">{children}</main>
+            <main className="mx-6">{children}</main>
             <Footer />
         </div>
     );
