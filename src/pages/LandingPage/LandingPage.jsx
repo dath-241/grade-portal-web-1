@@ -28,8 +28,8 @@ function LandingPage() {
                         SINH VIÊN ĐẠI HỌC <span className="text-fourth">BÁCH KHOA</span>
                     </p>
                     <p className="mt-10">
-                        <span className="text-lg font-bold text-fourth">#</span> Hệ thống được phát triển dựa trên
-                        nhu cầu sử dụng của sinh viên toàn trường. Chúng tôi luôn mang lại trải nghiệm tốt nhất cho sinh
+                        <span className="text-lg font-bold text-fourth">#</span> Hệ thống được phát triển dựa trên nhu
+                        cầu sử dụng của sinh viên toàn trường. Chúng tôi luôn mang lại trải nghiệm tốt nhất cho sinh
                         viên.
                     </p>
                     <Link to="/home" className="mt-6 size-fit">
