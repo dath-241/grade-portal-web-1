@@ -1,0 +1,185 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+
+* {
+  margin: 0px;
+  font-family: "Inter";
+  font-size: 14;
+  color: black;   
+}
+
+.main {
+  background-color: rgba(217, 217, 217, 0.60);
+  ;
+}
+
+.navbar {
+  padding: 5px;
+  display: flex;
+  color: white;
+  align-items: center;
+  max-width: 1480px;
+  margin: 5px auto;
+  border-bottom: 1px solid #d9d9d9;
+  border-radius: 28.901px;
+  background: linear-gradient(90deg, rgba(219, 226, 239, 0.65) 0%, rgba(17, 45, 78, 0.65) 100%);
+}
+
+.navbar h1 {
+  color: #112D4E;
+  font-size: 25px;
+  font-style: normal;
+  font-weight: 600;
+  letter-spacing: -0.911px;
+  padding: 10px;
+}
+
+.navbar link {
+  justify-items: center;
+}
+
+.navbar a {
+  text-decoration: none;
+  padding: 10px;
+  color: white;
+  margin: 0px 10px 0px;
+  justify-content: center;
+}
+
+.navbar a:hover {
+  background-color: #112D4E;
+  border-radius: 8px;
+}
+
+.content {
+  max-width: 600px;
+  margin: 40 auto;
+  padding: 20px;
+  color: black;
+}
+
+.lecturer-details {
+    margin-top: 20px;
+  }
+  
+  .lecturer-info {
+    display: flex;
+    justify-content: space-between;
+    background-color: #f6f6f6;
+    padding: 20px;
+    border-radius: 13.52px;
+    align-items: center;
+    justify-items: center;
+    align-content: right;
+    flex: 1;
+    margin: 20px;
+    margin-left: 10px;
+    width: 60%;
+}
+
+  .lecturer-avatar {
+    width: 200px;
+    object-fit: cover;
+    border-radius: 12px;
+    margin: 20px;
+    padding: 30px;
+    align-items: left;
+    background-color: #f6f6f6;
+    width: 20%;
+  }
+
+  .ava{
+    background-color: white;;
+    display: flex;
+    width: 100%;
+  }
+  
+  .course-table {
+    margin: 20px;
+    padding: 20px;
+    background-color: #F6F6F6;
+    border-radius: 12px;
+  }
+  
+  .custom-table .ant-table-thead > tr > th {
+    background-color: #112D4E; 
+    color: white; 
+  }
+
+  .custom-table .ant-table-tbody > tr > td {
+    background-color: #DBE2EF;
+  }
+
+.button {
+    color: white;
+    background-color: #5693da;
+    padding: 10px 20px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    margin: 10px;
+  }
+
+  .table{
+    display: flex;
+    width: 100%;
+  }
+
+  .ifor{
+    margin-top: 0px;
+    margin-left: 20px;
+  }
+
+  .breadcrumb {
+    margin: 10px 0;
+    color: #555;
+  }
+  
+  .p {
+    background-color: white;
+    padding: 15px;
+    border-radius: 8px;
+    margin: 0px 15px 15px 15px; 
+  }
+
+  .profile {
+    display: flex;
+    padding: 15px;
+    border-radius: 8px;
+    margin: 0; 
+  }
+  
+  .profile-image{
+    background-color: #F6F6F6;
+    padding: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 20px;
+  }
+  
+  .profile-image img {
+    border-radius: 50%;
+    width: 200px;
+    height: 200px;
+  }
+  
+  .profile-info {
+    line-height: 1.5;
+    display: flex;
+    background-color: #F6F6F6;
+    margin-left: 20px;
+    padding: 25px;
+    border-radius: 20px;
+    flex: 1;
+  }
+  
+  .profile-info .right{
+    margin-left: 200px;
+  }
+  
+  .profile-info h2 {
+    margin-bottom: 10px;
+  }
+  
+
+  
