@@ -1,4 +1,6 @@
 import LandingPage from '../pages/LandingPage/LandingPage';
+import Login from '../components/Login/Login';
+import HOF from '../components/HOF/HOF';
 import Home from '../pages/Home/Home';
 import Controller from '../pages/Admin/Controller';
 import AddTeacher from '../pages/Admin/AddTeacher';
@@ -8,6 +10,14 @@ const routes = [
     {
         path: '/',
         component: LandingPage,
+    },
+    {
+        path: '/login',
+        component: Login,
+    },
+    {
+        path: '/hof',
+        component: HOF,
     },
     {
         path: '/home',
