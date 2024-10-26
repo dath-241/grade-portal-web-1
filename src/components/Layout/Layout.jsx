@@ -14,7 +14,7 @@ function Header() {
             items[0].classList.add('bg-primary');
         } else if (path.startsWith('/management')) {
             items[1].classList.add('bg-primary');
-        } else if (path.startsWith('/course')) {
+        } else if (path.startsWith('/courses')) {
             items[2].classList.add('bg-primary');
         } else if (path.startsWith('/hall-of-fame')) {
             items[2].classList.add('bg-primary');
@@ -36,7 +36,7 @@ function Header() {
                     Bảng điều khiển
                 </Link>
 
-                <Link to="/course" className="rounded-lg px-4 py-2 text-white hover:bg-primary">
+                <Link to="/courses" className="rounded-lg px-4 py-2 text-white hover:bg-primary">
                     Khóa học của tôi
                 </Link>
 
@@ -67,7 +67,7 @@ function Layout({ children }) {
     return (
         <div className="flex h-20 min-h-screen flex-col bg-bgColor pt-6">
             <Header />
-            <main className="mx-6 h-full">{children}</main>
+            <main className="mx-6 h-full pt-6">{children}</main>
             <Footer />
         </div>
     );
