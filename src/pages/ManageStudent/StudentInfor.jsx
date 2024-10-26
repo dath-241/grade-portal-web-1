@@ -157,7 +157,7 @@ const Sinhvien2 = () => {
                             <br></br>
                             <br></br>
                             <Button type="primary" danger onClick={showDeleteConfirm}>
-                                Xóa GV
+                                Xóa SV
                             </Button>
                         </div>
                     </div>
