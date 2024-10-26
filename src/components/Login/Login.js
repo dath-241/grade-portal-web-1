@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import './Login.css';
-import loginHCMUT from '../../assets/img/loginHCMUT.png';
+import loginHCMUT from '../../assets/img/logoBK.png';
 import { useNavigate } from 'react-router-dom';
 import LoginWithGoogle from './LoginWithGoogle';
 import LogoutWithGoogle from './LogoutWithGoogle';
