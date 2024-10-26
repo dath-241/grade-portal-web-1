@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import './Login.css';
 import loginHCMUT from '../../assets/img/logoBK.png';
-import { useNavigate } from 'react-router-dom';
+// import { useNavigate } from 'react-router-dom';
 import LoginWithGoogle from './LoginWithGoogle';
-import LogoutWithGoogle from './LogoutWithGoogle';
+// import LogoutWithGoogle from './LogoutWithGoogle';
 
 function Login() {
     const [accountTypeVerified, setAccountTypeVerified] = useState(false);
-    const navigate = useNavigate();
+    // const navigate = useNavigate();
 
     const handleHCMUTAcccount = () => {
         setAccountTypeVerified(true);
@@ -16,13 +16,13 @@ function Login() {
         setAccountTypeVerified(true);
     };
 
-    const handleLogin = () => {
-        setAccountTypeVerified(false);
-        navigate('/hof');
-    };
-    const handleForgotPassword = () => {
-        //
-    };
+    // const handleLogin = () => {
+    //     setAccountTypeVerified(false);
+    //     navigate('/hof');
+    // };
+    // const handleForgotPassword = () => {
+    //     //
+    // };
 
     return (
         <div className="login-container-a">

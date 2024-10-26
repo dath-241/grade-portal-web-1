@@ -1,4 +1,4 @@
-import landingImg from '../../assets/img/landingPic.png';
+
 function Home() {
     return (
         <>
