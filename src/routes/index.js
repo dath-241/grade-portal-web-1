@@ -10,6 +10,9 @@ import StudentInfor from '../pages/ManageStudent/StudentInfor';
 import CoursePage from '../pages/StudentPages/CoursePage';
 import CourseInfo from '../pages/StudentPages/CourseInfo';
 import GradeInfo from '../pages/StudentPages/GradeInfo';
+import FacultyList from '../pages/Admin/FacultyList';
+import SubjectList from '../pages/Admin/SubjectList ';
+import ClassList from '../pages/Admin/ClassList ';
 
 const routes = [
     {
@@ -56,10 +59,26 @@ const routes = [
         layout: true,
     },
     {
-        path: '/course',
+        path: '/courses',
         component: CoursePage,
         layout: true,
     },
+    {
+        path: '/management/faculty-list',
+        component: FacultyList,
+        layout: true,
+    },
+    {
+        path: '/management/subject-list',
+        component: SubjectList,
+        layout: true,
+    },
+    {
+        path: '/management/class-list',
+        component: ClassList,
+        layout: true,
+    },
+
     {
         path: '/course/:id/info',
         component: CourseInfo,
