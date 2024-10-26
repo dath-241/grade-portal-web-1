@@ -4,20 +4,17 @@ import React, { useEffect, useState, useRef } from 'react';
 import ReactPaginate from 'react-paginate';
 import { DataTable } from 'simple-datatables';
 
-import logo from '../../assets/img/hcmut.png';
-import landingImg from '../../assets/img/landingPic.png';
-import studenticon from '../../assets/img/student.png';
+import teachericon from '../../assets/img/teacher.png';
 
-const Student = () => {
-    const [students, setStudents] = useState([
+const Teacher = () => {
+    const [teachers, setTeachers] = useState([
         {
             id: 1000,
             fname: 'A',
             lname: 'Nguyễn Văn',
             mail: 'nguyenvana1@hcmut.edu.vn',
             faculty: 'KH-KT Máy tính',
-            course: 'CNPM',
-            teacher: 'LDT',
+            phone: '012345678',
         },
         {
             id: 1001,
@@ -25,8 +22,7 @@ const Student = () => {
             lname: 'Nguyễn Văn',
             mail: 'nguyenvana2@hcmut.edu.vn',
             faculty: 'KH-KT Máy tính',
-            course: 'CNPM',
-            teacher: 'LDT',
+            phone: '012345678',
         },
         {
             id: 1002,
@@ -34,8 +30,7 @@ const Student = () => {
             lname: 'Nguyễn Văn',
             mail: 'nguyenvana@hcmut.edu.vn',
             faculty: 'KH-KT Máy tính',
-            course: 'CNPM',
-            teacher: 'LDT',
+            phone: '012345678',
         },
         {
             id: 1003,
@@ -43,8 +38,7 @@ const Student = () => {
             lname: 'Nguyễn Văn',
             mail: 'nguyenvana@hcmut.edu.vn',
             faculty: 'KH-KT Máy tính',
-            course: 'CNPM',
-            teacher: 'LDT',
+            phone: '012345678',
         },
         {
             id: 1004,
@@ -52,8 +46,7 @@ const Student = () => {
             lname: 'Nguyễn Văn',
             mail: 'nguyenvana3@hcmut.edu.vn',
             faculty: 'KH-KT Máy tính',
-            course: 'CNPM',
-            teacher: 'LDT',
+            phone: '012345678',
         },
         {
             id: 1005,
@@ -61,113 +54,103 @@ const Student = () => {
             lname: 'Nguyễn Văn',
             mail: 'nguyenvana3@hcmut.edu.vn',
             faculty: 'KH-KT Máy tính',
-            course: 'CNPM',
-            teacher: 'LDT',
+            phone: '012345678',
         },
         {
             id: 1006,
-            fname: 'A',
+            fname: 'G',
             lname: 'Nguyễn Văn',
             mail: 'nguyenvana2@hcmut.edu.vn',
             faculty: 'KH-KT Máy tính',
-            course: 'CNPM',
-            teacher: 'LDT',
+            phone: '012345678',
         },
         {
             id: 1007,
-            fname: 'A',
+            fname: 'H',
             lname: 'Nguyễn Văn',
             mail: 'nguyenvana1@hcmut.edu.vn',
             faculty: 'KH-KT Máy tính',
-            course: 'CNPM',
-            teacher: 'LDT',
+            phone: '012345678',
         },
         {
             id: 1008,
-            fname: 'A',
+            fname: 'I',
             lname: 'Nguyễn Văn',
             mail: 'nguyenvana@hcmut.edu.vn',
             faculty: 'KH-KT Máy tính',
-            course: 'CNPM',
-            teacher: 'LDT',
+            phone: '012345678',
         },
         {
             id: 1009,
-            fname: 'A',
+            fname: 'K',
             lname: 'Nguyễn Văn',
             mail: 'nguyenvana@hcmut.edu.vn',
             faculty: 'KH-KT Máy tính',
-            course: 'CNPM',
-            teacher: 'LDT',
+            phone: '012345678',
         },
         {
             id: 1010,
-            fname: 'A',
+            fname: 'L',
             lname: 'Nguyễn Văn',
             mail: 'nguyenvana@hcmut.edu.vn',
             faculty: 'KH-KT Máy tính',
-            course: 'CNPM',
-            teacher: 'LDT',
+            phone: '012345678',
         },
         {
             id: 1011,
-            fname: 'A',
+            fname: 'M',
             lname: 'Nguyễn Văn',
             mail: 'nguyenvana@hcmut.edu.vn',
             faculty: 'KH-KT Máy tính',
-            course: 'CNPM',
-            teacher: 'LDT',
+            phone: '012345678',
         },
         {
             id: 1012,
-            fname: 'A',
+            fname: 'N',
             lname: 'Nguyễn Văn',
             mail: 'nguyenvana@hcmut.edu.vn',
             faculty: 'KH-KT Máy tính',
-            course: 'CNPM',
-            teacher: 'LDT',
+            phone: '012345678',
         },
         {
             id: 1013,
-            fname: 'A',
+            fname: 'R',
             lname: 'Nguyễn Văn',
             mail: 'nguyenvana@hcmut.edu.vn',
             faculty: 'KH-KT Máy tính',
-            course: 'CNPM',
-            teacher: 'LDT',
+            phone: '012345678',
         },
         {
             id: 1014,
-            fname: 'A',
+            fname: 'S',
             lname: 'Nguyễn Văn',
             mail: 'nguyenvana@hcmut.edu.vn',
             faculty: 'KH-KT Máy tính',
-            course: 'CNPM',
-            teacher: 'LDT',
+            phone: '012345678',
         },
     ]);
 
     //Search-logic
     const tableRef = useRef(null);
-    const [filteredStudents, setFilteredStudents] = useState(students);
+    const [filteredTeachers, setFilteredTeachers] = useState(teachers);
     const [searchTerm, setSearchTerm] = useState('');
 
     const handleSearch = (event) => {
         const query = event.target.value.toLowerCase();
         setSearchTerm(query);
 
-        const filtered = students.filter(
-            (student) =>
-                student.id.toString().includes(query) ||
-                student.fname.toLowerCase().includes(query) ||
-                student.lname.toLowerCase().includes(query) ||
-                student.mail.toLowerCase().includes(query) ||
-                student.faculty.toLowerCase().includes(query),
+        const filtered = teachers.filter(
+            (teacher) =>
+                teacher.id.toString().includes(query) ||
+                teacher.fname.toLowerCase().includes(query) ||
+                teacher.lname.toLowerCase().includes(query) ||
+                teacher.mail.toLowerCase().includes(query) ||
+                teacher.faculty.toLowerCase().includes(query) ||
+                teacher.phone.toLowerCase().includes(query),
         );
-
-        // const finalList = sortOrder === 'default' ? filtered : handleSort(filtered);
-        setFilteredStudents(filtered);
+        setFilteredTeachers(filtered);
     };
+
     useEffect(() => {
         if (tableRef.current) {
             const dataTable = new DataTable(tableRef.current, {
@@ -175,55 +158,56 @@ const Student = () => {
                 sortable: false,
             });
         }
-    }, [filteredStudents]);
+    }, [filteredTeachers]);
 
     //Sort
     const [sortOrder, setSortOrder] = useState('default');
 
-    const handleSort = (studentsList) => {
-        const sortedStudents = [...studentsList];
+    const handleSort = (teachersList) => {
+        const sortedTeachers = [...teachersList];
         if (sortOrder === 'down') {
-            sortedStudents.sort((a, b) => a.fname.localeCompare(b.fname));
+            sortedTeachers.sort((a, b) => a.fname.localeCompare(b.fname));
             setSortOrder('up');
         } else if (sortOrder === 'up') {
-            sortedStudents.sort((a, b) => b.fname.localeCompare(a.fname));
+            sortedTeachers.sort((a, b) => b.fname.localeCompare(a.fname));
             setSortOrder('default');
         } else {
             setSortOrder('down');
         }
-        return sortedStudents;
+        return sortedTeachers;
     };
 
     const handleSortChange = () => {
-        const sortedStudents = handleSort(filteredStudents);
-        setFilteredStudents(sortedStudents);
+        const sortedTeachers = handleSort(filteredTeachers);
+        setFilteredTeachers(sortedTeachers);
     };
 
     useEffect(() => {
         if (searchTerm === '') {
-            setFilteredStudents(students);
+            setFilteredTeachers(teachers);
             setSortOrder('default');
         }
     }, [searchTerm]);
 
     // Pagination-logic
-    const [studentOffset, setStudentOffset] = useState(0);
-    const studentsPerPage = 10;
-    const endOffset = studentOffset + studentsPerPage;
+    const [teacherOffset, setTeacherOffset] = useState(0);
+    const teachersPerPage = 10;
+    const endOffset = teacherOffset + teachersPerPage;
 
-    const currentStudents = students.slice(studentOffset, endOffset);
-    const pageCount = Math.ceil(filteredStudents.length / studentsPerPage);
+    const currentTeachers = filteredTeachers.slice(teacherOffset, endOffset);
+    const pageCount = Math.ceil(filteredTeachers.length / teachersPerPage);
+    const currentPage = Math.floor(teacherOffset / teachersPerPage);
 
     const handlePageClick = (event) => {
-        const newOffset = (event.selected * studentsPerPage) % filteredStudents.length;
-        setStudentOffset(newOffset);
+        const newOffset = (event.selected * teachersPerPage) % filteredTeachers.length;
+        setTeacherOffset(newOffset);
     };
 
     return (
         <div className="container mx-auto p-4">
             <div>
                 <div>
-                    <img src={studenticon} alt="Icon" className="size-[145px]" />
+                    <img src={teachericon} alt="Icon" className="size-[145px]" />
                 </div>
                 {/* Breadcums */}
                 <nav class="flex" aria-label="Breadcrumb">
@@ -262,19 +246,19 @@ const Student = () => {
                                         d="m1 9 4-4-4-4"
                                     />
                                 </svg>
-                                <span class="ms-1 text-sm font-medium text-gray-700 md:ms-2">Sinh viên</span>
+                                <span class="ms-1 text-sm font-medium text-gray-700 md:ms-2">Giảng viên</span>
                             </div>
                         </li>
                     </ol>
                 </nav>
 
-                <h1 className="mb-4 text-2xl font-bold">Sinh viên</h1>
+                <h1 className="mb-4 text-2xl font-bold">Giảng viên</h1>
                 <button
                     type="button"
                     className="mb-2 me-2 rounded-lg bg-primary px-5 py-2.5 text-sm font-medium text-white hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300"
                 >
                     <i class="fa-solid fa-plus mr-2" style={{ color: '#30d70f' }}></i>
-                    Thêm SV
+                    Thêm GV
                 </button>
             </div>
 
@@ -366,6 +350,7 @@ const Student = () => {
                     </div>
                 </div>
             </div>
+
             {/* table */}
             <div class="relative mt-4 overflow-x-auto shadow-md sm:rounded-lg">
                 <table class="w-full text-left text-sm text-white rtl:text-right">
@@ -387,28 +372,34 @@ const Student = () => {
                                 Email
                             </th>
                             <th scope="col" class="px-6 py-3">
+                                SĐT
+                            </th>
+                            <th scope="col" class="px-6 py-3">
                                 Khoa
                             </th>
                         </tr>
                     </thead>
                     <tbody>
-                        {currentStudents.length > 0 ? (
-                            currentStudents.map((student) => (
-                                <tr key={student.id} class="border-b bg-white dark:border-gray-300">
+                        {currentTeachers.length > 0 ? (
+                            currentTeachers.map((teacher) => (
+                                <tr key={teacher.id} class="border-b bg-white dark:border-gray-300">
                                     <td scope="row" class="whitespace-nowrap px-6 py-4 font-medium text-gray-700">
-                                        {student.id}
+                                        {teacher.id}
                                     </td>
                                     <td scope="row" class="whitespace-nowrap px-6 py-4 font-medium text-gray-700">
-                                        {student.fname}
+                                        {teacher.fname}
                                     </td>
                                     <td scope="row" class="whitespace-nowrap px-6 py-4 font-medium text-gray-700">
-                                        {student.lname}
+                                        {teacher.lname}
                                     </td>
                                     <td scope="row" class="whitespace-nowrap px-6 py-4 font-medium text-gray-700">
-                                        {student.mail}
+                                        {teacher.mail}
                                     </td>
                                     <td scope="row" class="whitespace-nowrap px-6 py-4 font-medium text-gray-700">
-                                        {student.faculty}
+                                        {teacher.phone}
+                                    </td>
+                                    <td scope="row" class="whitespace-nowrap px-6 py-4 font-medium text-gray-700">
+                                        {teacher.faculty}
                                     </td>
                                 </tr>
                             ))
@@ -464,10 +455,11 @@ const Student = () => {
                     activeClassName="z-10 flex items-center justify-center px-3 h-8 text-blue-600 border border-blue-300 bg-blue-50"
                     previousClassName="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-e-0 border-gray-300 rounded-s-lg"
                     nextClassName="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 rounded-e-lg"
+                    forcePage={currentPage}
                 />
             </div>
         </div>
     );
 };
 
-export default Student;
+export default Teacher;

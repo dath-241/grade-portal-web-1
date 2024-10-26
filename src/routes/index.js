@@ -13,6 +13,8 @@ import GradeInfo from '../pages/StudentPages/GradeInfo';
 import FacultyList from '../pages/Admin/FacultyList';
 import SubjectList from '../pages/Admin/SubjectList ';
 import ClassList from '../pages/Admin/ClassList ';
+import StudentsInfo from '../pages/Student/StudentsInfo';
+import TeachersInfo from '../pages/Teacher/TeachersInfo';
 
 const routes = [
     {
@@ -87,6 +89,16 @@ const routes = [
     {
         path: '/course/:id/grade',
         component: GradeInfo,
+        layout: true,
+    },
+    {
+        path: '/management/students',
+        component: StudentsInfo,
+        layout: true,
+    },
+    {
+        path: '/management/teachers',
+        component: TeachersInfo,
         layout: true,
     },
 ];
