@@ -10,7 +10,7 @@ function Controller() {
         <div className="flex h-full pb-2 pt-2">
             <div className="grid flex-1 grid-cols-1 gap-8 rounded-lg bg-white p-8 md:grid-cols-3">
                 <Link
-                    to="/"
+                    to="/management/lecturer-list"
                     className="max-h-[250px] cursor-pointer rounded-lg bg-gray-200 p-6 shadow-md hover:bg-gray-300"
                 >
                     <div className="flex pb-6">

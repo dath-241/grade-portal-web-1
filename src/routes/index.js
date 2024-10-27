@@ -5,7 +5,8 @@ import HOF from '../pages/HOF/HOF';
 import Management from '../pages/Admin/Management';
 import AddTeacher from '../pages/Admin/AddTeacher';
 import AddStudent from '../pages/Admin/AddStudent';
-import TeacherInfor from '../pages/ManageLecturer/LecturerInfor';
+import LecturerList from '../pages/ManageLecturer/LecturerList';
+import LecturerInfor from '../pages/ManageLecturer/LecturerInfor';
 import StudentInfor from '../pages/ManageStudent/StudentInfor';
 import StudentCoursePage from '../pages/StudentPages/CoursePage';
 import StudentCourseInfo from '../pages/StudentPages/CourseInfo';
@@ -52,8 +53,13 @@ const routes = [
         layout: true,
     },
     {
+        path: '/management/lecturer-list',
+        component: LecturerList,
+        layout: true,
+    },
+    {
         path: '/management/lecturer-infor',
-        component: TeacherInfor,
+        component: LecturerInfor,
         layout: true,
     },
     {
