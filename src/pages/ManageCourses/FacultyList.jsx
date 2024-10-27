@@ -35,7 +35,7 @@ function FacultyList() {
                 </div>
             </div>
             <div className="mt-2 flex justify-center">
-                <div className="flex h-[580px] w-full flex-col items-center overflow-y-auto rounded-lg border border-gray-300 bg-gray-50 p-4">
+                <div className="flex w-full flex-col items-center overflow-y-auto rounded-lg border border-gray-300 bg-gray-50 p-4">
                     {Array.from({ length: 10 }, (_, i) => (
                         <div key={i}>
                             <Link

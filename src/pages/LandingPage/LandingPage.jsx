@@ -27,7 +27,7 @@ function Header() {
 
 function LandingPage() {
     return (
-        <div className="pt-6">
+        <div className="pt-[1rem]">
             <Header />
             <main className="mx-6 flex">
                 <div className="flex flex-1 flex-col justify-center pl-11 pr-36">

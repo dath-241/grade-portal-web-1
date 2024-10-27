@@ -20,7 +20,7 @@ function Controller() {
                     <p>Xem và quản lý thông tin các giáo viên</p>
                 </Link>
                 <Link
-                    to="/"
+                    to="/management/student-list"
                     className="max-h-[250px] cursor-pointer rounded-lg bg-gray-200 p-6 shadow-md hover:bg-gray-300"
                 >
                     <div className="flex pb-6">

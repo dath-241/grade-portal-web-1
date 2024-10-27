@@ -7,6 +7,7 @@ import AddTeacher from '../pages/Admin/AddTeacher';
 import AddStudent from '../pages/Admin/AddStudent';
 import LecturerList from '../pages/ManageLecturer/LecturerList';
 import LecturerInfor from '../pages/ManageLecturer/LecturerInfor';
+import StudentList from '../pages/ManageStudent/StudentList';
 import StudentInfor from '../pages/ManageStudent/StudentInfor';
 import StudentCoursePage from '../pages/StudentPages/CoursePage';
 import StudentCourseInfo from '../pages/StudentPages/CourseInfo';
@@ -60,6 +61,11 @@ const routes = [
     {
         path: '/management/lecturer-infor',
         component: LecturerInfor,
+        layout: true,
+    },
+    {
+        path: '/management/student-list',
+        component: StudentList,
         layout: true,
     },
     {

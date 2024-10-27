@@ -10,19 +10,24 @@ function Header() {
         const path = window.location.pathname;
         resetClasses();
 
-        if (path.startsWith('/home')) {
-            items[0].classList.add('bg-primary');
-        } else if (path.startsWith('/management')) {
-            items[1].classList.add('bg-primary');
-        } else if (path.startsWith('/student-courses') || path.startsWith('/lecturer-courses')) {
-            items[2].classList.add('bg-primary');
-        } else if (path.startsWith('/hall-of-fame')) {
-            items[2].classList.add('bg-primary');
+        const pathToIndexMap = {
+            '/home': 0,
+            '/management': 1,
+            '/student-courses': 2,
+            '/lecturer-courses': 2,
+            '/hall-of-fame': 3,
+        };
+
+        const matchingPrefix = Object.keys(pathToIndexMap).find((prefix) => path.startsWith(prefix));
+
+        if (matchingPrefix) {
+            window.scrollTo(0, 0);
+            items[pathToIndexMap[matchingPrefix]].classList.add('bg-primary');
         }
     });
 
     return (
-        <div className="mx-6 flex h-[60px] items-center rounded-2xl bg-opacity-10 bg-gradient-to-r from-[#DBE2EF] to-[#64768C] px-6 py-4">
+        <div className="fixed left-0 right-0 top-[1rem] z-50 mx-6 flex h-[60px] items-center rounded-2xl bg-opacity-10 bg-gradient-to-r from-[#DBE2EF] to-[#64768C] px-6 py-4">
             <div className="mr-auto flex items-center">
                 <img src={logo} alt="Logo" className="size-[45px]" />
                 <p className="ml-4 text-xl font-semibold">BK Tra cứu</p>
@@ -65,9 +70,9 @@ function Footer() {
 
 function Layout({ children }) {
     return (
-        <div className="flex h-20 min-h-screen flex-col bg-bgColor pt-6">
+        <div className="flex min-h-screen flex-col pt-[5rem] bg-bgColor">
             <Header />
-            <main className="mx-6 h-full pt-6">{children}</main>
+            <main className="mx-6 flex-grow py-6">{children}</main>
             <Footer />
         </div>
     );

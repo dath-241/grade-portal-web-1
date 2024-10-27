@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { Table } from 'antd';
 
-import LecturerIcon from '../../assets/img/teacher.png';
+import StudentIcon from '../../assets/img/student.png';
 
-function LecturerList() {
+function StudentList() {
     const [pageSize, setPageSize] = useState(10);
     // const [dataSource, setDataSource] = useState([]);
     // const [filteredData, setFilteredData] = useState(dataSource);
@@ -64,15 +64,15 @@ function LecturerList() {
             {/* header */}
             <div className="flex justify-between">
                 <div className="flex gap-4">
-                    <img src={LecturerIcon} alt="" className="w-20" />
+                    <img src={StudentIcon} alt="" className="w-20" />
                     <div className="">
                         <span>Bảng điều khiển / giảng viên</span>
-                        <p className="text-2xl font-semibold">Giảng viên</p>
+                        <p className="text-2xl font-semibold">Sinh viên</p>
                     </div>
                 </div>
 
                 <div className="size-fit cursor-pointer rounded-lg bg-primary px-4 py-2 text-white shadow-inner hover:shadow-white">
-                    thêm giảng viên
+                    thêm sinh viên
                 </div>
             </div>
 
@@ -105,4 +105,4 @@ function LecturerList() {
     );
 }
 
-export default LecturerList;
+export default StudentList;
