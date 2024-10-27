@@ -7,12 +7,15 @@ import AddTeacher from '../pages/Admin/AddTeacher';
 import AddStudent from '../pages/Admin/AddStudent';
 import TeacherInfor from '../pages/ManageLecturer/LecturerInfor';
 import StudentInfor from '../pages/ManageStudent/StudentInfor';
-import CoursePage from '../pages/StudentPages/CoursePage';
-import CourseInfo from '../pages/StudentPages/CourseInfo';
-import GradeInfo from '../pages/StudentPages/GradeInfo';
-import FacultyList from '../pages/Admin/FacultyList';
-import SubjectList from '../pages/Admin/SubjectList ';
-import ClassList from '../pages/Admin/ClassList ';
+import StudentCoursePage from '../pages/StudentPages/CoursePage';
+import StudentCourseInfo from '../pages/StudentPages/CourseInfo';
+import StudentGradeInfo from '../pages/StudentPages/GradeInfo';
+import LecturerCoursePage from '../pages/LecturerPages/CoursePage';
+import LecturerCourseInfo from '../pages/LecturerPages/CourseInfo';
+import LecturerGradeInfo from '../pages/LecturerPages/GradeInfo';
+import FacultyList from '../pages/ManageCourses/FacultyList';
+import SubjectList from '../pages/ManageCourses/SubjectList ';
+import ClassList from '../pages/ManageCourses/ClassList ';
 
 const routes = [
     {
@@ -39,16 +42,6 @@ const routes = [
         layout: true,
     },
     {
-        path: '/management/lecturer-infor',
-        component: TeacherInfor,
-        layout: true,
-    },
-    {
-        path: '/management/student-infor',
-        component: StudentInfor,
-        layout: true,
-    },
-    {
         path: '/add-teacher',
         component: AddTeacher,
         layout: true,
@@ -59,10 +52,15 @@ const routes = [
         layout: true,
     },
     {
-        path: '/courses',
-        component: CoursePage,
+        path: '/management/lecturer-infor',
+        component: TeacherInfor,
         layout: true,
     },
+    {
+        path: '/management/student-infor',
+        component: StudentInfor,
+        layout: true,
+    },      
     {
         path: '/management/faculty-list',
         component: FacultyList,
@@ -78,15 +76,34 @@ const routes = [
         component: ClassList,
         layout: true,
     },
-
     {
-        path: '/course/:id/info',
-        component: CourseInfo,
+        path: '/student-courses',
+        component: StudentCoursePage,
         layout: true,
     },
     {
-        path: '/course/:id/grade',
-        component: GradeInfo,
+        path: '/student-course/:id/info',
+        component: StudentCourseInfo,
+        layout: true,
+    },
+    {
+        path: '/student-course/:id/grade',
+        component: StudentGradeInfo,
+        layout: true,
+    },
+    {
+        path: '/lecturer-courses',
+        component: LecturerCoursePage,
+        layout: true,
+    },
+    {
+        path: '/lecturer-course/:id/info',
+        component: LecturerCourseInfo,
+        layout: true,
+    },
+    {
+        path: '/lecturer-course/:id/grade',
+        component: LecturerGradeInfo,
         layout: true,
     },
 ];

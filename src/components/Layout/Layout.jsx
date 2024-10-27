@@ -14,7 +14,7 @@ function Header() {
             items[0].classList.add('bg-primary');
         } else if (path.startsWith('/management')) {
             items[1].classList.add('bg-primary');
-        } else if (path.startsWith('/courses')) {
+        } else if (path.startsWith('/student-courses') || path.startsWith('/lecturer-courses')) {
             items[2].classList.add('bg-primary');
         } else if (path.startsWith('/hall-of-fame')) {
             items[2].classList.add('bg-primary');
@@ -36,7 +36,7 @@ function Header() {
                     Bảng điều khiển
                 </Link>
 
-                <Link to="/courses" className="rounded-lg px-4 py-2 text-white hover:bg-primary">
+                <Link to="/lecturer-courses" className="rounded-lg px-4 py-2 text-white hover:bg-primary">
                     Khóa học của tôi
                 </Link>
 
