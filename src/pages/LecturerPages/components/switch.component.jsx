@@ -5,14 +5,14 @@ function Switch({id, active }) {
     const navigate = useNavigate()
     return (
         <div className="ml-[100px]">
-            <ul className="flex w-[280px] rounded-[15px] border-[2px] border-primary bg-white">
+            <ul className="flex w-[280px] rounded-[10px] border-black bg-white">
                 <li className={active === 'info' ? isActive : isNotActive} 
-                    onClick={() => navigate(`/course/${id}/info`)}
+                    onClick={() => navigate(`/lecturer-course/${id}/info`)}
                 >
                      Thông tin
                 </li>
                 <li className={active === 'grade' ? isActive : isNotActive} 
-                  onClick={() => navigate(`/course/${id}/grade`)}
+                  onClick={() => navigate(`/lecturer-course/${id}/grade`)}
                 >
                      Điểm số
                 </li>
