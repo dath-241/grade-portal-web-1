@@ -5,7 +5,13 @@ import { clientID } from './config';
 import { jwtDecode } from 'jwt-decode'; //decode the Google response to get user email
 
 //navigate to
-let navigatePlace = '/home';
+
+const navigateOnRoles = (role) => {
+    if (role === 'teacher') return '/home';
+    else if (role === 'admin') return '/hall-of-fame';
+    return '/management';
+};
+
 //list accounts
 let teacherEmails = ['nguyendinhbang53@gmail.com', 'abc@gmail.com'];
 let adminEmails = ['nguyendinhbang53az@gmail.com', 'ghi@gmail.com'];
@@ -27,6 +33,7 @@ function LoginWithGoogle() {
     const navigate = useNavigate();
     const onSuccess = (response) => {
         let userEmail = getUserEmail(response);
+        const navigatePlace = navigateOnRoles(getRoles(userEmail));
         console.log('Login with Google success');
         console.log('email:', userEmail);
         console.log('role:', getRoles(userEmail));
