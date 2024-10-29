@@ -78,7 +78,7 @@ function CoursePage() {
             ) : (
                 courses.map((course, index) => {
                     return (
-                        <Link to={`/course/${course.id}/info`} key={index}>
+                        <Link to={`/lecturer-course/${course.id}/info`} key={index}>
                             <CourseItem
                                 img={course.img}
                                 courseName={course.name}
