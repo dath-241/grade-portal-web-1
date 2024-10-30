@@ -7,12 +7,12 @@ function Switch({id, active }) {
         <div className="ml-[100px]">
             <ul className="flex w-[280px] rounded-[10px] border-black bg-white">
                 <li className={active === 'info' ? isActive : isNotActive} 
-                    onClick={() => navigate(`/lecturer-course/${id}/info`)}
+                    onClick={() => navigate(`/lectuer-course/${id}/info`)}
                 >
                      Thông tin
                 </li>
                 <li className={active === 'grade' ? isActive : isNotActive} 
-                  onClick={() => navigate(`/lecturer-course/${id}/grade`)}
+                  onClick={() => navigate(`/lectuer-course/${id}/grade`)}
                 >
                      Điểm số
                 </li>

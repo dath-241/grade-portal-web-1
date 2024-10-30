@@ -15,9 +15,8 @@ function Switch({ id, active }) {
                 >
                     Thông tin
                 </li>
-                <li
-                    className={active === 'grade' ? isActive : isNotActive}
-                    onClick={() => navigate(`/student-course/${id}/grade`)}
+                <li className={active === 'grade' ? isActive : isNotActive} 
+                  onClick={() => navigate(`/student-course/${id}/grade`)}
                 >
                     Điểm số
                 </li>
