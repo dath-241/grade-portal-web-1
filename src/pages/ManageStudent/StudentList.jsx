@@ -67,7 +67,7 @@ function StudentList() {
                 <div className="flex gap-4">
                     <img src={StudentIcon} alt="" className="w-20" />
                     <div className="">
-                        <span>Bảng điều khiển / giảng viên</span>
+                        <span>Bảng điều khiển / Sinh viên</span>
                         <p className="text-2xl font-semibold">Sinh viên</p>
                     </div>
                 </div>

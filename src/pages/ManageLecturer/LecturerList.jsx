@@ -1,20 +1,20 @@
 import React, { useState } from 'react';
-import { Table } from 'antd';
+import { Breadcrumb, Table, TreeSelect } from 'antd';
 
 import LecturerIcon from '../../assets/img/teacher.png';
 import { Link } from 'react-router-dom';
 
 function LecturerList() {
     const [pageSize, setPageSize] = useState(10);
-    // const [dataSource, setDataSource] = useState([]);
-    // const [filteredData, setFilteredData] = useState(dataSource);
+    const [searchTerm, setSearchTerm] = useState('');
+    const [selectedFaculty, setSelectedFaculty] = useState('');
 
-    const data = Array.from({ length: 10 }, (_, index) => ({
+    const data = Array.from({ length: 50 }, (_, index) => ({
         studentId: `22100${index + 1}`,
         name: 'An',
         surName: 'Nguyen Van',
         email: 'abc@hcmut.edu.vn',
-        faculty: 'KH-KT máy tính',
+        faculty: index % 2 === 0 ? 'KH-KT Máy tính' : 'KT Hoá học',
     }));
 
     const handlePageSizeChange = (value) => {
@@ -27,6 +27,20 @@ function LecturerList() {
         pageSizeOptions: ['5', '10', '20'],
         onShowSizeChange: (current, size) => handlePageSizeChange(size),
     };
+
+    const handleSearch = (e) => {
+        setSearchTerm(e.target.value.toLowerCase());
+    };
+
+    const handleFacultyChange = (faculty) => {
+
+    };
+
+    const filteredData = data.filter((item) =>
+        Object.keys(item).some((key) =>
+            String(item[key]).toLowerCase().includes(searchTerm)
+        )    
+    );
 
     const columns = [
         {
@@ -48,17 +62,13 @@ function LecturerList() {
         {
             title: <span style={{ fontWeight: '600' }}>Khoa</span>,
             dataIndex: 'faculty',
+            filters: [
+                { text: 'KH-KT Máy tính', value: 'KH-KT Máy tính'},
+                { text: 'KT Hoá học', value: 'KT Hoá học'},
+            ],
+            onFilter: (value, record) => record.faculty.includes(value),
         },
     ];
-
-    // const handleSearch = (e) => {
-    //     const value = e.target.value.toLowerCase();
-
-    //     const filtered = dataSource.filter((item) =>
-    //         Object.keys(item).some((key) => String(item[key]).toLowerCase().includes(value)),
-    //     );
-    //     setFilteredData(filtered);
-    // };
 
     return (
         <div className="">
@@ -67,7 +77,7 @@ function LecturerList() {
                 <div className="flex gap-4">
                     <img src={LecturerIcon} alt="" className="w-20" />
                     <div className="">
-                        <span>Bảng điều khiển / giảng viên</span>
+                        <span>Bảng điều khiển / Giảng viên</span>
                         <p className="text-2xl font-semibold">Giảng viên</p>
                     </div>
                 </div>
@@ -81,14 +91,21 @@ function LecturerList() {
 
             {/* search */}
             <div className="my-6 flex justify-between">
-                <div className="">
-                    <input type="text" placeholder="Search" className="rounded-full px-4 py-2 shadow outline-none" />
+                <div className="relative mt-1 rounded-full bg-white px-4 py-2 shadow outline-none">
+                    <i class="fa-solid fa-magnifying-glass mr-2"></i>
+                    <input 
+                        type="text" 
+                        placeholder="Tìm kiếm" 
+                        className=""
+                        value={searchTerm}
+                        onChange={handleSearch}
+                    />
                 </div>
 
                 <div className="flex items-center rounded-full bg-white px-4 py-2 shadow">
                     <i className="fa-solid fa-filter"></i>
                     <div className="ml-4 flex items-center gap-2">
-                        <span>khoa</span>
+                        <span>Khoa</span>
                         <i className="fa-solid fa-angle-down mt-1"></i>
                     </div>
                 </div>
@@ -97,7 +114,7 @@ function LecturerList() {
             {/* table */}
             <Table
                 columns={columns}
-                dataSource={data}
+                dataSource={filteredData}
                 pagination={paginationOptions}
                 scroll={{
                     x: 900,
