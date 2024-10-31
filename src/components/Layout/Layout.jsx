@@ -1,8 +1,12 @@
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { useEffect } from 'react';
 import logo from '../../assets/img/logoBK.png';
+import backGround from '../../assets/img/BgHome.jpg';
 
 function Header() {
+    const location = useLocation();
+    const isHome = location.pathname === '/home';
+
     useEffect(() => {
         const items = document.querySelectorAll('.headerNav a');
         const resetClasses = () => items.forEach((item) => item.classList.remove('bg-primary'));
@@ -26,11 +30,11 @@ function Header() {
         }
     });
 
-    
-
     return (
-        <div className="header fixed left-0 right-0 top-0 z-50 mx-6  pt-4  bg-bgColor">
-            <div className="z-50 mx-6 flex h-[60px] items-center rounded-2xl bg-opacity-10 bg-gradient-to-r from-[#DBE2EF] to-[#64768C] px-6 py-4">
+        <div
+            className={`header fixed left-0 right-0 top-0 z-50 mx-6 rounded-b-2xl ${isHome ? 'bg-transparent' : 'bg-white'} pt-4`}
+        >
+            <div className="z-50 flex h-[60px] items-center rounded-2xl bg-opacity-10 bg-gradient-to-r from-[#DBE2EF] to-[#64768C] px-6 py-4 shadow">
                 <div className="mr-auto flex items-center">
                     <img src={logo} alt="Logo" className="size-[45px]" />
                     <p className="ml-4 text-xl font-semibold">BK Tra cứu</p>
@@ -73,11 +77,27 @@ function Footer() {
 }
 
 function Layout({ children }) {
+    const location = useLocation();
+    const isHome = location.pathname === '/home';
+
     return (
-        <div className="flex min-h-screen flex-col bg-bgColor pt-[5rem]">
-            <Header />
-            <main className="mx-6 flex-grow py-6">{children}</main>
-            <Footer />
+        <div className="relative flex min-h-screen flex-col pt-[5rem]">
+            {isHome && (
+                <div
+                    className="absolute inset-0 z-0 bg-black opacity-80"
+                    style={{
+                        backgroundImage: `url(${backGround})`,
+                        backgroundSize: 'cover',
+                        backgroundPosition: 'center',
+                        filter: 'blur(2px)'
+                    }}
+                />
+            )}
+            <div className="relative z-10 flex min-h-screen flex-col">
+                <Header />
+                <main className="mx-6 flex-grow py-6">{children}</main>
+                <Footer />
+            </div>
         </div>
     );
 }
