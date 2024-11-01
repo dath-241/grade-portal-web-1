@@ -78,11 +78,11 @@ function StudentList() {
                                 title: <a href="/management">Bảng điều khiển</a>,
                             },
                             {
-                                title: 'Giảng viên',
+                                title: 'Sinh viên',
                             },
                             ]}
                         />
-                        <p className="text-2xl font-semibold">Giảng viên</p>
+                        <p className="text-2xl font-semibold">Sinh viên</p>
                     </div>
                 </div>
                 <Link to="/add-student">

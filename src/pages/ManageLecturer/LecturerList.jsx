@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Breadcrumb, Table, TreeSelect } from 'antd';
+import { Breadcrumb, Table } from 'antd';
 
 import LecturerIcon from '../../assets/img/teacher.png';
 import { Link } from 'react-router-dom';
@@ -76,8 +76,17 @@ function LecturerList() {
             <div className="flex justify-between">
                 <div className="flex gap-4">
                     <img src={LecturerIcon} alt="" className="w-20" />
-                    <div className="">
-                        <span>Bảng điều khiển / Giảng viên</span>
+                    <div>
+                        <Breadcrumb
+                            items={[
+                            {
+                                title: <a href="/management">Bảng điều khiển</a>,
+                            },
+                            {
+                                title: 'Giảng viên',
+                            },
+                            ]}
+                        />
                         <p className="text-2xl font-semibold">Giảng viên</p>
                     </div>
                 </div>

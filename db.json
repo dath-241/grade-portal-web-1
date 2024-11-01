@@ -1,0 +1,39 @@
+{
+  "lecturers": [
+    {
+      "id": 2210012,
+      "name": "An",
+      "surName": "Nguyen Van",
+      "email": "abc@hcmut.edu.vn",
+      "faculty": "KH-KT máy tính"
+    },
+    {
+      "id": 2210013,
+      "name": "Anb",
+      "surName": "Nguyen Van",
+      "email": "abc@hcmut.edu.vn",
+      "faculty": "KH-KT máy tính"
+    },
+    {
+      "id": 2210014,
+      "name": "Anc",
+      "surName": "Nguyen Van",
+      "email": "abc@hcmut.edu.vn",
+      "faculty": "KH-KT máy tính"
+    },
+    {
+      "id": 2210015,
+      "name": "And",
+      "surName": "Nguyen Van",
+      "email": "abc@hcmut.edu.vn",
+      "faculty": "KH-KT máy tính"
+    },
+    {
+      "id": 2210017,
+      "name": "Ane",
+      "surName": "Nguyen Van",
+      "email": "abc@hcmut.edu.vn",
+      "faculty": "KH-KT máy tính"
+    }
+  ]
+}
