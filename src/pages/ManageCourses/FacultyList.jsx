@@ -11,24 +11,9 @@ function FacultyList() {
     return (
         <div>
             <div className="flex">
-                <div className="flex">
-                    <img src={CourseIcon} alt="course" className="ml-24 h-24 w-24 p-2" />
-                    <h1 className="text-3xl font-semibold">
-                        <nav className="mt-2">
-                            {' '}
-                            {/* Breadcums */}
-                            <ul className="flex items-center gap-6 p-2 text-xl text-[#2E4053]">
-                                <li className="font-roboto text-center text-sm font-semibold leading-5 text-gray-400">
-                                    Bảng điều khiển
-                                </li>
-                                <div className="font-roboto text-center text-sm font-semibold leading-5 text-gray-400">
-                                    /
-                                </div>
-                                <li className="font-roboto text-center text-sm leading-5 text-black">Khóa học</li>
-                            </ul>
-                        </nav>
-                        <div className="font-roboto ml-2 mt-1 text-3xl font-bold leading-none text-black">Khóa học</div>
-                    </h1>
+                <div className="flex items-center">
+                    <img src={CourseIcon} alt="course" className="h-24 w-24 p-2" />
+                    <h1 className="text-3xl font-semibold">Các khoa</h1>
                 </div>
                 <div className="ml-auto mr-8 mt-12">
                     <SearchBar onSearch={handleSearch} />

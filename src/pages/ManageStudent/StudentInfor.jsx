@@ -1,9 +1,10 @@
-import { Button, Col, Row, Table, Typography, Modal } from 'antd';
+import { Button, Table, Typography, Modal } from 'antd';
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import './StudentInfor.css';
+import StudentIcon from '../../assets/img/student.png';
 
-const { Title, Text } = Typography;
+const { Title } = Typography;
 
 const CourseTable = ({ data }) => {
     const handleCheckResult = (subject) => {
@@ -61,19 +62,21 @@ const CourseTable = ({ data }) => {
             title: 'Kết quả học tập',
             key: 'students',
             render: (_, record) => (
-                <Button className="button" type="primary" onClick={() => handleCheckResult(record.subject)}>
+                <Button
+                    className="button shadow-inner transition-transform hover:shadow-white"
+                    type="primary"
+                    onClick={() => handleCheckResult(record.subject)}
+                >
                     Kiểm tra
                 </Button>
             ),
         },
     ];
 
-    return (
-        <Table className="custom-table" columns={columns} dataSource={data} pagination={false} scroll={{ y: 200 }} />
-    );
+    return <Table className="custom-table" columns={columns} dataSource={data} pagination={false} />;
 };
 
-const Sinhvien2 = () => {
+const StudentInfor = () => {
     const navigate = useNavigate();
 
     const data = [
@@ -126,43 +129,70 @@ const Sinhvien2 = () => {
 
     return (
         <div className="student">
-            <Row className="control">
-                <Col className="breadcrumb">
-                    <Button type="link">Bảng điều khiển</Button>
-                    <Text>/</Text>
-                    <Button type="link">Giảng viên</Button>
-                    <Text>/</Text>
-                    <Button type="link">Thông tin SV</Button>
-                </Col>
-            </Row>
+            <div className="mb-4 flex">
+                <img src={StudentIcon} alt="course" className="w-20" />
+                <div className="ml-4 space-y-2">
+                    <ul className="mt-1 flex items-center gap-6 text-xl text-[#2E4053]">
+                        <Link
+                            to={'/management/student-list'}
+                            className="font-roboto text-center text-sm font-semibold leading-5 text-gray-400"
+                        >
+                            Danh sach sinh viên
+                        </Link>
+                        <div className="font-roboto text-center text-sm font-semibold leading-5 text-gray-400">/</div>
+                        <li className="font-roboto text-center text-sm font-semibold leading-5 text-gray-400">
+                            Thông tin sinh viên
+                        </li>
+                    </ul>
+                    <div className="font-roboto text-3xl font-semibold leading-none text-black">sinh viên</div>
+                </div>
+            </div>
             <div className="p">
                 <div className="profile">
                     <div className="profile-image">
                         <img src="https://cdn-icons-png.flaticon.com/512/1144/1144760.png" alt="Profile" />
                     </div>
                     <div className="profile-info">
-                        <div className="left">
-                            <h2>Thông tin sinh viên:</h2>
-                            <p>Họ và tên: Nguyễn Văn A</p>
-                            <p>MSSV: 2211111</p>
-                            <p>Email: example@hcmut.edu.vn</p>
-                            <p>Số điện thoại: 090123xxxx</p>
-                            <p>Khoa: Khoa học và Kỹ thuật máy tính</p>
+                        <div className="left space-y-2 font-semibold">
+                            <p>
+                                Họ và tên:
+                                <span className="ml-2 font-normal"> Nguyễn Văn A</span>
+                            </p>
+                            <p>
+                                Mã số: <span className="ml-2 font-normal"> 2217639</span>
+                            </p>
+                            <p>
+                                Email: <span className="ml-2 font-normal"> abc@hcmut.edu.vn</span>
+                            </p>
+                            <p>
+                                Số điện thoại: <span className="ml-2 font-normal"> 19006791</span>
+                            </p>
+                            <p>
+                                Khoa: <span className="ml-2 font-normal"> Khoa học và kĩ thuật máy tính</span>
+                            </p>
                         </div>
-                        <div className="right">
-                            <br></br>
-                            <br></br>
-                            <p>Số điện thoại: 090123xxxx</p>
-                            <p>Khoa: Khoa học và Kỹ thuật máy tính</p>
-                            <br></br>
-                            <br></br>
-                            <Button type="primary" danger onClick={showDeleteConfirm}>
-                                Xóa SV
-                            </Button>
+                        <div className="right left space-y-2 font-semibold">
+                            <p>
+                                Ngày tạo: <span className="ml-2 font-normal">16:04 32/02/2015</span>
+                            </p>
+                            <p>
+                                Người tạo: <span className="ml-2 font-normal"> Admin 007</span>
+                            </p>
                         </div>
+                        <Button
+                            style={{
+                                backgroundColor: '#dc3545',
+                                borderColor: 'transparent',
+                                color: '#fff',
+                            }}
+                            onClick={showDeleteConfirm}
+                            className="ml-auto mt-auto border-none bg-[#dc3545] font-medium shadow-inner transition-transform  hover:shadow-third"
+                        >
+                            Xóa SV
+                        </Button>
                     </div>
                 </div>
-                <div className="course">
+                <div className="course mt-4">
                     <Title level={3}>Báo cáo khóa học</Title>
                     <CourseTable data={data} />
                 </div>
@@ -171,4 +201,4 @@ const Sinhvien2 = () => {
     );
 };
 
-export default Sinhvien2;
+export default StudentInfor;

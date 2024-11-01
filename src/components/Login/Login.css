@@ -30,7 +30,7 @@
     background-size: cover;
     background-position: center;
     position: relative;
-    animation: fade 1s;
+    animation: fade 0.75s;
 }
 
 .overlay-a {
@@ -55,7 +55,7 @@
 
 .login-box-a {
     position: absolute;
-    bottom: 0;
+    bottom: 24px;
     right: 0;
     width: 400px;
     background-color: white;
@@ -63,9 +63,9 @@
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     text-align: center;
-    margin-right: 50px;
-    height: 70vh;
-    animation: loginBox 1s;
+    margin-right: 50px;    
+    min-height: 70vh;
+    animation: loginBox 0.75s;
 }
 
 .logo-a {

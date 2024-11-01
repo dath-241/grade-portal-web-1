@@ -1,21 +1,29 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import CourseItem from './components/course.component';
 import { Link } from 'react-router-dom';
-const courseList = [
-    {
-        id: 'CO2039',
-        img: 'https://via.assets.so/movie.png?id=1&q=95&w=190&h=120&fit=fill',
-        name: 'Page của giảng viên',
-        teacher: 'Lê Đình Thuận',
-        semester: 'HK221',
-        group: 'L08',
-        status: 'Đang diễn ra',
-    },
-];
+
+const courseList = Array.from({ length: 10 }, (_, index) => ({
+    id: `CO2039`,
+    name: 'Lập trình nâng cao',
+    teacher: 'Lê Đình Thuận',
+    semester: 'HK241',
+    group: 'L08',
+    status: 'Đang diễn ra',
+}));
 
 function CoursePage() {
     const [courses, setCourses] = useState(courseList);
     const semeters = ['Tất cả học kì', ...new Set(courseList.map((course) => course.semester))];
+    const [randomImages, setRandomImages] = useState([]);
+
+    // Hàm để xáo trộn mảng ảnh
+    const shuffleArray = (array) => {
+        for (let i = array.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [array[i], array[j]] = [array[j], array[i]];
+        }
+    };
+
     const changeHandler = (event) => {
         if (event.target.value === '') {
             setCourses(courseList);
@@ -38,27 +46,34 @@ function CoursePage() {
         document.querySelector('#course').value = '';
         setCourses(courseList);
     };
+
+    useEffect(() => {
+        const imageIndices = Array.from({ length: 12 }, (_, i) => i + 1);
+
+        shuffleArray(imageIndices);
+
+        setRandomImages(imageIndices.slice(0, courses.length));
+    }, [courses.length]);
+
     return (
-        <div className='mx-6 px-[200px]'>
-            <div className="ml-10 my-[10px]  text-[40px] font-semibold">Các khoá học của tôi</div>
-            <div className="flex justify-between ">
-                <div className='flex items-center'>
+        <div className="mx-auto max-w-[70%]">
+            <div className="my-6 text-3xl font-semibold">Các khoá học của tôi</div>
+            <div className="mb-6 flex justify-between">
+                <div className="flex items-center rounded-xl border-[1px] bg-white px-4">
                     <input
                         type="text"
                         id="course"
                         placeholder="Tìm kiếm khoá học"
-                        className="h-[50px] w-[450px] rounded-[10px] border-[1px] bg-white p-[10px] text-[25px]"
+                        className="text-lg outline-none"
                         onChange={changeHandler}
                     />
-                    <button className="h-[50px] w-[80px] rounded-[10px] bg-primary text-white" onClick={clickHandler}>
-                        X
-                    </button>
+                    <i className="fa-solid fa-magnifying-glass text-xl opacity-80"></i>
                 </div>
-                <div>
+                <div className="rounded-xl border-[1px] bg-white pr-4 text-lg">
                     <select
                         name="semester"
                         id=""
-                        className="h-[50px] w-[300px] rounded-[10px] border-[1px] bg-white p-[10px] text-[25px]"
+                        className="cursor-pointer rounded-xl px-4 py-2 outline-none"
                         onChange={changeSemesterHandler}
                     >
                         {semeters.map((semeter, index) => {
@@ -72,15 +87,19 @@ function CoursePage() {
                 </div>
             </div>
             {courses.length === 0 ? (
-                <div className="mt-[10px] flex h-screen items-center justify-center border-[1px] bg-white text-[35px] rounded-[20px]">
+                <div className="mt-[10px] flex h-screen items-center justify-center rounded-[20px] border-[1px] bg-white text-[35px]">
                     Không tìm thấy khoá học
                 </div>
             ) : (
                 courses.map((course, index) => {
+                    const imageIndex = randomImages[index];
+                    const imgSrc = imageIndex
+                        ? require(`../../assets/img/bgCourses/bgCourses${imageIndex}.jpg`)
+                        : require(`../../assets/img/bgCourses/bgCourses12.jpg`);
                     return (
-                        <Link to={`/lecturer-course/${course.id}/info`} key={index}>
+                        <Link to={`/student-course/${course.id}/info`} key={index}>
                             <CourseItem
-                                img={course.img}
+                                img={imgSrc}
                                 courseName={course.name}
                                 teacher={course.teacher}
                                 semester={course.semester}

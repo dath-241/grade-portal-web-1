@@ -63,12 +63,9 @@ function StudentList() {
         <div className="">
             {/* header */}
             <div className="flex justify-between">
-                <div className="flex gap-4">
+                <div className="flex items-center gap-4">
                     <img src={StudentIcon} alt="" className="w-20" />
-                    <div className="">
-                        <span>Bảng điều khiển / giảng viên</span>
-                        <p className="text-2xl font-semibold">Sinh viên</p>
-                    </div>
+                    <p className="text-2xl font-semibold">Sinh viên</p>
                 </div>
 
                 <div className="size-fit cursor-pointer rounded-lg bg-primary px-4 py-2 text-white shadow-inner hover:shadow-white">
@@ -78,8 +75,9 @@ function StudentList() {
 
             {/* search */}
             <div className="my-6 flex justify-between">
-                <div className="">
-                    <input type="text" placeholder="Search" className="rounded-full px-4 py-2 shadow outline-none" />
+                <div className="flex w-[300px] items-center rounded-full bg-white px-4 py-2 shadow outline-none">
+                    <i className="fa-solid fa-magnifying-glass"></i>
+                    <input type="text" placeholder="Search" className="ml-4 w-fit flex-grow outline-none" />
                 </div>
 
                 <div className="flex items-center rounded-full bg-white px-4 py-2 shadow">

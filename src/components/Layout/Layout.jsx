@@ -93,7 +93,7 @@ function Layout({ children }) {
                     }}
                 />
             )}
-            <div className="relative z-10 flex min-h-screen flex-col">
+            <div className={`relative z-10 flex min-h-screen flex-col ${isHome ? "" :"bg-bgColor"}`}>
                 <Header />
                 <main className="mx-6 flex-grow py-6">{children}</main>
                 <Footer />
