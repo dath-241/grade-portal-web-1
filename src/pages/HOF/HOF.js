@@ -1,13 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import './HOF.css';
-//sample data
-const { HCSDLdata, CNPMdata } = require('./HOFsampledata');
+
+const GPAapi = 'http://localhost:5200/data';
 
 const hallOfFameSize = 10;
 
 const HOF = () => {
     const [selectedCourse, setSelectedCourse] = useState('HCSDL');
     const [renderData, setRenderData] = useState([]);
+    const [GPAdata, setGPAdata] = useState({});
     const [data, setData] = useState(processData(renderData));
 
     const handleSelectedCourseChange = (e) => {
@@ -18,11 +19,24 @@ const HOF = () => {
         setData([...data].reverse());
     };
 
-    const getRenderList = (course) => {
-        if (course === 'HCSDL') return HCSDLdata;
-        else if (course === 'CNPM') return CNPMdata;
-        else return [];
-    };
+    useEffect(() => {
+        fetch(GPAapi)
+            .then((res) => res.json())
+            .then((data) => setGPAdata(data));
+    }, []);
+
+    useEffect(() => {
+        console.log(GPAdata);
+    }, [GPAdata]);
+
+    const getRenderList = useCallback(
+        (course) => {
+            if (course === 'HCSDL') return GPAdata.HCSDLdata || [];
+            else if (course === 'CNPM') return GPAdata.CNPMdata || [];
+            else return [];
+        },
+        [GPAdata],
+    );
 
     function processData(renderData) {
         let newData = renderData;
@@ -35,7 +49,7 @@ const HOF = () => {
         const newRenderData = getRenderList(selectedCourse);
         setRenderData(newRenderData);
         setData(processData(newRenderData));
-    }, [selectedCourse]);
+    }, [selectedCourse, GPAdata, getRenderList]);
 
     return (
         <div className="hof-container">
@@ -51,9 +65,9 @@ const HOF = () => {
                 <h1 className="title">Hall of Fame</h1>
             </div>
             <div className="list">
-                {data.map((x, index = 0) => {
+                {data.map((x, index) => {
                     return (
-                        <div className="list-item">
+                        <div className="list-item" key={index}>
                             <div className="rank">{index + 1}</div>
                             <div className="name">{x.name}</div>
                             <div className="GPA">{x.score}</div>
