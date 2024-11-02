@@ -32,7 +32,7 @@ function Header() {
 
     return (
         <div
-            className={`header fixed left-0 right-0 top-0 z-50 mx-6 rounded-b-2xl ${isHome ? 'bg-transparent' : 'bg-white'} pt-4`}
+            className={`header fixed left-0 right-0 top-0 z-50 mx-6 rounded-b-2xl ${isHome ? 'bg-transparent' : 'bg-bgColor'} pt-4`}
         >
             <div className="z-50 flex h-[60px] items-center rounded-2xl bg-opacity-10 bg-gradient-to-r from-[#DBE2EF] to-[#64768C] px-6 py-4 shadow">
                 <div className="mr-auto flex items-center">
@@ -81,7 +81,7 @@ function Layout({ children }) {
     const isHome = location.pathname === '/home';
 
     return (
-        <div className="relative flex min-h-screen flex-col pt-[5rem]">
+        <div className="relative flex min-h-screen bg-bgColor flex-col pt-[5rem]">
             {isHome && (
                 <div
                     className="absolute inset-0 z-0 bg-black opacity-80"
@@ -93,7 +93,7 @@ function Layout({ children }) {
                     }}
                 />
             )}
-            <div className={`relative z-10 flex min-h-screen flex-col ${isHome ? "" :"bg-bgColor"}`}>
+            <div className={`relative z-10 flex min-h-screen flex-col `}>
                 <Header />
                 <main className="mx-6 flex-grow py-6">{children}</main>
                 <Footer />

@@ -32,7 +32,7 @@ function FacultyList() {
                                     alt={`Item ${i + 1}`}
                                     className="h-full w-[160px] rounded-lg object-cover"
                                 />
-                                <div className="font-roboto ml-4 flex-shrink-0 text-[24px] font-semibold leading-[27px] text-[#2E2E2E]">
+                                <div className="font-roboto ml-12 flex-shrink-0 text-xl font-semibold leading-[27px] text-[#2E2E2E]">
                                     Khoa khoa học - Kỹ thuật máy tính
                                 </div>
                             </Link>
