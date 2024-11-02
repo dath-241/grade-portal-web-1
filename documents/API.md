@@ -1,5 +1,5 @@
 ## MOCKUP API FOR COURSE LIST OF STUDENT
-
+RUN JSON-SERVER : npm run db-run
 API: http://localhost:3000/course
 DATA: 
 [
