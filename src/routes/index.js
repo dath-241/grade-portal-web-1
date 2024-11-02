@@ -18,6 +18,7 @@ import LecturerGradeInfo from '../pages/LecturerPages/GradeInfo';
 import FacultyList from '../pages/ManageCourses/FacultyList';
 import SubjectList from '../pages/ManageCourses/SubjectList ';
 import ClassList from '../pages/ManageCourses/ClassList ';
+import AddCourse from '../pages/ManageCourses/AddCourse';
 
 const routes = [
     {
@@ -116,6 +117,11 @@ const routes = [
     {
         path: '/lecturer-course/:id/grade',
         component: LecturerGradeInfo,
+        layout: true,
+    },
+    {
+        path: '/managerment/add-course',
+        component: AddCourse,
         layout: true,
     },
 ];
