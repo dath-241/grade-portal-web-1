@@ -1,0 +1,116 @@
+{
+    "course": [
+        {
+            "id": "CO2013",
+            "class": "L01",
+            "teacher":"Lê Thị Bảo Thu",
+            "semester": "HK241",
+            "name": "Hệ cơ sở dữ liệu",
+            "credit": 4,
+            "status": "Đang diễn ra",
+            "score": {
+                "BT": null,
+                "TN": 9,
+                "BTL": 4,
+                "GK": 5,
+                "CK": 9.8
+            }
+        },
+        {
+            "id": "CO3001",
+            "class": "L02",
+            "teacher":"Trần Trương Tuấn Phát",
+            "semester": "HK231",
+            "name": "Công nghệ phần mềm",
+            "credit": 3,
+            "status": "Đang diễn ra",
+            "score": {
+                "BT": 5.8,
+                "TN": 6.3,
+                "BTL": 8,
+                "GK": 9,
+                "CK": 7
+            }
+        },
+        {
+            "id": "CO3005",
+            "class": "L03",
+            "teacher":"Nguyễn Ngọc Bảo Duy",
+            "semester": "HK232",
+            "name": "Nguyên lý ngôn ngữ lập trình",
+            "credit": 4,
+            "status": "Đã kết thúc",
+            "score": {
+                "BT": 6,
+                "TN": 7,
+                "BTL": 8,
+                "GK": 9,
+                "CK": 10
+            }
+        },
+        {
+            "id": "CO3061",
+            "class": "L04",
+            "teacher":"Vương Bá Thịnh",
+            "semester": "HK242",
+            "name": "Nhập môn trí tuệ nhân tạo",
+            "credit": 3,
+            "status": "Đang diễn ra",
+            "score": {
+                "BT": 8,
+                "TN": 9,
+                "BTL": null,
+                "GK": null,
+                "CK": null
+            }
+        },
+        {
+            "id": "CO3093",
+            "class": "L05",
+            "teacher":"Nguyễn Phương Duy",
+            "semester": "HK241",
+            "name": "Mạng máy tính",
+            "credit": 3,
+            "status": "Đang diễn ra",
+            "score": {
+                "BT": 5,
+                "TN": 4,
+                "BTL": 2,
+                "GK": null,
+                "CK": null
+            }
+        },
+        {
+            "id": "CO3013",
+            "class": "L04",
+            "teacher":"Lê Đình Thuận",
+            "semester": "HK251",
+            "name": "Đồ án tổng hợp - Hướng công nghệ phần mềm",
+            "credit": 1,
+            "status": "Đang diễn ra",
+            "score": {
+                "BT": null,
+                "TN": null,
+                "BTL": null,
+                "GK": 10,
+                "CK": 10
+            }
+        },
+        {
+            "id": "CO3115",
+            "class": "L01",
+            "teacher":"Nguyễn Thanh Tùng",
+            "semester": "HK252",
+            "name": "Phân tích và thiết kế hệ thống",
+            "credit": 3,
+            "status": "Đang diễn ra",
+            "score": {
+                "BT": 7,
+                "TN": 8,
+                "BTL": 9,
+                "GK": 10,
+                "CK": 7
+            }
+        }
+    ]
+}
