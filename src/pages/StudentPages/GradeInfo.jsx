@@ -1,6 +1,7 @@
 import { useParams } from 'react-router-dom';
 import Switch from './components/switch.component';
 import ContentBox from './components/content-box.component';
+
 import { useState ,useEffect } from 'react';
 function GradeInfo() {
     const { id } = useParams();
@@ -33,4 +34,5 @@ function GradeInfo() {
         </div>
     );
 }
+
 export default GradeInfo;

@@ -24,10 +24,12 @@ function CourseInfo() {
 
     return (
         <div className="mx-6 flex flex-col items-center">
+
             <div className="flex justify-center text-[40px] font-[600px] text-[#012193] my-[10px]">
                 {courseInfo.name}
             </div>
             <div className="w-[1100px]">
+
                 <Switch id={id} active="info" />
                 <ContentBox title="Thông tin chung" courseInfo={courseInfo} type="info" />
             </div>
