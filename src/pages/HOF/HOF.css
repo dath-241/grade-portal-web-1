@@ -63,10 +63,13 @@
     padding-left: 10px;
 }
 
-.score {
+.GPA {
+    display: flex;
+    justify-content: center;
     background-color: #facc15;
     padding: 10px;
     border-radius: 0 5px 5px 0;
     font-weight: bold;
     color: black;
+    min-width: 50px;
 }

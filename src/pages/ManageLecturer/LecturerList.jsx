@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Table } from 'antd';
 
 import LecturerIcon from '../../assets/img/teacher.png';
+import { Link } from 'react-router-dom';
 
 function LecturerList() {
     const [pageSize, setPageSize] = useState(10);
@@ -71,9 +72,11 @@ function LecturerList() {
                     </div>
                 </div>
 
-                <div className="size-fit cursor-pointer rounded-lg bg-primary px-4 py-2 text-white shadow-inner hover:shadow-white">
-                    thêm giảng viên
-                </div>
+                <Link to="/add-teacher">
+                    <div className="size-fit cursor-pointer rounded-lg bg-primary px-4 py-2 text-white shadow-inner hover:shadow-white">
+                        thêm giảng viên
+                    </div>
+                </Link>
             </div>
 
             {/* search */}
