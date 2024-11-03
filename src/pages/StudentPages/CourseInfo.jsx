@@ -1,31 +1,37 @@
 import { useParams } from 'react-router-dom';
 import Switch from './components/switch.component';
 import ContentBox from './components/content-box.component';
-const courseList = [
-    {
-        id: 'CO2039',
-        img: 'https://via.assets.so/movie.png?id=1&q=95&w=190&h=120&fit=fill',
-        name: 'Lập trình nâng cao',
-        teacher: 'Lê Đình Thuận',
-        semester: 'HK221',
-        group: 'L08',
-        status: 'Đang diễn ra',
-    },
-];
+
+import { useEffect, useState } from 'react';
+
 function CourseInfo() {
     const { id } = useParams();
-    const courseInfo = courseList.find((course) => course.id === id);
+    const api = 'http://localhost:3000/course';
+    const [courseInfo, setCourseInfo] = useState(null); // Initialize state to store course data
+
+    useEffect(() => {
+        fetch(api)
+            .then((response) => response.json())
+            .then((json) => {
+                const course = json.find((course) => course.id === id);
+                setCourseInfo(course); // Update state once data is fetched
+            })
+            .catch((error) => console.error("Error fetching data:", error));
+    }, [id, api]); 
+
     if (!courseInfo) {
-        return <div>Không tìm thấy khoá học</div>;
+        return <div></div>; 
     }
+
     return (
         <div className="mx-6 flex flex-col items-center">
             <div className="mb-4 flex justify-center text-3xl font-semibold text-[#012193]">{courseInfo.name}</div>
             <div className="w-[1100px]">
                 <Switch id={id} active="info" />
-                <ContentBox title="Thông tin chung" courseInfo={courseInfo} />
+                <ContentBox title="Thông tin chung" courseInfo={courseInfo} type="info" />
             </div>
         </div>
     );
 }
+
 export default CourseInfo;

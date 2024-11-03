@@ -1,34 +1,30 @@
-import { useState, useEffect } from 'react';
+import { useEffect, useRef ,useState } from 'react';
 import CourseItem from './components/course.component';
 import { Link } from 'react-router-dom';
 
-const courseList = Array.from({ length: 10 }, (_, index) => ({
-    id: `CO2039`,
-    name: 'Lập trình nâng cao',
-    teacher: 'Lê Đình Thuận',
-    semester: 'HK241',
-    group: 'L08',
-    status: 'Đang diễn ra',
-}));
+
 
 function CoursePage() {
-    const [courses, setCourses] = useState(courseList);
-    const semeters = ['Tất cả học kì', ...new Set(courseList.map((course) => course.semester))];
-    const [randomImages, setRandomImages] = useState([]);
-
-    // Hàm để xáo trộn mảng ảnh
-    const shuffleArray = (array) => {
-        for (let i = array.length - 1; i > 0; i--) {
-            const j = Math.floor(Math.random() * (i + 1));
-            [array[i], array[j]] = [array[j], array[i]];
-        }
-    };
-
+    const api = 'http://localhost:3000/course';
+    const [courses, setCourses] = useState([]);
+    const courseList = useRef([])
+    useEffect(() => {
+        fetch(api)
+            .then((response) => {
+                return response.json();
+            })
+            .then((json) => {
+                courseList.current = json
+                setCourses(json)
+            });
+    }, []);
+    const course_list = courseList.current
+    const semeters = ['Tất cả học kì', ...new Set(course_list.map((course) => course.semester))];
     const changeHandler = (event) => {
         if (event.target.value === '') {
-            setCourses(courseList);
+            setCourses(course_list);
         } else {
-            const courseFind = courseList.filter((course) =>
+            const courseFind = course_list.filter((course) =>
                 course.name.trim().toLowerCase().includes(event.target.value.trim().toLowerCase()),
             );
             setCourses(courseFind);
@@ -36,15 +32,15 @@ function CoursePage() {
     };
     const changeSemesterHandler = (event) => {
         if (event.target.value === '') {
-            setCourses(courseList);
+            setCourses(course_list);
         } else {
-            const courseFind = courseList.filter((course) => course.semester.trim() === event.target.value.trim());
+            const courseFind = course_list.filter((course) => course.semester.trim() === event.target.value.trim());
             setCourses(courseFind);
         }
     };
     const clickHandler = () => {
         document.querySelector('#course').value = '';
-        setCourses(courseList);
+        setCourses(course_list);
     };
 
     useEffect(() => {
@@ -97,15 +93,16 @@ function CoursePage() {
                         ? require(`../../assets/img/bgCourses/bgCourses${imageIndex}.jpg`)
                         : require(`../../assets/img/bgCourses/bgCourses12.jpg`);
                     return (
-                        <Link to={`/student-course/${course.id}/info`} key={index}>
-                            <CourseItem
-                                img={imgSrc}
-                                courseName={course.name}
-                                teacher={course.teacher}
-                                semester={course.semester}
-                                group={course.group}
-                            />
-                        </Link>
+
+                            <Link to={`/student-course/${course.id}/info`} key={index}>
+                                <CourseItem
+                                    id={index}
+                                    courseName={course.name}
+                                    teacher={course.teacher}
+                                    semester={course.semester}
+                                    group={course.group}
+                                />
+                            </Link>
                     );
                 })
             )}

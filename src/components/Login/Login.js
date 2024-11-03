@@ -7,7 +7,6 @@ import LoginWithGoogle from './LoginWithGoogle';
 
 function Login() {
     const [accountTypeVerified, setAccountTypeVerified] = useState(false);
-    // const navigate = useNavigate();
 
     const handleHCMUTAcccount = () => {
         setAccountTypeVerified(true);
@@ -15,14 +14,6 @@ function Login() {
     const handleAdminAccount = () => {
         setAccountTypeVerified(true);
     };
-
-    // const handleLogin = () => {
-    //     setAccountTypeVerified(false);
-    //     navigate('/hof');
-    // };
-    // const handleForgotPassword = () => {
-    //     //
-    // };
 
     return (
         <div className="login-container-a">

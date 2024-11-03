@@ -3,6 +3,7 @@ const isActive =
     'flex  items-center justify-center rounded-[10px] text-lg px-4 py-2  bg-primary text-white cursor-pointer';
 const isNotActive =
     'flex  items-center justify-center rounded-[10px] text-lg px-4 py-2  text-black hover:bg-primary hover:text-white cursor-pointer';
+
 function Switch({ id, active }) {
     const navigate = useNavigate();
     return (
