@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Breadcrumb, Table } from 'antd';
+import { fetchAllLecturerApi } from '../../apis/lecturers';
 
 import LecturerIcon from '../../assets/img/teacher.png';
 import { Link } from 'react-router-dom';
@@ -7,15 +8,17 @@ import { Link } from 'react-router-dom';
 function LecturerList() {
     const [pageSize, setPageSize] = useState(10);
     const [searchTerm, setSearchTerm] = useState('');
-    const [selectedFaculty, setSelectedFaculty] = useState('');
+    const [lecturers, setLecturers] = useState([]);
+    
+    const getLecturers = async () => {
+        const lecturerData =  await fetchAllLecturerApi();
+        setLecturers(lecturerData);
+    };
 
-    const data = Array.from({ length: 50 }, (_, index) => ({
-        studentId: `22100${index + 1}`,
-        name: 'An',
-        surName: 'Nguyen Van',
-        email: 'abc@hcmut.edu.vn',
-        faculty: index % 2 === 0 ? 'KH-KT Máy tính' : 'KT Hoá học',
-    }));
+    useEffect(() => {
+        getLecturers();
+    }, []);
+
 
     const handlePageSizeChange = (value) => {
         setPageSize(value);
@@ -32,20 +35,10 @@ function LecturerList() {
         setSearchTerm(e.target.value.toLowerCase());
     };
 
-    const handleFacultyChange = (faculty) => {
-
-    };
-
-    const filteredData = data.filter((item) =>
-        Object.keys(item).some((key) =>
-            String(item[key]).toLowerCase().includes(searchTerm)
-        )    
-    );
-
     const columns = [
         {
             title: <span style={{ fontWeight: '600' }}>MSSV</span>,
-            dataIndex: 'studentId',
+            dataIndex: 'id',
         },
         {
             title: <span style={{ fontWeight: '600' }}>Tên</span>,
@@ -62,11 +55,6 @@ function LecturerList() {
         {
             title: <span style={{ fontWeight: '600' }}>Khoa</span>,
             dataIndex: 'faculty',
-            filters: [
-                { text: 'KH-KT Máy tính', value: 'KH-KT Máy tính'},
-                { text: 'KT Hoá học', value: 'KT Hoá học'},
-            ],
-            onFilter: (value, record) => record.faculty.includes(value),
         },
     ];
 
@@ -123,7 +111,7 @@ function LecturerList() {
             {/* table */}
             <Table
                 columns={columns}
-                dataSource={filteredData}
+                dataSource={lecturers}
                 pagination={paginationOptions}
                 scroll={{
                     x: 900,

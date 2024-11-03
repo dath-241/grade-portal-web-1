@@ -32,7 +32,7 @@ function StudentList() {
         setSearchTerm(e.target.value.toLowerCase());
     };
 
-    const filteredData = data.filter(() => 
+    const filteredData = data.filter((item) => 
         Object.keys(item).some((key) =>
             String(item[key]).toLowerCase().includes(searchTerm)
         ) 
