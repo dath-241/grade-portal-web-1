@@ -5,7 +5,7 @@ function Switch({id, active }) {
     const navigate = useNavigate()
     return (
         <div className="ml-[100px]">
-            <ul className="flex w-[280px] rounded-[10px] border-black bg-white">
+            <ul className="flex w-[280px] rounded-[15px] border-primary bg-white">
                 <li className={active === 'info' ? isActive : isNotActive} 
                     onClick={() => navigate(`/lectuer-course/${id}/info`)}
                 >
