@@ -22,7 +22,8 @@ const HOF = () => {
     useEffect(() => {
         fetch(GPAapi)
             .then((res) => res.json())
-            .then((data) => setGPAdata(data));
+            .then((data) => setGPAdata(data))
+            .catch((err) => console.log('error while fetching GPA data: ', err));
     }, []);
 
     useEffect(() => {
