@@ -9,19 +9,44 @@ function LecturerList() {
     const [pageSize, setPageSize] = useState(10);
     const [searchTerm, setSearchTerm] = useState('');
     const [lecturers, setLecturers] = useState([]);
+    const [filteredLecturers, setFilteredLecturers] = useState([]);
     
-    const getLecturers = async () => {
+    const handleGetLecturers = async () => {
         const lecturerData =  await fetchAllLecturerApi();
         setLecturers(lecturerData);
     };
 
     useEffect(() => {
-        getLecturers();
+        handleGetLecturers();
     }, []);
 
+    const handleSearchLectures = (searchValue) => {
+        if (!searchValue){
+            return lecturers.slice(0, pageSize);
+        }
+
+        return lecturers.filter(lecturer =>
+            lecturer.id.toString().toLowerCase().includes(searchValue) ||
+            lecturer.name.toLowerCase().includes(searchValue) ||
+            lecturer.surName.toLowerCase().includes(searchValue) ||
+            lecturer.email.toLowerCase().includes(searchValue) ||
+            lecturer.faculty.toLowerCase().includes(searchValue)
+        ).slice(0, pageSize);
+    };
+
+    const handleSearch = (e) => {
+        const value = e.target?.value?.toLowerCase();
+        setSearchTerm(value);
+        if (!value) {
+            handleGetLecturers();
+        } else {
+            setFilteredLecturers(handleSearchLectures(value)); 
+        }
+    };
 
     const handlePageSizeChange = (value) => {
         setPageSize(value);
+        setLecturers(handleSearchLectures());
     };
 
     const paginationOptions = {
@@ -29,10 +54,6 @@ function LecturerList() {
         showSizeChanger: true,
         pageSizeOptions: ['5', '10', '20'],
         onShowSizeChange: (current, size) => handlePageSizeChange(size),
-    };
-
-    const handleSearch = (e) => {
-        setSearchTerm(e.target.value.toLowerCase());
     };
 
     const columns = [
@@ -111,7 +132,7 @@ function LecturerList() {
             {/* table */}
             <Table
                 columns={columns}
-                dataSource={lecturers}
+                dataSource={filteredLecturers}
                 pagination={paginationOptions}
                 scroll={{
                     x: 900,
