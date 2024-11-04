@@ -14,6 +14,7 @@ function LecturerList() {
     const handleGetLecturers = async () => {
         const lecturerData =  await fetchAllLecturerApi();
         setLecturers(lecturerData);
+        setFilteredLecturers(lecturerData);
     };
 
     useEffect(() => {
@@ -102,7 +103,7 @@ function LecturerList() {
 
                 <Link to="/add-teacher">
                     <div className="size-fit cursor-pointer rounded-lg bg-primary px-4 py-2 text-white shadow-inner hover:shadow-white">
-                        thêm giảng viên
+                        Thêm giảng viên
                     </div>
                 </Link>
             </div>
@@ -138,6 +139,7 @@ function LecturerList() {
                     x: 900,
                 }}
                 className="rounded-lg border-[1px] border-[#EFF1F3] shadow"
+                rowClassName="cursor-pointer"
             />
         </div>
     );
