@@ -1,24 +1,55 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Breadcrumb, Table } from 'antd';
-
+import axios from 'axios';
 import StudentIcon from '../../assets/img/student.png';
 import { Link } from 'react-router-dom';
-
 function StudentList() {
     const [pageSize, setPageSize] = useState(10);
+    const [data, setData] = useState([]);
+    const [filteredStudents, setFilteredStudents] = useState([]);
     const [searchTerm, setSearchTerm] = useState('');
-    // const [filteredData, setFilteredData] = useState(dataSource);
 
-    const data = Array.from({ length: 10 }, (_, index) => ({
-        studentId: `22100${index + 1}`,
-        name: 'An',
-        surName: 'Nguyen Van',
-        email: 'abc@hcmut.edu.vn',
-        faculty: 'KH-KT máy tính',
-    }));
+    const fetchStudents = async () => {
+        try {
+            const response = await axios.get('http://localhost:4000/students');
+            setData(response.data);
+            setFilteredStudents(response.data);
+        } catch (error) {
+            console.error('Error fetching data:', error);
+        }
+    };
+    useEffect(() => {
+        fetchStudents();
+    }, []);
+    const handleSearchStudents = (searchValue) => {
+        if (!searchValue) {
+            return data.slice(0, pageSize);
+        }
 
+        return data
+            .filter(
+                (data) =>
+                    data.studentId.toString().includes(searchValue) ||
+                    data.name.includes(searchValue) ||
+                    data.surName.includes(searchValue) ||
+                    data.email.includes(searchValue) ||
+                    data.faculty.includes(searchValue),
+            )
+            .slice(0, pageSize);
+    };
+
+    const handleSearch = (e) => {
+        const value = e.target?.value;
+        setSearchTerm(value);
+        if (!value) {
+            setFilteredStudents(data);
+        } else {
+            setFilteredStudents(handleSearchStudents(value));
+        }
+    };
     const handlePageSizeChange = (value) => {
         setPageSize(value);
+        setData(handleSearchStudents());
     };
 
     const paginationOptions = {
@@ -28,36 +59,31 @@ function StudentList() {
         onShowSizeChange: (current, size) => handlePageSizeChange(size),
     };
 
-    const handleSearch = (e) => {
-        setSearchTerm(e.target.value.toLowerCase());
-    };
-
-    const filteredData = data.filter((item) => 
-        Object.keys(item).some((key) =>
-            String(item[key]).toLowerCase().includes(searchTerm)
-        ) 
-    );
-
     const columns = [
         {
             title: <span style={{ fontWeight: '600' }}>MSSV</span>,
             dataIndex: 'studentId',
+            render: (text, record) => <Link to={`/management/student-infor/${record.studentId}`}>{text}</Link>,
         },
         {
             title: <span style={{ fontWeight: '600' }}>Tên</span>,
             dataIndex: 'name',
+            render: (text, record) => <Link to={`/management/student-infor/${record.studentId}`}>{text}</Link>,
         },
         {
             title: <span style={{ fontWeight: '600' }}>Họ tên đệm</span>,
             dataIndex: 'surName',
+            render: (text, record) => <Link to={`/management/student-infor/${record.studentId}`}>{text}</Link>,
         },
         {
             title: <span style={{ fontWeight: '600' }}>Email</span>,
             dataIndex: 'email',
+            render: (text, record) => <Link to={`/management/student-infor/${record.studentId}`}>{text}</Link>,
         },
         {
             title: <span style={{ fontWeight: '600' }}>Khoa</span>,
             dataIndex: 'faculty',
+            render: (text, record) => <Link to={`/management/student-infor/${record.studentId}`}>{text}</Link>,
         },
     ];
 
@@ -117,7 +143,7 @@ function StudentList() {
             {/* table */}
             <Table
                 columns={columns}
-                dataSource={filteredData}
+                dataSource={filteredStudents}
                 pagination={paginationOptions}
                 scroll={{
                     x: 900,
