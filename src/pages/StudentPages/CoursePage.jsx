@@ -73,7 +73,8 @@ function CoursePage() {
             </div>
             {courses.length === 0 ? (
                 <div className="mt-[10px] flex h-screen items-center justify-center rounded-[20px] border-[1px] bg-white text-[35px]">
-                    Không tìm thấy khoá học
+                    <img src="https://lms.hcmut.edu.vn/theme/image.php/academi/block_myoverview/1725955904/courses" alt="" />
+                    <p>Không tìm thấy khoá học</p>
                 </div>
             ) : (
                 courses.map((course, index) => {
