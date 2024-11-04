@@ -18,6 +18,7 @@ function CoursePage() {
                 setCourses(json);
             })
             .catch( () =>{
+                setLoading(false)
                 setCourses([])
             })
     }, []);
