@@ -40,7 +40,7 @@ function Login() {
                             Tài khoản HCMUT ( HCMUT account)
                         </button>
                         <button className="login-button-a" onClick={handleAdminAccount}>
-                            Admin
+                            Quan trị viên 
                         </button>
                     </div>
                 ) : (
