@@ -14,7 +14,10 @@ function CoursePage() {
             .then((json) => {
                 courseList.current = json;
                 setCourses(json);
-            });
+            })
+            .catch( () =>{
+                setCourses([])
+            })
     }, []);
     const course_list = courseList.current;
     const semeters = ['Tất cả học kì', ...new Set(course_list.map((course) => course.semester))];
@@ -54,7 +57,7 @@ function CoursePage() {
                     />
                     <i className="fa-solid fa-magnifying-glass text-xl opacity-80"></i>
                 </div>
-                <div className="rounded-xl border-[1px] bg-white pr-4 text-lg">
+                <div className="rounded-xl bg-bgColor text-lg">
                     <select
                         name="semester"
                         id=""

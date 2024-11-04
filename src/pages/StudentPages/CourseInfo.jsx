@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react';
 
 function CourseInfo() {
     const { id } = useParams();
-    const api = 'http://localhost:3000/course';
+    const api = `http://localhost:3000/course?id=${id}`;
     const [courseInfo, setCourseInfo] = useState(null); // Initialize state to store course data
 
     useEffect(() => {

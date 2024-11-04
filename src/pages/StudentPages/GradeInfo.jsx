@@ -5,15 +5,15 @@ import ContentBox from './components/content-box.component';
 import { useState ,useEffect } from 'react';
 function GradeInfo() {
     const { id } = useParams();
-    const api = 'http://localhost:3000/course';
-    const [gradeInfo, setGradeInfo] = useState(null); // Initialize state to store course data
+    const api = `http://localhost:3000/course?id=${id}`;
+    const [gradeInfo, setGradeInfo] = useState(null); 
 
     useEffect(() => {
         fetch(api)
             .then((response) => response.json())
             .then((json) => {
                 const course = json.find((course) => course.id === id);
-                setGradeInfo(course); // Update state once data is fetched
+                setGradeInfo(course); 
             })
             .catch((error) => console.error("Error fetching data:", error));
     }, [id, api]); 
