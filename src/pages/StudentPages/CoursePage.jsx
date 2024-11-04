@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 function CoursePage() {
     const api = 'http://localhost:3000/course';
     const [courses, setCourses] = useState([]);
+    const [loading,setLoading] = useState(true)
     const courseList = useRef([]);
     useEffect(() => {
         fetch(api)
@@ -13,6 +14,7 @@ function CoursePage() {
             })
             .then((json) => {
                 courseList.current = json;
+                setLoading(false)
                 setCourses(json);
             })
             .catch( () =>{
@@ -43,6 +45,13 @@ function CoursePage() {
     //     document.querySelector('#course').value = '';
     //     setCourses(course_list);
     // };
+    if(loading){
+        return(
+            <div className="flex justify-center items-center min-h-screen text-lg font-semibold">
+                Đang tải dữ liệu ...
+            </div>
+        )
+    }
     return (
         <div className="mx-auto max-w-[70%]">
             <div className="my-6 text-3xl font-semibold">Các khoá học của tôi</div>
