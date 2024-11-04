@@ -70,7 +70,7 @@ const routes = [
         layout: true,
     },
     {
-        path: '/management/student-infor',
+        path: '/management/student-infor/:id',
         component: StudentInfor,
         layout: true,
     },      
