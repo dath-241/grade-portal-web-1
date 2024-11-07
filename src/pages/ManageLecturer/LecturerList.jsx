@@ -10,9 +10,9 @@ function LecturerList() {
     const [searchTerm, setSearchTerm] = useState('');
     const [lecturers, setLecturers] = useState([]);
     const [filteredLecturers, setFilteredLecturers] = useState([]);
-    
+
     const handleGetLecturers = async () => {
-        const lecturerData =  await fetchAllLecturerApi();
+        const lecturerData = await fetchAllLecturerApi();
         setLecturers(lecturerData);
         setFilteredLecturers(lecturerData);
     };
@@ -22,17 +22,20 @@ function LecturerList() {
     }, []);
 
     const handleSearchLectures = (searchValue) => {
-        if (!searchValue){
+        if (!searchValue) {
             return lecturers.slice(0, pageSize);
         }
 
-        return lecturers.filter(lecturer =>
-            lecturer.id.toString().toLowerCase().includes(searchValue) ||
-            lecturer.name.toLowerCase().includes(searchValue) ||
-            lecturer.surName.toLowerCase().includes(searchValue) ||
-            lecturer.email.toLowerCase().includes(searchValue) ||
-            lecturer.faculty.toLowerCase().includes(searchValue)
-        ).slice(0, pageSize);
+        return lecturers
+            .filter(
+                (lecturer) =>
+                    lecturer.id.toString().toLowerCase().includes(searchValue) ||
+                    lecturer.name.toLowerCase().includes(searchValue) ||
+                    lecturer.surName.toLowerCase().includes(searchValue) ||
+                    lecturer.email.toLowerCase().includes(searchValue) ||
+                    lecturer.faculty.toLowerCase().includes(searchValue),
+            )
+            .slice(0, pageSize);
     };
 
     const handleSearch = (e) => {
@@ -41,7 +44,7 @@ function LecturerList() {
         if (!value) {
             handleGetLecturers();
         } else {
-            setFilteredLecturers(handleSearchLectures(value)); 
+            setFilteredLecturers(handleSearchLectures(value));
         }
     };
 
@@ -84,26 +87,16 @@ function LecturerList() {
         <div className="">
             {/* header */}
             <div className="flex justify-between">
-                <div className="flex gap-4">
-                    <img src={LecturerIcon} alt="" className="w-20" />
-                    <div>
-                        <Breadcrumb
-                            items={[
-                            {
-                                title: <a href="/management">Bảng điều khiển</a>,
-                            },
-                            {
-                                title: 'Giảng viên',
-                            },
-                            ]}
-                        />
-                        <p className="text-2xl font-semibold">Giảng viên</p>
+                <div className="flex">
+                    <div className="flex items-center">
+                        <img src={LecturerIcon} alt="course" className="mt-2 h-24 w-24 p-2" />
+                        <h1 className="text-3xl font-semibold">Giảng viên</h1>
                     </div>
                 </div>
 
                 <Link to="/add-teacher">
                     <div className="size-fit cursor-pointer rounded-lg bg-primary px-4 py-2 text-white shadow-inner hover:shadow-white">
-                        Thêm giảng viên
+                        thêm giảng viên
                     </div>
                 </Link>
             </div>
@@ -112,10 +105,10 @@ function LecturerList() {
             <div className="my-6 flex justify-between">
                 <div className="relative mt-1 rounded-full bg-white px-4 py-2 shadow outline-none">
                     <i class="fa-solid fa-magnifying-glass mr-2"></i>
-                    <input 
-                        type="text" 
-                        placeholder="Tìm kiếm" 
-                        className=""
+                    <input
+                        type="text"
+                        placeholder="Tìm kiếm"
+                        className="outline-none"
                         value={searchTerm}
                         onChange={handleSearch}
                     />

@@ -29,7 +29,7 @@ function Header() {
     
 
     return (
-        <div className="header fixed left-0 right-0 top-0 z-50 mx-6  pt-4  bg-bgColor">
+        <div className="header fixed left-0 right-0 top-0 z-50   pt-4  bg-bgColor">
             <div className="z-50 mx-6 flex h-[60px] items-center rounded-2xl bg-opacity-10 bg-gradient-to-r from-[#DBE2EF] to-[#64768C] px-6 py-4">
                 <div className="mr-auto flex items-center">
                     <img src={logo} alt="Logo" className="size-[45px]" />
