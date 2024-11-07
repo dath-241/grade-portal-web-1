@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Breadcrumb, Table } from 'antd';
+import { Table } from 'antd';
 import axios from 'axios';
 import StudentIcon from '../../assets/img/student.png';
 import { Link } from 'react-router-dom';
@@ -91,26 +91,13 @@ function StudentList() {
         <div className="">
             {/* header */}
             <div className="flex justify-between">
-                <div className="flex gap-4">
-                    <img src={StudentIcon} alt="" className="w-20" />
-                    {/* <div className="">
-                        <span>Bảng điều khiển / Sinh viên</span>
-                        <p className="text-2xl font-semibold">Sinh viên</p>
-                    </div> */}
-                    <div>
-                        <Breadcrumb
-                            items={[
-                            {
-                                title: <a href="/management">Bảng điều khiển</a>,
-                            },
-                            {
-                                title: 'Sinh viên',
-                            },
-                            ]}
-                        />
-                        <p className="text-2xl font-semibold">Sinh viên</p>
+            <div className="flex">
+                    <div className="flex items-center">
+                        <img src={StudentIcon} alt="course" className="h-24 w-24 p-2 mt-2" />
+                        <h1 className="text-3xl font-semibold">Sinh viên</h1>
                     </div>
                 </div>
+
                 <Link to="/add-student">
                     <div className="size-fit cursor-pointer rounded-lg bg-primary px-4 py-2 text-white shadow-inner hover:shadow-white">
                         thêm sinh viên
@@ -125,7 +112,7 @@ function StudentList() {
                     <input 
                         type="text" 
                         placeholder="Tìm kiếm" 
-                        className=""
+                        className="outline-none"
                         value={searchTerm}
                         onChange={handleSearch}
                     />

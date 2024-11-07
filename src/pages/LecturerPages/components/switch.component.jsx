@@ -1,23 +1,29 @@
-import { useNavigate } from "react-router-dom";
-const isActive = 'flex h-[50px] w-[150px] items-center justify-center rounded-[10px] text-[30px] font-light bg-primary text-white cursor-pointer'
-const isNotActive = 'flex h-[50px] w-[150px] items-center justify-center rounded-[10px] text-[30px] font-light text-black hover:bg-primary hover:text-white cursor-pointer'
-function Switch({id, active }) {
-    const navigate = useNavigate()
+import { useNavigate } from 'react-router-dom';
+
+const isActive =
+    'flex py-2 w-[150px] items-center justify-center rounded-[10px] text-xl  bg-primary text-white cursor-pointer';
+const isNotActive =
+    'flex py-2 w-[150px] items-center justify-center rounded-[10px] text-xl  text-black hover:bg-primary hover:text-white cursor-pointer';
+
+function Switch({ id, active }) {
+    const navigate = useNavigate();
     return (
         <div className="ml-[100px]">
-            <ul className="flex w-[280px] rounded-[15px] border-[2px] border-primary bg-white">
-                <li className={active === 'info' ? isActive : isNotActive} 
-                    onClick={() => navigate(`/lectuer-course/${id}/info`)}
+            <ul className="flex w-[280px] overflow-hidden rounded-[10px] border border-gray-500 bg-white">
+                <li
+                    className={active === 'info' ? isActive : isNotActive}
+                    onClick={() => navigate(`/student-course/${id}/info`)}
                 >
-                     Thông tin
+                    Thông tin
                 </li>
-                <li className={active === 'grade' ? isActive : isNotActive} 
-                  onClick={() => navigate(`/lectuer-course/${id}/grade`)}
+                <li
+                    className={active === 'grade' ? isActive : isNotActive}
+                    onClick={() => navigate(`/student-course/${id}/grade`)}
                 >
-                     Điểm số
+                    Điểm số
                 </li>
             </ul>
         </div>
     );
 }
-export default Switch
+export default Switch;
