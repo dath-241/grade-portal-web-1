@@ -1,11 +1,11 @@
-import { Button, Col, Row, Table, Typography, Modal } from 'antd';
+import { Button, Table, Typography, Modal } from 'antd';
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams, Link } from 'react-router-dom';
 import './StudentInfor.css';
 import axios from 'axios';
 import StudentIcon from '../../assets/img/student.png';
 
-const { Title, Text } = Typography;
+const { Title } = Typography;
 
 
 const CourseTable = ({ data }) => {

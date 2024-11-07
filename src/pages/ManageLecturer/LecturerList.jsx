@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Breadcrumb, Table } from 'antd';
+import { Table } from 'antd';
 import { fetchAllLecturerApi } from '../../apis/lecturers';
 
 import LecturerIcon from '../../assets/img/teacher.png';

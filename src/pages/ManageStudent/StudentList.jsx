@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Breadcrumb, Table } from 'antd';
+import { Table } from 'antd';
 import axios from 'axios';
 import StudentIcon from '../../assets/img/student.png';
 import { Link } from 'react-router-dom';
