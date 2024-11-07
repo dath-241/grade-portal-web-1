@@ -4,7 +4,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import './LecturerInfor.css';
 import LecturerIcon from '../../assets/img/teacher.png';
 
-const { Title, Text } = Typography;
+const { Title } = Typography;
 
 const CourseTable = ({ data }) => {
     const columns = [
