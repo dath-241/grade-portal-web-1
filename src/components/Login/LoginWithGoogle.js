@@ -4,9 +4,9 @@ import { useNavigate } from 'react-router-dom';
 import { clientID } from './config';
 import { bypassLogin } from './config';
 
-// const loginAPI = 'https://canxphung.id.vn/admin/api/login'; //server của BE
+const loginAPI = 'https://canxphung.id.vn/admin/api/login'; //server của BE
 
-const loginAPI = 'http://localhost:10000/admin/api/login'; //server trên local
+// const loginAPI = 'https://canxphung.id.vn/admin/api/login'; //server trên local
 
 const navigatePlace = '/home'; //route navigate tới khi đã login thành công
 
