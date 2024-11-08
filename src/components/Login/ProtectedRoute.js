@@ -10,7 +10,6 @@ const ProtectedRoute = ({ children, allowedRoles }) => {
     if (bypassLogin || (isLoggedIn && allowedRoles.includes(userRole))) {
         return children;
     } else if (isLoggedIn) {
-        //
         return <Navigate to="/unauthorized" />;
     } else {
         return <Navigate to="/login" />;

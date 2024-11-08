@@ -9,17 +9,19 @@ import { UserContext } from './UserContext';
 // const loginAdminAPI = 'https://canxphung.id.vn/admin/api/login';
 // const loginUserAPI = 'https://canxphung.id.vn/api/login';
 
-const loginAPI = 'http://localhost:10000/admin/api/login'; //server trên local
-
+const loginAdminAPI = 'http://localhost:10000/admin/api/login';
+const loginUserAPI = 'http://localhost:10000/api/login';
 const navigatePlace = '/home'; //route navigate tới khi đã login thành công
 
-function LoginWithGoogle() {
+function LoginWithGoogle({ accountType }) {
     const navigate = useNavigate();
     const { setUserRole } = useContext(UserContext);
 
     async function sendIdTokenToServer(idToken) {
+        //gửi token về api tương ứng
+        const apiURL = accountType === 'admin' ? loginAdminAPI : loginUserAPI;
         try {
-            const response = await fetch(loginAPI, {
+            const response = await fetch(apiURL, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -76,7 +78,6 @@ function LoginWithGoogle() {
             return;
             //nếu không, gửi idToken về server
         } else {
-            //sendIdTokenToBackend(response.credential); //gửi idToken về server
             const serverResponse = await sendIdTokenToServer(response.credential); //gửi idToken về server
             if (serverResponse && serverResponse.code === 'Success') {
                 //nhận response từ server
@@ -87,7 +88,7 @@ function LoginWithGoogle() {
                 console.log('Login with Google success');
                 console.log('Gooogle response:', response);
             } else {
-                console.log('Error while login:', serverResponse);
+                console.log('Error while login or server is down:', serverResponse);
             }
         }
     };

@@ -125,7 +125,7 @@ const routes = [
         path: '/student-courses',
         component: StudentCoursePage,
         layout: true,
-        allowedRoles: ['student', 'admin'],
+        allowedRoles: ['student'],
         protected: true,
     },
     {
