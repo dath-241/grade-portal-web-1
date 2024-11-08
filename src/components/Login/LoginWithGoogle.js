@@ -3,8 +3,11 @@ import { GoogleLogin, GoogleOAuthProvider } from '@react-oauth/google';
 import { useNavigate } from 'react-router-dom';
 import { clientID } from './config';
 import { bypassLogin } from './config';
+import { useContext } from 'react';
+import { UserContext } from './UserContext';
 
-// const loginAPI = 'https://canxphung.id.vn/admin/api/login'; //server của BE
+// const loginAdminAPI = 'https://canxphung.id.vn/admin/api/login';
+// const loginUserAPI = 'https://canxphung.id.vn/api/login';
 
 const loginAPI = 'http://localhost:10000/admin/api/login'; //server trên local
 
@@ -12,44 +15,7 @@ const navigatePlace = '/home'; //route navigate tới khi đã login thành côn
 
 function LoginWithGoogle() {
     const navigate = useNavigate();
-    //list accounts
-    // let teacherEmails = ['nguyendinhbang53@gmail.com', 'abc@gmail.com'];
-    // let adminEmails = ['nguyendinhbang53az@gmail.com', 'ghi@gmail.com'];
-
-    // let getRoles = (email) => {
-    //     if (teacherEmails.includes(email)) return 'teacher';
-    //     else if (adminEmails.includes(email)) return 'admin';
-    //     return 'student';
-    // };
-
-    // function getUserEmail(res) {
-    //     let result = jwtDecode(res.credential);
-    //     if (result) return result.email;
-    //     return '';
-    // }
-
-    //gửi idToken về server
-    // function sendIdTokenToBackend(idToken) {
-    //     var xhr = new XMLHttpRequest();
-    //     xhr.open('POST', loginAPI);
-    //     xhr.setRequestHeader('Content-Type', 'application/json');
-    //     xhr.onreadystatechange = function () {
-    //         if (xhr.readyState === 4) {
-    //             if (xhr.status === 200) {
-    //                 const response = JSON.parse(xhr.responseText);
-    //                 console.log('ID Token đã được gửi thành công.');
-    //                 console.log('⭕ Server response:', response);
-    //                 if (response.code) {
-    //                     console.log('⭕ Code from server:', response.code);
-    //                     // setServerResponse(response.code);
-    //                 }
-    //             } else {
-    //                 console.error('Lỗi khi gửi ID Token:', xhr.responseText);
-    //             }
-    //         }
-    //     };
-    //     xhr.send(JSON.stringify({ idToken: idToken }));
-    // }
+    const { setUserRole } = useContext(UserContext);
 
     async function sendIdTokenToServer(idToken) {
         try {
@@ -62,12 +28,11 @@ function LoginWithGoogle() {
             });
             const data = await response.json();
             console.log('Server response:', data);
-            return data.code;
+            return data; // Return the entire data object
         } catch (error) {
             console.error('Error while sending idToken to server:', error);
         }
     }
-
     function saveLoginState(idToken) {
         const now = new Date();
         const expirationTime = now.getTime() + 3600 * 1000 * 24; //24h
@@ -96,6 +61,8 @@ function LoginWithGoogle() {
         //lấy idToken từ storage
         if (bypassLogin) {
             console.log('Bypass login');
+            setUserRole('admin');
+            localStorage.setItem('userRole', 'admin');
             navigate(navigatePlace);
             return;
         }
@@ -111,20 +78,15 @@ function LoginWithGoogle() {
         } else {
             //sendIdTokenToBackend(response.credential); //gửi idToken về server
             const serverResponse = await sendIdTokenToServer(response.credential); //gửi idToken về server
-            if (serverResponse && serverResponse === 'Success') {
+            if (serverResponse && serverResponse.code === 'Success') {
                 //nhận response từ server
-                // let userEmail = getUserEmail(response);
-                // const role = getRoles(userEmail);
-                // setUserRole(role);
+                setUserRole(serverResponse.role);
+                localStorage.setItem('userRole', serverResponse.role);
                 navigate(navigatePlace);
                 saveLoginState(response.credential);
-
                 console.log('Login with Google success');
-                // console.log('email:', userEmail);
-                // console.log('role:', getRoles(userEmail));
                 console.log('Gooogle response:', response);
             } else {
-                //khi server trả về lỗi
                 console.log('Error while login:', serverResponse);
             }
         }
