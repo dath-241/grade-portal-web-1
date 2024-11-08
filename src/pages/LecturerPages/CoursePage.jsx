@@ -1,26 +1,28 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import CourseItem from './components/course.component';
 import { Link } from 'react-router-dom';
-const courseList = [
-    {
-        id: 'CO2039',
-        img: 'https://via.assets.so/movie.png?id=1&q=95&w=190&h=120&fit=fill',
-        name: 'Page của giảng viên',
-        teacher: 'Lê Đình Thuận',
-        semester: 'HK221',
-        group: 'L08',
-        status: 'Đang diễn ra',
-    },
-];
 
 function CoursePage() {
-    const [courses, setCourses] = useState(courseList);
-    const semeters = ['Tất cả học kì', ...new Set(courseList.map((course) => course.semester))];
+    const api = 'http://localhost:3000/course';
+    const [courses, setCourses] = useState([]);
+    const courseList = useRef([]);
+    useEffect(() => {
+        fetch(api)
+            .then((response) => {
+                return response.json();
+            })
+            .then((json) => {
+                courseList.current = json;
+                setCourses(json);
+            });
+    }, []);
+    const course_list = courseList.current;
+    const semeters = ['Tất cả học kì', ...new Set(course_list.map((course) => course.semester))];
     const changeHandler = (event) => {
         if (event.target.value === '') {
-            setCourses(courseList);
+            setCourses(course_list);
         } else {
-            const courseFind = courseList.filter((course) =>
+            const courseFind = course_list.filter((course) =>
                 course.name.trim().toLowerCase().includes(event.target.value.trim().toLowerCase()),
             );
             setCourses(courseFind);
@@ -28,37 +30,35 @@ function CoursePage() {
     };
     const changeSemesterHandler = (event) => {
         if (event.target.value === '') {
-            setCourses(courseList);
+            setCourses(course_list);
         } else {
-            const courseFind = courseList.filter((course) => course.semester.trim() === event.target.value.trim());
+            const courseFind = course_list.filter((course) => course.semester.trim() === event.target.value.trim());
             setCourses(courseFind);
         }
     };
-    const clickHandler = () => {
-        document.querySelector('#course').value = '';
-        setCourses(courseList);
-    };
+    // const clickHandler = () => {
+    //     document.querySelector('#course').value = '';
+    //     setCourses(course_list);
+    // };
     return (
-        <div className='mx-6 px-[200px]'>
-            <div className="ml-10 my-[10px]  text-[40px] font-semibold">Các khoá học của tôi</div>
-            <div className="flex justify-between ">
-                <div className='flex items-center'>
+        <div className="mx-auto max-w-[70%]">
+            <div className="my-6 text-3xl font-semibold">Các khoá học của tôi</div>
+            <div className="mb-6 flex justify-between">
+                <div className="flex items-center rounded-xl border-[1px] bg-white px-4">
                     <input
                         type="text"
                         id="course"
                         placeholder="Tìm kiếm khoá học"
-                        className="h-[50px] w-[450px] rounded-[10px] border-[1px] bg-white p-[10px] text-[25px]"
+                        className="text-lg outline-none"
                         onChange={changeHandler}
                     />
-                    <button className="h-[50px] w-[80px] rounded-[10px] bg-primary text-white" onClick={clickHandler}>
-                        X
-                    </button>
+                    <i className="fa-solid fa-magnifying-glass text-xl opacity-80"></i>
                 </div>
-                <div>
+                <div className="rounded-xl border-[1px] bg-white pr-4 text-lg">
                     <select
                         name="semester"
                         id=""
-                        className="h-[50px] w-[300px] rounded-[10px] border-[1px] bg-white p-[10px] text-[25px]"
+                       className="cursor-pointer rounded-xl px-4 py-2 outline-none"
                         onChange={changeSemesterHandler}
                     >
                         {semeters.map((semeter, index) => {
@@ -72,15 +72,15 @@ function CoursePage() {
                 </div>
             </div>
             {courses.length === 0 ? (
-                <div className="mt-[10px] flex h-screen items-center justify-center border-[1px] bg-white text-[35px] rounded-[20px]">
+                <div className="mt-[10px] flex h-screen items-center justify-center rounded-[20px] border-[1px] bg-white text-[35px]">
                     Không tìm thấy khoá học
                 </div>
             ) : (
-                courses.map((course, index) => {
+                courses.map((course, index) => {                    
                     return (
-                        <Link to={`/course/${course.id}/info`} key={index}>
+                        <Link to={`/lecturer-course/${course.id}/info`} key={index}>
                             <CourseItem
-                                img={course.img}
+                                id={index}
                                 courseName={course.name}
                                 teacher={course.teacher}
                                 semester={course.semester}
