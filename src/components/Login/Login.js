@@ -6,11 +6,15 @@ import LogoutWithGoogle from './LogoutWithGoogle';
 
 function Login() {
     const [accountTypeVerified, setAccountTypeVerified] = useState(false);
+    const [accountType, setAccountType] = useState('');
 
     const handleHCMUTAcccount = () => {
+        setAccountType('user');
         setAccountTypeVerified(true);
     };
+
     const handleAdminAccount = () => {
+        setAccountType('admin');
         setAccountTypeVerified(true);
     };
 
@@ -44,7 +48,7 @@ function Login() {
                     </div>
                 ) : (
                     <div>
-                        <LoginWithGoogle />
+                        <LoginWithGoogle accountType={accountType} />
                         <LogoutWithGoogle />
                     </div>
                 )}

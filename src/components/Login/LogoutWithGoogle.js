@@ -1,15 +1,17 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { googleLogout } from '@react-oauth/google';
 import { useNavigate } from 'react-router-dom';
+import { UserContext } from './UserContext';
 
 function LogoutWithGoogle() {
-    // const { setUserRole } = useContext(UserContext);
+    const { setUserRole } = useContext(UserContext);
     const navigate = useNavigate();
 
     const handleLogout = () => {
         googleLogout();
         localStorage.removeItem('loginState');
-        // setUserRole(null);
+
+        setUserRole(null);
         navigate('/login');
         console.log('Logout successful');
     };

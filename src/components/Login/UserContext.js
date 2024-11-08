@@ -1,11 +1,20 @@
-import React, { createContext } from 'react';
+import React, { createContext, useState, useEffect } from 'react';
 
-export const UserContext = createContext(); // create context object
+export const UserContext = createContext();
 
 export const UserProvider = ({ children }) => {
-    // const [userRole, setUserRole] = useState(null);
+    const [userRole, setUserRole] = useState(() => {
+        const storedUserRole = localStorage.getItem('userRole');
+        return storedUserRole || null;
+    });
 
-    // pass the userRole and setUserRole to the chilren prop
-    // -> children can access the userRole and setUserRole
-    return <UserContext.Provider value={{}}>{children}</UserContext.Provider>;
+    useEffect(() => {
+        if (userRole) {
+            localStorage.setItem('userRole', userRole);
+        } else {
+            localStorage.removeItem('userRole');
+        }
+    }, [userRole]);
+
+    return <UserContext.Provider value={{ userRole, setUserRole }}>{children}</UserContext.Provider>;
 };

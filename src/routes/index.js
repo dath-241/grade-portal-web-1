@@ -1,6 +1,7 @@
 // routes.js
 import LandingPage from '../pages/LandingPage/LandingPage';
 import Login from '../components/Login/Login';
+import Unauthorize from '../components/Login/unauthorize';
 import Home from '../pages/Home/Home';
 import HOF from '../pages/HOF/HOF';
 import Management from '../pages/Admin/Management';
@@ -28,16 +29,21 @@ const routes = [
         protected: false,
     },
     {
+        path: '/login',
+        component: Login,
+        protected: false,
+    },
+    {
+        path: '/unauthorized',
+        component: Unauthorize,
+        protected: false,
+    },
+    {
         path: '/home',
         component: Home,
         layout: true,
         allowedRoles: ['teacher', 'admin', 'student'],
         protected: true,
-    },
-    {
-        path: '/login',
-        component: Login,
-        protected: false,
     },
     {
         path: '/hall-of-fame',
