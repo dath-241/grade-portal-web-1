@@ -2,43 +2,99 @@ import React from 'react';
 import { GoogleLogin, GoogleOAuthProvider } from '@react-oauth/google';
 import { useNavigate } from 'react-router-dom';
 import { clientID } from './config';
-import { jwtDecode } from 'jwt-decode'; //decode the Google response to get user email
+import { bypassLogin } from './config';
+import { useContext } from 'react';
+import { UserContext } from './UserContext';
 
-//navigate to
+// const loginAdminAPI = 'https://canxphung.id.vn/admin/api/login';
+// const loginUserAPI = 'https://canxphung.id.vn/api/login';
 
-const navigateOnRoles = (role) => {
-    if (role === 'teacher') return '/home';
-    else if (role === 'admin') return '/hall-of-fame';
-    return '/management';
-};
+const loginAdminAPI = 'http://localhost:10000/admin/api/login';
+const loginUserAPI = 'http://localhost:10000/api/login';
+const navigatePlace = '/home'; //route navigate tới khi đã login thành công
 
-//list accounts
-let teacherEmails = ['nguyendinhbang53@gmail.com', 'abc@gmail.com'];
-let adminEmails = ['nguyendinhbang53az@gmail.com', 'ghi@gmail.com'];
-//
-
-let getRoles = (email) => {
-    if (teacherEmails.includes(email)) return 'teacher';
-    else if (adminEmails.includes(email)) return 'admin';
-    return 'student';
-};
-
-function getUserEmail(res) {
-    let result = jwtDecode(res.credential);
-    if (result) return result.email;
-    return '';
-}
-
-function LoginWithGoogle() {
+function LoginWithGoogle({ accountType }) {
     const navigate = useNavigate();
-    const onSuccess = (response) => {
-        let userEmail = getUserEmail(response);
-        const navigatePlace = navigateOnRoles(getRoles(userEmail));
-        console.log('Login with Google success');
-        console.log('email:', userEmail);
-        console.log('role:', getRoles(userEmail));
-        navigate(navigatePlace);
+    const { setUserRole } = useContext(UserContext);
+
+    async function sendIdTokenToServer(idToken) {
+        //gửi token về api tương ứng
+        const apiURL = accountType === 'admin' ? loginAdminAPI : loginUserAPI;
+        try {
+            const response = await fetch(apiURL, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ idToken: idToken }),
+            });
+            const data = await response.json();
+            console.log('Server response:', data);
+            return data; // Return the entire data object
+        } catch (error) {
+            console.error('Error while sending idToken to server:', error);
+        }
+    }
+    function saveLoginState(idToken) {
+        const now = new Date();
+        const expirationTime = now.getTime() + 3600 * 1000 * 24; //24h
+        const loginState = {
+            idToken: idToken,
+            expirationTime: expirationTime,
+        };
+        localStorage.setItem('loginState', JSON.stringify(loginState));
+    }
+
+    function getValidIdToken() {
+        const loginState = JSON.parse(localStorage.getItem('loginState'));
+        if (loginState) {
+            const now = new Date();
+            if (now.getTime() < loginState.expirationTime) {
+                return loginState.idToken;
+            } else {
+                localStorage.removeItem('loginState');
+            }
+        }
+        return null;
+    }
+
+    //nếu đăng nhập thành công -> Google trả về response
+    const onSuccess = async (response) => {
+        //lấy idToken từ storage
+        if (bypassLogin) {
+            console.log('Bypass login');
+            setUserRole('admin');
+            localStorage.setItem('userRole', 'admin');
+            navigate(navigatePlace);
+            return;
+        }
+
+        const storageToken = getValidIdToken();
+        //nếu có, navigate
+        if (storageToken) {
+            console.log('Already logged in');
+            console.log('Token valid until: ', new Date(JSON.parse(localStorage.getItem('loginState')).expirationTime));
+            navigate(navigatePlace);
+            return;
+            //nếu không, gửi idToken về server
+        } else {
+            const serverResponse = await sendIdTokenToServer(response.credential); //gửi idToken về server
+            if (serverResponse && serverResponse.code === 'Success') {
+                //nhận response từ server
+                setUserRole(serverResponse.role);
+                localStorage.setItem('userRole', serverResponse.role);
+                navigate(navigatePlace);
+                saveLoginState(response.credential);
+                console.log('Login with Google success');
+                console.log('Gooogle response:', response);
+            } else {
+                console.log('Error while login or server is down:', serverResponse);
+            }
+        }
     };
+
+    //
+    //nếu đăng nhập Google thất bại
     const onFailure = (response) => {
         alert('Login with Google failed: ', response.error);
     };

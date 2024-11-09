@@ -4,7 +4,7 @@ import Papa from "papaparse";
 
 const LoadMark = () => {
   const [data, setData] = useState([]);
-  const [error ,setError] = useState("");
+  const [error, setError] = useState("");
 
   const requiredColumns = [
     "STT",

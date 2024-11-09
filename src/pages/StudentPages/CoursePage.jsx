@@ -76,7 +76,7 @@ function CoursePage() {
                     Không tìm thấy khoá học
                 </div>
             ) : (
-                courses.map((course, index) => {
+                courses.map((course, index) => {                    
                     return (
                         <Link to={`/student-course/${course.id}/info`} key={index}>
                             <CourseItem

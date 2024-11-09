@@ -1,17 +1,20 @@
 import React, { useState } from 'react';
 import './Login.css';
 import loginHCMUT from '../../assets/img/logoBK.png';
-// import { useNavigate } from 'react-router-dom';
 import LoginWithGoogle from './LoginWithGoogle';
-// import LogoutWithGoogle from './LogoutWithGoogle';
+import LogoutWithGoogle from './LogoutWithGoogle';
 
 function Login() {
     const [accountTypeVerified, setAccountTypeVerified] = useState(false);
+    const [accountType, setAccountType] = useState('');
 
     const handleHCMUTAcccount = () => {
+        setAccountType('user');
         setAccountTypeVerified(true);
     };
+
     const handleAdminAccount = () => {
+        setAccountType('admin');
         setAccountTypeVerified(true);
     };
 
@@ -45,29 +48,8 @@ function Login() {
                     </div>
                 ) : (
                     <div>
-                        {/* <h2 className="logintext-a">Đăng nhập vào tài khoản</h2>
-                        <div className="email-input-container-a">
-                            <label htmlFor="email" className="email-label-a">
-                                Email:
-                            </label>
-                            <input type="email" id="email" className="email-input-a" />
-                        </div>
-                        <div className="remember-forgot-container-a">
-                            <label className="remember-me-a">
-                                <input type="checkbox" id="remember-me" className="checkBox-a" />
-                                Remember me
-                            </label>
-                            <button className="forgot-password-a" onClick={handleForgotPassword}>
-                                Forgot password?
-                            </button>
-                        </div>
-                        <button className="login-button-a" onClick={handleLogin}>
-                            Đăng nhập
-                        </button> */}
-                        <div>
-                            <LoginWithGoogle />
-                            {/* <LogoutWithGoogle /> */}
-                        </div>
+                        <LoginWithGoogle accountType={accountType} />
+                        <LogoutWithGoogle />
                     </div>
                 )}
             </div>

@@ -15,21 +15,19 @@ function CourseInfo() {
                 const course = json.find((course) => course.id === id);
                 setCourseInfo(course); // Update state once data is fetched
             })
-            .catch((error) => console.error("Error fetching data:", error));
-    }, [id, api]); 
+            .catch((error) => console.error('Error fetching data:', error));
+    }, [id, api]);
 
     if (!courseInfo) {
-        return <div></div>; 
+        return <div></div>;
     }
 
     return (
         <div className="mx-6 flex flex-col items-center">
-
-            <div className="flex justify-center text-[40px] font-[600px] text-[#012193] my-[10px]">
+            <div className="my-[10px] flex justify-center text-3xl font-semibold text-[#012193]">
                 {courseInfo.name}
             </div>
             <div className="w-[1100px]">
-
                 <Switch id={id} active="info" />
                 <ContentBox title="Thông tin chung" courseInfo={courseInfo} type="info" />
             </div>
