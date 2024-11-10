@@ -100,7 +100,7 @@ function StudentList() {
 
                 <Link to="/add-student">
                     <div className="size-fit cursor-pointer rounded-lg bg-primary px-4 py-2 text-white shadow-inner hover:shadow-white">
-                        thêm sinh viên
+                        Thêm sinh viên
                     </div>
                 </Link>
             </div>

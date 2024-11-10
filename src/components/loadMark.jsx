@@ -1,10 +1,22 @@
-import { Table } from "antd";
+import {Table, Modal } from "antd";
 import React, { useState } from "react";
 import Papa from "papaparse";
 
 const LoadMark = () => {
   const [data, setData] = useState([]);
   const [error, setError] = useState("");
+
+  const requiredColumns = [
+    "STT",
+    "MSSV",
+    "Họ và tên",
+    "Nhóm lớp",
+    "Điểm bài tập",
+    "Điểm lab",
+    "Điểm BTL",
+    "Điểm thi giữa kỳ",
+    "Điểm thi cuối kỳ",
+  ];
 
   const handleFileChange = (event) => {
     const file = event.target.files[0];
@@ -14,34 +26,58 @@ const LoadMark = () => {
         header: true,
         skipEmptyLines: true,
         complete: (results) => {
+          const columns = Object.keys(results.data[0]);
+          const missingColumns = requiredColumns.filter(
+            (col) => col !== "Điểm lab" && !columns.includes(col) 
+          );
+
+          if (missingColumns.length > 0) {
+            setError("Các cột bị thiếu: " + missingColumns.join(", "));
+            Modal.error({
+              title: "Lỗi",
+              content: `Tệp tải lên không đúng định dạng. Các cột bị thiếu: ${missingColumns.join(
+                ", "
+              )}`,
+            });
+            return;
+          }
+
           setData(results.data);
           setError("");
         },
         error: (err) => {
           setError("Có lỗi xảy ra khi đọc tệp CSV");
+          Modal.error({
+            title: "Lỗi",
+            content: "Có lỗi xảy ra khi đọc tệp CSV.",
+          });
         },
       });
     }
   };
 
-  const columns =
-    data.length > 0
-      ? Object.keys(data[0]).map((key) => ({
-          title: key,
-          dataIndex: key,
-          key: key,
-        }))
-      : [];
+   const hasLabScores = data.some((record) => record["Điểm lab"] !== undefined && record["Điểm lab"] !== "");
+
+   const columns = requiredColumns.map((key) => {
+     if (key === "Điểm lab" && !hasLabScores) {
+       return null;
+     }
+     return {
+       title: key,
+       dataIndex: key,
+       key: key,
+     };
+   }).filter(Boolean);
 
   const components = {
     header: {
       cell: (props) => (
-        <th {...props} style={{ backgroundColor: "#112d4e", color: "white" }} />
+        <th {...props} style={{ backgroundColor: "#112d4e", color: "white", textAlign: "center" }} />
       ),
     },
     body: {
       cell: (props) => (
-        <td {...props} style={{ backgroundColor: "#dbe2ef", color: "black" }} />
+        <td {...props} style={{ backgroundColor: "#dbe2ef", color: "black", textAlign: "center" }} />
       ),
     },
   };
@@ -61,19 +97,11 @@ const LoadMark = () => {
         />
         <img
           src="https://s3-alpha-sig.figma.com/img/362a/6e3f/9411054ec26261167f9b946d14f39954?Expires=1731283200&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=VLkVaM-5xIY8a8MiRhfitKeMxKwxs0fo9Uzg7QqCL65dwXI4U5ifxL8XZ5QZ1syYcfYpqQgKIkh6DAfOJOF0n-eQx0h4enq-Ds4PKPOtxNh7gFtln2-tBoABkj2Qk1yzMRASkUu8CCHbvqgC9i0jxB3TdZ23iQtFYBibq-4YaPG8Ev1qngNtqHBiW0xlEZ3n3I929d0iN8lx5BL505l0ZSgS2dyvQEcHYYxUxCZ6ihGhvgn-EBwestOIDDkYkHgIPp6jCu53WMCoIEaDSM0pQG8FaXNUbYYzTdS35oIRKkpowgXGIKXCT~nSyly1ZtCmouHg-PFOfHaIjCoHdZKuQg__"
-          alt=""
+          alt="Upload"
           className="size-16 mb-4"
         />
-        <p className="text-gray-500 text-center">
-          Nhấn vào để chọn tệp tải lên
-        </p>
-        <p className="text-gray-300 text-center">
-          Chỉ hỗ trợ tệp CSV có định dạng chuẩn
-        </p>
-      </div>
-      <br />
-      {error && <div style={{ color: "red", marginTop: "10px" }}>{error}</div>}
-
+        <p className="text-gray-600">Nhấp để tải lên tệp CSV</p>
+ </div>
       {data.length > 0 && (
         <div style={{ marginTop: "20px", width: "80%" }}>
           <h2 className="text-center text-2xl font-semibold text-blue-950 ">
@@ -92,7 +120,7 @@ const LoadMark = () => {
       <br />
       <button
         type="button"
-        class="py-2.5 px-5 me-2 mb-2 text-sm font-medium text-white focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-blue-950 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-blue-900"
+        className="py-2.5 px-5 me-2 mb-2 text-sm font-medium text-white focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-blue-950 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-blue-900"
       >
         Tải lên
       </button>

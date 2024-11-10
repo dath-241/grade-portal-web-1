@@ -29,11 +29,11 @@ function Header() {
 
         const matchingPrefix = Object.keys(pathToIndexMap).find((prefix) => path.startsWith(prefix));
 
-        if (matchingPrefix) {
+        if (matchingPrefix && items[pathToIndexMap[matchingPrefix]]) {
             window.scrollTo(0, 0);
             items[pathToIndexMap[matchingPrefix]].classList.add('bg-primary');
         }
-    });
+    }, []);
 
     function adminHeader() {
         return (

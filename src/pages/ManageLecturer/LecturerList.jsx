@@ -64,22 +64,27 @@ function LecturerList() {
         {
             title: <span style={{ fontWeight: '600' }}>MSSV</span>,
             dataIndex: 'id',
+            render: (text, record) => <Link to={`/management/lecturer-info/${record.id}`}>{text}</Link>,
         },
         {
             title: <span style={{ fontWeight: '600' }}>Tên</span>,
             dataIndex: 'name',
+            render: (text, record) => <Link to={`/management/lecturer-infor/${record.id}`}>{text}</Link>,
         },
         {
             title: <span style={{ fontWeight: '600' }}>Họ tên đệm</span>,
             dataIndex: 'surName',
+            render: (text, record) => <Link to={`/management/lecturer-infor/${record.id}`}>{text}</Link>,
         },
         {
             title: <span style={{ fontWeight: '600' }}>Email</span>,
             dataIndex: 'email',
+            render: (text, record) => <Link to={`/management/lecturer-infor/${record.id}`}>{text}</Link>,
         },
         {
             title: <span style={{ fontWeight: '600' }}>Khoa</span>,
             dataIndex: 'faculty',
+            render: (text, record) => <Link to={`/management/lecturer-infor/${record.id}`}>{text}</Link>,
         },
     ];
 
@@ -96,7 +101,7 @@ function LecturerList() {
 
                 <Link to="/add-teacher">
                     <div className="size-fit cursor-pointer rounded-lg bg-primary px-4 py-2 text-white shadow-inner hover:shadow-white">
-                        thêm giảng viên
+                        Thêm giảng viên
                     </div>
                 </Link>
             </div>
