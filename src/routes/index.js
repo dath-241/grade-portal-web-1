@@ -20,6 +20,7 @@ import LecturerGradeInfo from '../pages/LecturerPages/GradeInfo';
 import FacultyList from '../pages/ManageCourses/FacultyList';
 import SubjectList from '../pages/ManageCourses/SubjectList ';
 import ClassList from '../pages/ManageCourses/ClassList ';
+import AddCourse from '../pages/ManageCourses/AddCourse';
 
 const routes = [
     {
@@ -94,7 +95,7 @@ const routes = [
         protected: true,
     },
     {
-        path: '/management/student-infor',
+        path: '/management/student-infor/:id',
         component: StudentInfor,
         layout: true,
         allowedRoles: ['admin'],

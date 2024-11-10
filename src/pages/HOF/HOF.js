@@ -1,11 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import './HOF.css';
 
-// const GPAapi = 'http://localhost:5200/data';
-
-
-const classId = '672b87af226ae67ef9aaa047';
-const GPAapi = `https://canxphung.id.vn/admin/api/resultScore/${classId}`;
+const GPAapi = 'http://localhost:5200/data';
 
 const hallOfFameSize = 10;
 
@@ -24,20 +20,14 @@ const HOF = () => {
     };
 
     useEffect(() => {
-        fetch(GPAapi, {
-            method: 'GET',
-            headers: {
-                Authorization: 'Bearer ' + localStorage.getItem('token'),
-                'Content-Type': 'application/json',
-            },
-        })
+        fetch(GPAapi)
             .then((res) => res.json())
             .then((data) => setGPAdata(data))
             .catch((err) => console.log('error while fetching GPA data: ', err));
     }, []);
 
     useEffect(() => {
-        console.log('GPA data: ', GPAdata);
+        console.log(GPAdata);
     }, [GPAdata]);
 
     const getRenderList = useCallback(
