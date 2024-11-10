@@ -1,8 +1,9 @@
 import { Button, Table, Typography, Modal } from 'antd';
-import React from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { useNavigate, Link, useParams } from 'react-router-dom';
 import './LecturerInfor.css';
 import LecturerIcon from '../../assets/img/teacher.png';
+import { fetchLectureByIDApi } from '../../apis/lecturers';
 
 const { Title } = Typography;
 
@@ -33,8 +34,23 @@ const CourseTable = ({ data }) => {
     return <Table className="custom-table" columns={columns} dataSource={data} pagination={false} />;
 };
 
-const TeacherInfor = () => {
+const LecturerInfor = () => {
     const navigate = useNavigate();
+    const { id } = useParams();
+    const [lecturerInfo, setLecturerInfo] = useState({});
+
+    const handleGetLecturerByID = async () => {
+        try {
+            const lecturer = await fetchLectureByIDApi(id);
+            setLecturerInfo(lecturer);
+        } catch (error) {
+            console.error('Erroe fetching', error);
+        }
+    };
+    useEffect(() => {
+        handleGetLecturerByID();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [id]);
 
     const data = [
         {
@@ -99,7 +115,7 @@ const TeacherInfor = () => {
                             to={'/management/lecturer-list'}
                             className="font-roboto text-center text-sm font-semibold leading-5 text-gray-400"
                         >
-                            Danh sach giảng viên
+                            Danh sách giảng viên
                         </Link>
                         <div className="font-roboto text-center text-sm font-semibold leading-5 text-gray-400">/</div>
                         <li className="font-roboto text-center text-sm font-semibold leading-5 text-gray-400">
@@ -118,19 +134,22 @@ const TeacherInfor = () => {
                         <div className="left space-y-2 font-semibold">
                             <p>
                                 Họ và tên:
-                                <span className="ml-2 font-normal"> Nguyễn Văn A</span>
+                                <span className="ml-2 font-normal">
+                                    {' '}
+                                    {lecturerInfo.surName + ' ' + lecturerInfo.name}
+                                </span>
                             </p>
                             <p>
-                                Mã số: <span className="ml-2 font-normal"> 2217639</span>
+                                Mã số: <span className="ml-2 font-normal"> {lecturerInfo.id}</span>
                             </p>
                             <p>
-                                Email: <span className="ml-2 font-normal"> abc@hcmut.edu.vn</span>
+                                Email: <span className="ml-2 font-normal"> {lecturerInfo.email}</span>
                             </p>
                             <p>
-                                Số điện thoại: <span className="ml-2 font-normal"> 19006791</span>
+                                Số điện thoại: <span className="ml-2 font-normal"> {lecturerInfo.phoneNumber}</span>
                             </p>
                             <p>
-                                Khoa: <span className="ml-2 font-normal"> Khoa học và kĩ thuật máy tính</span>
+                                Khoa: <span className="ml-2 font-normal"> {lecturerInfo.faculty}</span>
                             </p>
                         </div>
                         <div className="right left space-y-2 font-semibold">
@@ -163,4 +182,4 @@ const TeacherInfor = () => {
     );
 };
 
-export default TeacherInfor;
+export default LecturerInfor;
