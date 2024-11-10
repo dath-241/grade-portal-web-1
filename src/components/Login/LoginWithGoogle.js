@@ -6,11 +6,11 @@ import { bypassLogin } from './config';
 import { useContext } from 'react';
 import { UserContext } from './UserContext';
 
-// const loginAdminAPI = 'https://canxphung.id.vn/admin/api/login';
-// const loginUserAPI = 'https://canxphung.id.vn/api/login';
+const loginAdminAPI = 'https://canxphung.id.vn/admin/api/login';
+const loginUserAPI = 'https://canxphung.id.vn/api/login';
 
-const loginAdminAPI = 'http://localhost:10000/admin/api/login';
-const loginUserAPI = 'http://localhost:10000/api/login';
+// const loginAdminAPI = 'http://localhost:10000/admin/api/login';
+// const loginUserAPI = 'http://localhost:10000/api/login';
 const navigatePlace = '/home'; //route navigate tới khi đã login thành công
 
 function LoginWithGoogle({ accountType }) {
