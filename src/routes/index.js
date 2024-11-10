@@ -81,7 +81,7 @@ const routes = [
         protected: true,
     },
     {
-        path: '/management/lecturer-infor',
+        path: '/management/lecturer-infor/:id',
         component: LecturerInfor,
         layout: true,
         allowedRoles: ['admin'],
