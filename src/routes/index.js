@@ -123,6 +123,13 @@ const routes = [
         protected: true,
     },
     {
+        path: '/managerment/add-course',
+        component: AddCourse,
+        layout: true,
+        allowedRoles: ['admin'],
+        protected: true,
+    },
+    {
         path: '/student-courses',
         component: StudentCoursePage,
         layout: true,
@@ -164,13 +171,7 @@ const routes = [
         allowedRoles: ['teacher'],
         protected: true,
     },
-    {
-        path: '/managerment/add-course',
-        component: AddCourse,
-        layout: true,
-        allowedRoles: ['admin'],
-        protected: true,
-    },
+    
 ];
 
 export default routes;
