@@ -59,31 +59,37 @@ function StudentList() {
         onShowSizeChange: (current, size) => handlePageSizeChange(size),
     };
 
+    const renderRow = (text, record, columnKey) => (
+        <Link to={`/management/student-infor/${record.studentId}`} style={{ display: 'block' }}>
+            <div style={{ padding: '8px 16px' }}>{record[columnKey]}</div>
+        </Link>
+    );
+    
     const columns = [
         {
             title: <span style={{ fontWeight: '600' }}>MSSV</span>,
             dataIndex: 'studentId',
-            render: (text, record) => <Link to={`/management/student-infor/${record.studentId}`}>{text}</Link>,
+            render: (text, record) => renderRow(text, record, 'studentId'),
         },
         {
             title: <span style={{ fontWeight: '600' }}>Tên</span>,
             dataIndex: 'name',
-            render: (text, record) => <Link to={`/management/student-infor/${record.studentId}`}>{text}</Link>,
+            render: (text, record) => renderRow(text, record, 'name'),
         },
         {
             title: <span style={{ fontWeight: '600' }}>Họ tên đệm</span>,
             dataIndex: 'surName',
-            render: (text, record) => <Link to={`/management/student-infor/${record.studentId}`}>{text}</Link>,
+            render: (text, record) => renderRow(text, record, 'surName'),
         },
         {
             title: <span style={{ fontWeight: '600' }}>Email</span>,
             dataIndex: 'email',
-            render: (text, record) => <Link to={`/management/student-infor/${record.studentId}`}>{text}</Link>,
+            render: (text, record) => renderRow(text, record, 'email'),
         },
         {
             title: <span style={{ fontWeight: '600' }}>Khoa</span>,
             dataIndex: 'faculty',
-            render: (text, record) => <Link to={`/management/student-infor/${record.studentId}`}>{text}</Link>,
+            render: (text, record) => renderRow(text, record, 'faculty'),
         },
     ];
 
