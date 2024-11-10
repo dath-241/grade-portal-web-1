@@ -21,6 +21,9 @@ const LoadMark = () => {
     const handleFileChange = (event) => {
         const file = event.target.files[0];
 
+        console.log(error); // eslint-disable-line no-console
+        
+
         if (file) {
             Papa.parse(file, {
                 header: true,

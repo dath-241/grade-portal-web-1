@@ -1,6 +1,5 @@
 import { useParams } from 'react-router-dom';
 import Switch from './components/switch.component';
-import ContentBox from './components/content-box.component';
 import LoadMark from '../../components/loadMark';
 
 function GradeInfo() {
