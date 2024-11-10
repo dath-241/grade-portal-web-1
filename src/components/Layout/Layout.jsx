@@ -11,7 +11,7 @@ const avatarURL =
 function Header() {
     const [avatarPopup, setAvatarPopup] = useState(false);
     const { userRole } = useContext(UserContext);
-    
+
     const location = useLocation();
 
     useEffect(() => {
@@ -21,9 +21,9 @@ function Header() {
         const path = location.pathname;
         resetClasses();
 
-        items.forEach((item) => {  
+        items.forEach((item) => {
             const itemPath = new URL(item.href).pathname;
-            
+
             if (path.startsWith(itemPath)) {
                 item.classList.add('bg-primary');
             }
@@ -88,8 +88,8 @@ function Header() {
     }
 
     return (
-        <div className="header fixed left-0 right-0 top-0 z-50   pt-4  bg-bgColor rouned-2xl">
-            <div className=" z-50 mx-6 flex h-[60px] items-center rounded-2xl bg-opacity-10 bg-gradient-to-r from-[#DBE2EF] to-[#64768C] px-6 py-4">
+        <div className="header rouned-2xl fixed left-0 right-0 top-0 z-50 bg-bgColor pt-4">
+            <div className="z-50 mx-6 flex h-[60px] items-center rounded-2xl bg-opacity-10 bg-gradient-to-r from-[#DBE2EF] to-[#64768C] px-6 py-4">
                 <div className="mr-auto flex items-center">
                     <img src={logo} alt="Logo" className="size-[45px]" />
                     <p className="ml-4 text-xl font-semibold">BK Tra cứu</p>
@@ -107,7 +107,7 @@ function Header() {
                 </div>
 
                 {avatarPopup && (
-                    <div className="absolute right-0 top-10 mt-2 rounded-md bg-white px-[10px] py-[10px] shadow-lg">
+                    <div className="absolute right-10 top-20 mt-2 rounded-md border bg-white px-[10px] shadow">
                         <LogoutWithGoogle />
                     </div>
                 )}
