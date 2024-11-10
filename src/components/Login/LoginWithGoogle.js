@@ -20,15 +20,11 @@ function LoginWithGoogle({ accountType }) {
                 },
                 body: JSON.stringify({ idToken: idToken }),
             });
-            console.log('idToken:', idToken);
-            const data = await response.json();
-            console.log('Server: ', apiURL);
-            console.log('Server response:', data);
+            const data = await response.json();            
 
             //Lưu token vào localStorage
             //sử dụng cho các request sau
             if (data.token) {
-                console.log('Token:', data.token);
                 localStorage.setItem('token', data.token);
             }
             //ví dụ lấy token từ localStorage:
@@ -98,7 +94,6 @@ function LoginWithGoogle({ accountType }) {
                 navigate(navigatePlace);
                 saveLoginState(response.credential);
                 console.log('Login with Google success');
-                console.log('Gooogle response:', response);
                 console.log('User role: ', serverResponse.role || 'admin');
             } else {
                 console.log('Error while login or server is down:', serverResponse);
