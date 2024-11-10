@@ -29,33 +29,38 @@ function SubjectList() {
     return (
         <div>
             <div className="flex">
-                <img src={require('../../assets/img/course.png')} alt="course" className="h-24 w-24 p-2" />
+                <img src={require('../../assets/img/course.png')} alt="course" className="w-24 h-24 p-2 ml-24" />
                 <h1 className="text-3xl font-semibold">
                     <nav className="mt-2">
                         {' '}
                         {/* Breadcums */}
-                        <ul className="flex items-center gap-6 p-2 text-xl text-[#2E4053]">
-                            <Link
-                                to={'/management/faculty-list'}
-                                className="font-roboto text-center text-sm font-semibold leading-5 text-gray-400"
-                            >
-                                Các khoa
-                            </Link>
-                            <div className="font-roboto text-center text-sm font-semibold leading-5 text-gray-400">
+                        <ul className=" flex p-2 gap-6 text-xl text-[#2E4053] items-center">
+                            <li className=" text-gray-400 text-center font-roboto text-sm font-semibold leading-5">
+                                Bảng điều khiển
+                            </li>
+                            <div className=" text-gray-400 text-center font-roboto text-sm font-semibold leading-5">
                                 /
                             </div>
-                            <li className="font-roboto text-center text-sm leading-5 text-black">Khoa KHKT máy tính</li>
+                            <li className=" text-gray-400 text-center font-roboto text-sm font-semibold leading-5">
+                                Khóa học
+                            </li>
+                            <div className=" text-gray-400 text-center font-roboto text-sm font-semibold leading-5">
+                                /
+                            </div>
+                            <li className=" text-black text-center font-roboto text-sm  leading-5">
+                                Khoa KHKT máy tính
+                            </li>
                         </ul>
                     </nav>
-                    <div className="font-roboto ml-2 mt-1 text-3xl font-semibold leading-none text-black">Khóa học</div>
+                    <div className="ml-2 mt-1 text-black font-roboto text-3xl font-bold leading-none ">Khóa học</div>
                 </h1>
             </div>
-            <div className="ml-16 mr-8 mt-4">
+            <div className="ml-16 mt-4 mr-8">
                 <SearchBar onSearch={handleSearch} />
             </div>
-            <div className="ml-8 mr-8 mt-6 w-auto rounded-[24px] border border-gray-300 bg-gray-50 p-4">
+            <div className="ml-8 mr-8 mt-6 w-auto h-[580px] p-4 border border-gray-300 rounded-[24px] bg-gray-50 ">
                 <h2
-                    className="mb-4 ml-4 mt-4 text-left"
+                    className="mb-4 text-left mt-4 ml-4"
                     style={{
                         color: 'var(--black-100, #1C1C1C)',
                         fontFeatureSettings: "'ss01' on, 'cv01' on, 'cv11' on",
@@ -68,13 +73,13 @@ function SubjectList() {
                 >
                     Danh sách môn học
                 </h2>
-                <div className="w-full flex-col items-center overflow-y-auto bg-gray-50 p-4">
+                <div className="flex-col items-center w-full h-[560px] overflow-y-auto p-4 bg-gray-50">
                     <table className="min-w-full border-collapse bg-white">
                         <thead>
                             <tr>
-                                <th className="border-b border-gray-300 px-4 py-2 text-start">Mã môn học</th>
-                                <th className="border-b border-gray-300 px-4 py-2 text-start">Tên môn học</th>
-                                <th className="border-b border-gray-300 px-4 py-2 text-start">Số lượng lớp</th>
+                                <th className="px-4 py-2 border-b border-gray-300 text-start">Mã môn học</th>
+                                <th className="px-4 py-2 border-b border-gray-300 text-start">Số lượng môn</th>
+                                <th className="px-4 py-2 border-b border-gray-300 text-start">Số lượng lớp</th>
                             </tr>
                         </thead>
                         <tbody>

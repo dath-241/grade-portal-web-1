@@ -10,7 +10,7 @@ function LogoutWithGoogle() {
     const handleLogout = () => {
         googleLogout();
         localStorage.removeItem('loginState');
-
+        localStorage.removeItem('token');
         setUserRole(null);
         navigate('/login');
         console.log('Logout successful');

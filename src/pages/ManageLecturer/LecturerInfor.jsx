@@ -1,10 +1,9 @@
-import { Button, Table, Typography, Modal } from 'antd';
+import { Button, Col, Row, Table, Typography, Modal } from 'antd';
 import React from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import './LecturerInfor.css';
-import LecturerIcon from '../../assets/img/teacher.png';
 
-const { Title } = Typography;
+const { Title, Text } = Typography;
 
 const CourseTable = ({ data }) => {
     const columns = [
@@ -30,7 +29,9 @@ const CourseTable = ({ data }) => {
         },
     ];
 
-    return <Table className="custom-table" columns={columns} dataSource={data} pagination={false} />;
+    return (
+        <Table className="custom-table" columns={columns} dataSource={data} pagination={false} scroll={{ y: 200 }} />
+    );
 };
 
 const TeacherInfor = () => {
@@ -91,70 +92,43 @@ const TeacherInfor = () => {
 
     return (
         <div className="lecturer">
-            <div className="mb-4 flex">
-                <img src={LecturerIcon} alt="course" className="w-20" />
-                <div className="ml-4 space-y-2">
-                    <ul className="mt-1 flex items-center gap-6 text-xl text-[#2E4053]">
-                        <Link
-                            to={'/management/lecturer-list'}
-                            className="font-roboto text-center text-sm font-semibold leading-5 text-gray-400"
-                        >
-                            Danh sach giảng viên
-                        </Link>
-                        <div className="font-roboto text-center text-sm font-semibold leading-5 text-gray-400">/</div>
-                        <li className="font-roboto text-center text-sm font-semibold leading-5 text-gray-400">
-                            Thông tin giảng viên
-                        </li>
-                    </ul>
-                    <div className="font-roboto text-3xl font-semibold leading-none text-black">Giảng viên</div>
-                </div>
-            </div>
+            <Row className="control">
+                <Col className="breadcrumb">
+                    <Button type="link">Bảng điều khiển</Button>
+                    <Text>/</Text>
+                    <Button type="link">Giảng viên</Button>
+                    <Text>/</Text>
+                    <Button type="link">Thông tin GV</Button>
+                </Col>
+            </Row>
             <div className="p">
                 <div className="profile">
                     <div className="profile-image">
                         <img src="https://cdn-icons-png.flaticon.com/512/1144/1144760.png" alt="Profile" />
                     </div>
                     <div className="profile-info">
-                        <div className="left space-y-2 font-semibold">
-                            <p>
-                                Họ và tên:
-                                <span className="ml-2 font-normal"> Nguyễn Văn A</span>
-                            </p>
-                            <p>
-                                Mã số: <span className="ml-2 font-normal"> 2217639</span>
-                            </p>
-                            <p>
-                                Email: <span className="ml-2 font-normal"> abc@hcmut.edu.vn</span>
-                            </p>
-                            <p>
-                                Số điện thoại: <span className="ml-2 font-normal"> 19006791</span>
-                            </p>
-                            <p>
-                                Khoa: <span className="ml-2 font-normal"> Khoa học và kĩ thuật máy tính</span>
-                            </p>
+                        <div className="left">
+                            <h2>Thông tin giảng viên:</h2>
+                            <p>Họ và tên: Nguyễn Văn A</p>
+                            <p>Mã số: 2211111</p>
+                            <p>Email: example@hcmut.edu.vn</p>
+                            <p>Số điện thoại: 090123xxxx</p>
+                            <p>Khoa: Khoa học và Kỹ thuật máy tính</p>
                         </div>
-                        <div className="right left space-y-2 font-semibold">
-                            <p>
-                                Ngày tạo: <span className="ml-2 font-normal">16:04 32/02/2015</span>
-                            </p>
-                            <p>
-                                Người tạo: <span className="ml-2 font-normal"> Admin 007</span>
-                            </p>
+                        <div className="right">
+                            <br></br>
+                            <br></br>
+                            <p>Số điện thoại: 090123xxxx</p>
+                            <p>Khoa: Khoa học và Kỹ thuật máy tính</p>
+                            <br></br>
+                            <br></br>
+                            <Button type="primary" danger onClick={showDeleteConfirm}>
+                                Xóa GV
+                            </Button>
                         </div>
-                        <Button
-                            style={{
-                                backgroundColor: '#dc3545',
-                                borderColor: 'transparent',
-                                color: '#fff',
-                            }}
-                            onClick={showDeleteConfirm}
-                            className="ml-auto mt-auto border-none bg-[#dc3545] font-medium shadow-inner transition-transform hover:shadow-third"
-                        >
-                            Xóa SV
-                        </Button>
                     </div>
                 </div>
-                <div className="course mt-4">
+                <div className="course">
                     <Title level={3}>Danh sách môn học</Title>
                     <CourseTable data={data} />
                 </div>
