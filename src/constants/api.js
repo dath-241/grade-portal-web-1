@@ -1,6 +1,6 @@
 //List all api in this project
-const ADMIN_API_URL = "https://canxphung.id.vn/admin/api";
-// const CLIENT_API_URL = "https://canxphung.id.vn/api";
+const ADMIN_API_URL = process.env.REACT_APP_ADMIN_API_URL;
+const CLIENT_API_URL = process.env.REACT_APP_CLIENT_API_URL;
 
 
 export const LECTURER_LIST_API_URL = `${ADMIN_API_URL}/lecturers`;
