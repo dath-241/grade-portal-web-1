@@ -4,53 +4,44 @@ function ContentInside({ type, courseInfo }) {
             <ul className="flex flex-col gap-[10px]">
                 <li className="flex text-lg">
                     <div className="font-semibold">Lớp : </div>
-                    <div className="ml-[5px]">{courseInfo.class}</div>
+                    <div className="ml-[5px]">{courseInfo.Name}</div>
                 </li>
                 <li className="flex text-lg">
                     <div className="font-semibold">Giảng viên : </div>
-                    <div className="ml-[5px]">{courseInfo.teacher}</div>
-                </li>
-                <li className="flex text-lg">
-                    <div className="font-semibold">Số tín chỉ : </div>
-                    <div className="ml-[5px]">{courseInfo.credit}</div>
-                </li>
-                <li className="flex text-lg">
-                    <div className="font-semibold">Trạng thái : </div>
-                    <div className="ml-[5px]">{courseInfo.status}</div>
+                    <div className="ml-[5px]">{courseInfo.TeacherId}</div>
                 </li>
                 <li className="flex text-lg">
                     <div className="font-semibold">Học kì : </div>
-                    <div className="ml-[5px]">{courseInfo.semester}</div>
+                    <div className="ml-[5px]">{courseInfo.Semester}</div>
                 </li>
             </ul>
         );
     } else if (type === 'grade') {
-        const grade = courseInfo.score;
-        console.log(grade);
-        if (!grade) {
+        console.log(courseInfo)
+        if (!courseInfo) {
             return <div>Chưa có điểm</div>;
         }
         return (
             <ul className="flex flex-col gap-[10px]">
                 <li className="flex text-lg">
                     <div className="font-semibold">Điểm bài tập : </div>
-                    <div className="ml-[5px]">{grade.BT ? grade.BT : '_'}</div>
+                    <div className="ml-[5px]">{courseInfo.BT != null ? courseInfo.BT : '_'}</div>
                 </li>
                 <li className="flex text-lg">
                     <div className="font-semibold">Điểm thực hành : </div>
-                    <div className="ml-[5px]">{grade.TN ? grade.TN : '_'}</div>
+                    <div className="ml-[5px]">{courseInfo.TN != null ? courseInfo.TN : '_'}</div>
                 </li>
                 <li className="flex text-lg">
                     <div className="font-semibold">Điểm bài tập lớn : </div>
-                    <div className="ml-[5px]">{grade.BTL ? grade.BTL : '_'}</div>
+                    <div className="ml-[5px]">{courseInfo.BTL != null ? courseInfo.BTL : '_'}</div>
                 </li>
                 <li className="flex text-lg">
                     <div className="font-semibold">Điểm giữa kì : </div>
-                    <div className="ml-[5px]">{grade.GK ? grade.GK : '_'}</div>
+                    <div className="ml-[5px]">{courseInfo.GK != null ? courseInfo.GK : '_'}</div>
                 </li>
                 <li className="flex text-lg">
                     <div className="font-semibold">Điểm cuối kì : </div>
-                    <div className="ml-[5px]">{grade.CK ? grade.CK : '_'}</div>
+                    <div className="ml-[5px]">{courseInfo.CK != null ? courseInfo.CK : '_'}</div>
                 </li>
             </ul>
         );

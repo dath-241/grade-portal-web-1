@@ -1,20 +1,19 @@
 import { useEffect, useRef, useState } from 'react';
 import CourseItem from './components/course.component';
 import { Link } from 'react-router-dom';
-
+import { fetchAllClassApi } from '../../apis/lecturers';
 function CoursePage() {
-    const api = 'http://localhost:3000/course';
     const [courses, setCourses] = useState([]);
     const courseList = useRef([]);
     useEffect(() => {
-        fetch(api)
-            .then((response) => {
-                return response.json();
-            })
-            .then((json) => {
-                courseList.current = json;
-                setCourses(json);
-            });
+        fetchAllClassApi()
+        .then(data =>{
+            courseList.current = data.classAll
+            setCourses(data.classAll)
+        })
+        .catch(()=>{
+            console.log("Error when fetching data")
+        })
     }, []);
     const course_list = courseList.current;
     const semeters = ['Tất cả học kì', ...new Set(course_list.map((course) => course.semester))];
@@ -78,13 +77,13 @@ function CoursePage() {
             ) : (
                 courses.map((course, index) => {                    
                     return (
-                        <Link to={`/student-course/${course.id}/info`} key={index}>
+                        <Link to={`/student-course/${course.ID}/info`} key={index}>
                             <CourseItem
                                 id={index}
-                                courseName={course.name}
-                                teacher={course.teacher}
-                                semester={course.semester}
-                                group={course.group}
+                                courseName={course.CourseId}
+                                teacher={course.TeacherId}
+                                semester={course.Semester}
+                                group={course.Name}
                             />
                         </Link>
                     );
