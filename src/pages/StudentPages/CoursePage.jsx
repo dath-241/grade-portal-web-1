@@ -1,15 +1,15 @@
 import { useEffect, useRef, useState } from 'react';
 import CourseItem from './components/course.component';
 import { Link } from 'react-router-dom';
-import { fetchAllClassApi } from '../../apis/lecturers';
+import { fetchAllClassApi } from '../../apis/classInfo.api';
 function CoursePage() {
     const [courses, setCourses] = useState([]);
     const courseList = useRef([]);
     useEffect(() => {
         fetchAllClassApi()
-        .then(data =>{
-            courseList.current = data.classAll
-            setCourses(data.classAll)
+        .then(classList =>{
+            courseList.current = classList
+            setCourses(classList)
         })
         .catch(()=>{
             console.log("Error when fetching data")
@@ -80,8 +80,8 @@ function CoursePage() {
                         <Link to={`/student-course/${course.ID}/info`} key={index}>
                             <CourseItem
                                 id={index}
-                                courseName={course.CourseId}
-                                teacher={course.TeacherId}
+                                courseName={course.courseName}
+                                teacher={course.teacherName}
                                 semester={course.Semester}
                                 group={course.Name}
                             />

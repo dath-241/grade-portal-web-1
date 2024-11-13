@@ -8,7 +8,7 @@ function ContentInside({ type, courseInfo }) {
                 </li>
                 <li className="flex text-lg">
                     <div className="font-semibold">Giảng viên : </div>
-                    <div className="ml-[5px]">{courseInfo.TeacherId}</div>
+                    <div className="ml-[5px]">{courseInfo.teacherName}</div>
                 </li>
                 <li className="flex text-lg">
                     <div className="font-semibold">Học kì : </div>
