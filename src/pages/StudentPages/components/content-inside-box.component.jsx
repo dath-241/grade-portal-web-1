@@ -17,7 +17,6 @@ function ContentInside({ type, courseInfo }) {
             </ul>
         );
     } else if (type === 'grade') {
-        console.log(courseInfo)
         if (!courseInfo) {
             return <div>Chưa có điểm</div>;
         }

@@ -5,24 +5,27 @@ import { fetchAllClassApi } from '../../apis/classInfo.api';
 function CoursePage() {
     const [courses, setCourses] = useState([]);
     const courseList = useRef([]);
+    const [loading,setLoading] = useState(true)
     useEffect(() => {
         fetchAllClassApi()
         .then(classList =>{
             courseList.current = classList
+            setLoading(false)
             setCourses(classList)
         })
         .catch(()=>{
+            setLoading(false)
             console.log("Error when fetching data")
         })
     }, []);
     const course_list = courseList.current;
-    const semeters = ['Tất cả học kì', ...new Set(course_list.map((course) => course.semester))];
+    const semeters = ['Tất cả học kì', ...new Set(course_list.map((course) => course.Semester))];
     const changeHandler = (event) => {
         if (event.target.value === '') {
             setCourses(course_list);
         } else {
             const courseFind = course_list.filter((course) =>
-                course.name.trim().toLowerCase().includes(event.target.value.trim().toLowerCase()),
+                course.courseName.trim().toLowerCase().includes(event.target.value.trim().toLowerCase()),
             );
             setCourses(courseFind);
         }
@@ -31,7 +34,7 @@ function CoursePage() {
         if (event.target.value === '') {
             setCourses(course_list);
         } else {
-            const courseFind = course_list.filter((course) => course.semester.trim() === event.target.value.trim());
+            const courseFind = course_list.filter((course) => course.Semester.trim() === event.target.value.trim());
             setCourses(courseFind);
         }
     };
@@ -39,6 +42,13 @@ function CoursePage() {
     //     document.querySelector('#course').value = '';
     //     setCourses(course_list);
     // };
+    if(loading){
+        return(
+            <div className="flex justify-center items-center min-h-screen text-lg font-semibold">
+                Đang tải dữ liệu ...
+            </div>
+        )
+    }
     return (
         <div className="mx-auto max-w-[70%]">
             <div className="my-6 text-3xl font-semibold">Các khoá học của tôi</div>
