@@ -81,7 +81,7 @@ const routes = [
         protected: true,
     },
     {
-        path: '/management/lecturer-infor',
+        path: '/management/lecturer-infor/:id',
         component: LecturerInfor,
         layout: true,
         allowedRoles: ['admin'],
@@ -118,6 +118,13 @@ const routes = [
     {
         path: '/management/class-list',
         component: ClassList,
+        layout: true,
+        allowedRoles: ['admin'],
+        protected: true,
+    },
+    {
+        path: '/managerment/add-course',
+        component: AddCourse,
         layout: true,
         allowedRoles: ['admin'],
         protected: true,
@@ -164,13 +171,7 @@ const routes = [
         allowedRoles: ['teacher'],
         protected: true,
     },
-    {
-        path: '/managerment/add-course',
-        component: AddCourse,
-        layout: true,
-        allowedRoles: ['admin'],
-        protected: true,
-    },
+    
 ];
 
 export default routes;

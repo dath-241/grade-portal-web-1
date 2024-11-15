@@ -7,7 +7,7 @@ import { bypassLogin, clientID, loginAdminAPI, loginUserAPI, navigatePlace } fro
 
 function LoginWithGoogle({ accountType }) {
     const navigate = useNavigate();
-    const { setUserRole } = useContext(UserContext);
+    const { setUserRole } = useContext(UserContext); //lấy setUserRole từ context
 
     async function sendIdTokenToServer(idToken) {
         //gửi token về api tương ứng
@@ -20,15 +20,11 @@ function LoginWithGoogle({ accountType }) {
                 },
                 body: JSON.stringify({ idToken: idToken }),
             });
-            console.log('idToken:', idToken);
             const data = await response.json();
-            console.log('Server: ', apiURL);
-            console.log('Server response:', data);
 
             //Lưu token vào localStorage
             //sử dụng cho các request sau
             if (data.token) {
-                console.log('Token:', data.token);
                 localStorage.setItem('token', data.token);
             }
             //ví dụ lấy token từ localStorage:
@@ -69,7 +65,7 @@ function LoginWithGoogle({ accountType }) {
         if (bypassLogin) {
             console.log('Bypass login');
             setUserRole('admin');
-            localStorage.setItem('userRole', 'admin');
+            // localStorage.setItem('userRole', 'admin');
             navigate(navigatePlace);
             return;
         }
@@ -89,16 +85,15 @@ function LoginWithGoogle({ accountType }) {
                 //nếu server không trả về role -> đăng nhập bằng admin
                 if (!serverResponse.role) {
                     setUserRole('admin');
-                    localStorage.setItem('userRole', 'admin');
+                    // localStorage.setItem('userRole', 'admin');
                 } else {
                     setUserRole(serverResponse.role);
-                    localStorage.setItem('userRole', serverResponse.role);
+                    // localStorage.setItem('userRole', serverResponse.role);
                 }
 
                 navigate(navigatePlace);
                 saveLoginState(response.credential);
                 console.log('Login with Google success');
-                console.log('Gooogle response:', response);
                 console.log('User role: ', serverResponse.role || 'admin');
             } else {
                 console.log('Error while login or server is down:', serverResponse);
