@@ -30,7 +30,7 @@ function LoginWithGoogle({ accountType }) {
             //ví dụ lấy token từ localStorage:
             // const token = localStorage.getItem('token');
 
-            return data; // Return the entire data object
+            return data;
         } catch (error) {
             console.error('Error while sending idToken to server:', error);
         }
