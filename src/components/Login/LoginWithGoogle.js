@@ -29,6 +29,7 @@ function LoginWithGoogle({ accountType }) {
             }
             //ví dụ lấy token từ localStorage:
             // const token = localStorage.getItem('token');
+            // console.log('TOKENNNNN: ', data.token);
 
             return data;
         } catch (error) {
@@ -66,6 +67,7 @@ function LoginWithGoogle({ accountType }) {
             console.log('Bypass login');
             setUserRole('admin');
             // localStorage.setItem('userRole', 'admin');
+
             navigate(navigatePlace);
             return;
         }
@@ -83,13 +85,16 @@ function LoginWithGoogle({ accountType }) {
             if (serverResponse && serverResponse.code === 'Success') {
                 //nhận response từ server
                 //nếu server không trả về role -> đăng nhập bằng admin
-                if (!serverResponse.role) {
-                    setUserRole('admin');
-                    // localStorage.setItem('userRole', 'admin');
-                } else {
-                    setUserRole(serverResponse.role);
-                    // localStorage.setItem('userRole', serverResponse.role);
-                }
+                const role = serverResponse.role || 'admin';
+                setUserRole(role);
+                sessionStorage.setItem('userRole', role);
+                // if (!serverResponse.role) {
+                //     setUserRole('admin');
+                //     // localStorage.setItem('userRole', 'admin');
+                // } else {
+                //     setUserRole(serverResponse.role);
+                //     // localStorage.setItem('userRole', serverResponse.role);
+                // }
 
                 navigate(navigatePlace);
                 saveLoginState(response.credential);
