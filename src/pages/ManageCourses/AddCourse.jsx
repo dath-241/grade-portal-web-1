@@ -1,45 +1,104 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import tick from '../../assets/img/tick.png';
+import axios from 'axios';
 
 const AddCourse = () => {
-    const [department, setDepartment] = useState('');
-    const [subject, setSubject] = useState('');
-    const [courseName, setCourseName] = useState('');
     const [filteredMembers, setFilteredMembers] = useState([]);
     const [courseTeacher, setCourseTeacher] = useState(null);
     const [courseStudents, setCourseStudents] = useState([]);
     const [error, setError] = useState('');
     const [showSuccess, setShowSuccess] = useState(false);
+    const [teachersList, setTeachersList] = useState([]);
+    const [studentsList, setStudentsList] = useState([]);
+    const [classList, setClassList] = useState([]);
+    const [className, setClassName] = useState('');
+    const [courseList, setCourseList] = useState([]);
+    const [smt, setSmt] = useState('');
+    const ADMIN_API_URL = process.env.REACT_APP_ADMIN_API_URL;
+    const courseId = '672b86fd226ae67ef9aaa045';
+    useEffect(() => {
+        const token = localStorage.getItem('token');
 
-    const departments = ['KHMT', 'KTMT', 'Hóa'];
-    const subjects = ['DATH', 'Công nghệ phần mềm', 'Mạng máy tính'];
-    const studentsList = [
-        { id: 1, name: 'Member 1', department: 'KHMT', subject: 'DATH' },
-        { id: 2, name: 'Member 2', department: 'KHMT', subject: 'DATH' },
-    ];
-    const teachersList = [
-        { id: 3, name: 'Member 3', department: 'KHMT', subject: 'DATH' },
-        { id: 4, name: 'Member 4', department: 'KHMT', subject: 'DATH' },
-    ];
+        axios
+            .get(`${ADMIN_API_URL}/account/teacher`, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            })
+            .then((response) => {
+                console.log('Teacher', response.data);
+                setTeachersList(response.data);
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
 
-    const handleFilter = (type) => {
-        if (!department || !subject) {
-            setError('Vui lòng chọn đầy đủ thông tin.');
+        axios
+            .get(`${ADMIN_API_URL}/account/student`, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            })
+            .then((response) => {
+                console.log('Student', response.data);
+                setStudentsList(response.data);
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
+
+        axios
+            .get(`${ADMIN_API_URL}/class/course/${courseId}`, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            })
+            .then((response) => {
+                console.log('Class', response.data);
+                setClassList(response.data);
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
+
+        axios
+            .get(`${ADMIN_API_URL}/course/all`, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            })
+            .then((response) => {
+                console.log('Course', response.data);
+                setCourseList(response.data);
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
+    }, []);
+
+    const handleClassName = (selectedSemester) => {
+        if (!selectedSemester) {
+            setError('Vui lòng chọn học kỳ.');
             return;
         }
+        let classIndex = 1;
+        for (let i = 0; i < classList.classes.length; i++) {
+            if (classList.classes[i].Semester === selectedSemester) {
+                classIndex++;
+            }
+        }
+        setClassName(`L0${classIndex}`);
+    };
+    const handleFilter = (type) => {
         setError('');
-        const allMembers = type === 'teacher' ? teachersList : studentsList;
-        const filtered = allMembers.filter(
-            (member) =>
-                member.department === department &&
-                member.subject === subject &&
-                (type === 'student' ? !courseStudents.includes(member) : courseTeacher?.id !== member.id),
-        );
-        setFilteredMembers(filtered);
+        if (type === 'teacher') {
+            setFilteredMembers(teachersList.foundedUser);
+        } else {
+            setFilteredMembers(studentsList.foundedUser);
+        }
     };
 
     const addMemberToCourse = (member, type) => {
-        console.log('showSuccess', showSuccess);
         if (type === 'teacher') {
             setCourseTeacher(member);
         } else {
@@ -49,30 +108,50 @@ const AddCourse = () => {
     };
 
     const removeStudentFromCourse = (student) => {
-        setCourseStudents(courseStudents.filter((s) => s.id !== student.id));
+        setCourseStudents(courseStudents.filter((s) => s.Ms !== student.Ms));
     };
     const removeTeacherFromCourse = () => {
         setCourseTeacher(null);
     };
 
     const handleSubmit = (e) => {
-        console.log('showSuccess', showSuccess);
         e.preventDefault();
-        if (!department || !subject || !courseName || !courseTeacher || courseStudents.length === 0) {
+        if (!smt || !className || !courseTeacher || courseStudents.length === 0) {
             setError('Vui lòng điền đầy đủ thông tin.');
             return;
         }
         setError('');
         setShowSuccess(true); // Hiển thị thông báo thành công
 
+        const classData = {
+            semester: smt,
+            name: className,
+            course_id: courseId,
+            listStudent_ms: courseStudents.map((student) => student.Ms),
+            teacher_id: courseTeacher.ID,
+        };
+
+        console.log('classData:', classData);
+
+        const token = localStorage.getItem('token');
+        axios
+            .post(`${ADMIN_API_URL}/class/create`, classData, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            })
+            .then((response) => {
+                console.log('Class created:', response.data);
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
+
         setTimeout(() => setShowSuccess(false), 3000); // Ẩn thông báo sau 3s
 
         // Handle form submission logic here
-        console.log('Course added:', { department, subject, courseName, courseTeacher, courseStudents });
+        console.log('Course added:', { smt, className, courseTeacher, courseStudents });
         // Reset form
-        setDepartment('');
-        setSubject('');
-        setCourseName('');
         setCourseTeacher(null);
         setCourseStudents([]);
         setFilteredMembers([]);
@@ -85,51 +164,27 @@ const AddCourse = () => {
             <form onSubmit={handleSubmit} className=" ">
                 <div className="mb-6 grid grid-cols-1 gap-4 md:grid-cols-3">
                     <div className="flex flex-col">
-                        <label className="mb-2 font-medium">Khoa:</label>
+                        <label className="mb-2 font-medium">Học kỳ:</label>
                         <select
-                            value={department}
-                            onChange={(e) => setDepartment(e.target.value)}
+                            value={smt}
+                            onChange={(e) => {
+                                setSmt(e.target.value);
+                                handleClassName(e.target.value);
+                            }}
                             className="rounded-md border border-gray-300 bg-white p-2 focus:border-blue-500"
                         >
-                            <option value="">Chọn Khoa</option>
-                            {departments.map((dep, index) => (
-                                <option key={index} value={dep}>
-                                    {dep}
-                                </option>
-                            ))}
+                            <option value="">Chọn Học Kỳ</option>
+                            {courseList.semester &&
+                                Object.values(courseList.semester).map((sem) => (
+                                    <option key={sem} value={sem}>
+                                        {sem}
+                                    </option>
+                                ))}
                         </select>
-                        {error && !department && <span className="text-red-500">{error}</span>}
-                    </div>
-
-                    <div className="flex flex-col">
-                        <label className="mb-2 font-medium">Môn Học:</label>
-                        <select
-                            value={subject}
-                            onChange={(e) => setSubject(e.target.value)}
-                            className="rounded-md border border-gray-300 bg-white p-2 focus:border-blue-500"
-                        >
-                            <option value="">Chọn Môn Học</option>
-                            {subjects.map((sub, index) => (
-                                <option key={index} value={sub}>
-                                    {sub}
-                                </option>
-                            ))}
-                        </select>
-                        {error && !subject && <span className="text-red-500">{error}</span>}
-                    </div>
-
-                    <div className="flex flex-col">
-                        <label className="mb-2 font-medium">Tên Lớp Học:</label>
-                        <input
-                            type="text"
-                            value={courseName}
-                            onChange={(e) => setCourseName(e.target.value)}
-                            className="rounded-md border border-gray-300 bg-white p-2 focus:border-blue-500"
-                            placeholder="Nhập tên lớp học"
-                        />
-                        {error && !courseName && <span className="text-red-500">{error}</span>}
+                        {error && !smt && <span className="text-red-500">{error}</span>}
                     </div>
                 </div>
+
                 <div className="mb-6 flex gap-4">
                     <button
                         type="button"
@@ -160,23 +215,27 @@ const AddCourse = () => {
                                 </tr>
                             </thead>
                             <tbody>
-                                {filteredMembers.map((member) => (
-                                    <tr key={member.id} className="hover:bg-gray-50">
-                                        <td className="border-b px-4 py-2">{member.id}</td>
-                                        <td className="border-b px-4 py-2">{member.name}</td>
-                                        <td className="border-b px-4 py-2">
-                                            <button
-                                                type="button"
-                                                onClick={() =>
-                                                    addMemberToCourse(member, member.id > 2 ? 'teacher' : 'student')
-                                                }
-                                                className="rounded-md bg-blue-500 px-2 py-1 text-white hover:bg-blue-600"
-                                            >
-                                                Thêm
-                                            </button>
-                                        </td>
-                                    </tr>
-                                ))}
+                                {filteredMembers &&
+                                    filteredMembers.map((member) => (
+                                        <tr key={member.Ms} className="hover:bg-gray-50">
+                                            <td className="border-b px-4 py-2">{member.Ms}</td>
+                                            <td className="border-b px-4 py-2">{member.Name}</td>
+                                            <td className="border-b px-4 py-2">
+                                                <button
+                                                    type="button"
+                                                    onClick={() =>
+                                                        addMemberToCourse(
+                                                            member,
+                                                            member.Role === 'teacher' ? 'teacher' : 'student',
+                                                        )
+                                                    }
+                                                    className="rounded-md bg-blue-500 px-2 py-1 text-white hover:bg-blue-600"
+                                                >
+                                                    Thêm
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    ))}
                             </tbody>
                         </table>
                     </div>
@@ -188,8 +247,8 @@ const AddCourse = () => {
                             <tbody>
                                 {courseTeacher && (
                                     <tr className="hover:bg-gray-50">
-                                        <td className="border-b px-4 py-2">{courseTeacher.id}</td>
-                                        <td className="border-b px-4 py-2">{courseTeacher.name}</td>
+                                        <td className="border-b px-4 py-2">{courseTeacher.Ms}</td>
+                                        <td className="border-b px-4 py-2">{courseTeacher.Name}</td>
                                         <td className="border-b px-4 py-2">
                                             <button
                                                 type="button"
@@ -208,9 +267,9 @@ const AddCourse = () => {
                         <table className="min-w-full rounded-md">
                             <tbody>
                                 {courseStudents.map((member) => (
-                                    <tr key={member.id} className="hover:bg-gray-50">
-                                        <td className="border-b px-4 py-2">{member.id}</td>
-                                        <td className="border-b px-4 py-2">{member.name}</td>
+                                    <tr key={member.Ms} className="hover:bg-gray-50">
+                                        <td className="border-b px-4 py-2">{member.Ms}</td>
+                                        <td className="border-b px-4 py-2">{member.Name}</td>
                                         <td className="border-b px-4 py-2">
                                             <button
                                                 onClick={() => removeStudentFromCourse(member)}
