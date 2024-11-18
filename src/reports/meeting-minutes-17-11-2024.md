@@ -1,4 +1,4 @@
-# Meeting Minutes - [10/11/2024]
+# Meeting Minutes - [17/11/2024]
 
 **Người tham dự**:
 
