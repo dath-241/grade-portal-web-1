@@ -3,7 +3,8 @@ import { GoogleLogin, GoogleOAuthProvider } from '@react-oauth/google';
 import { useNavigate } from 'react-router-dom';
 import { useContext } from 'react';
 import { UserContext } from './UserContext';
-import { bypassLogin, clientID, loginAdminAPI, loginUserAPI, navigatePlace } from './config';
+import { bypassLogin, clientID, navigatePlace } from './config';
+import { LOGIN_ADMIN_API, LOGIN_USER_API } from '../../constants/api';
 
 function LoginWithGoogle({ accountType }) {
     const navigate = useNavigate();
@@ -11,7 +12,7 @@ function LoginWithGoogle({ accountType }) {
 
     async function sendIdTokenToServer(idToken) {
         //gửi token về api tương ứng
-        const apiURL = accountType === 'admin' ? loginAdminAPI : loginUserAPI;
+        const apiURL = accountType === 'admin' ? LOGIN_ADMIN_API : LOGIN_USER_API;
         try {
             const response = await fetch(apiURL, {
                 method: 'POST',
@@ -29,7 +30,7 @@ function LoginWithGoogle({ accountType }) {
             }
             //ví dụ lấy token từ localStorage:
             // const token = localStorage.getItem('token');
-            // console.log('TOKENNNNN: ', data.token);
+            console.log('TOKENNNNN: ', data.token);
 
             return data;
         } catch (error) {
@@ -59,15 +60,12 @@ function LoginWithGoogle({ accountType }) {
         }
         return null;
     }
-
-    //nếu đăng nhập thành công -> Google trả về response
     const onSuccess = async (response) => {
         //lấy idToken từ storage
         if (bypassLogin) {
             console.log('Bypass login');
             setUserRole('admin');
             // localStorage.setItem('userRole', 'admin');
-
             navigate(navigatePlace);
             return;
         }
@@ -79,22 +77,12 @@ function LoginWithGoogle({ accountType }) {
             console.log('Token valid until: ', new Date(JSON.parse(localStorage.getItem('loginState')).expirationTime));
             navigate(navigatePlace);
             return;
-            //nếu không, gửi idToken về server
         } else {
-            const serverResponse = await sendIdTokenToServer(response.credential); //gửi idToken về server
+            const serverResponse = await sendIdTokenToServer(response.credential);
             if (serverResponse && serverResponse.code === 'Success') {
-                //nhận response từ server
-                //nếu server không trả về role -> đăng nhập bằng admin
                 const role = serverResponse.role || 'admin';
                 setUserRole(role);
                 sessionStorage.setItem('userRole', role);
-                // if (!serverResponse.role) {
-                //     setUserRole('admin');
-                //     // localStorage.setItem('userRole', 'admin');
-                // } else {
-                //     setUserRole(serverResponse.role);
-                //     // localStorage.setItem('userRole', serverResponse.role);
-                // }
 
                 navigate(navigatePlace);
                 saveLoginState(response.credential);
@@ -106,8 +94,6 @@ function LoginWithGoogle({ accountType }) {
         }
     };
 
-    //
-    //nếu đăng nhập Google thất bại
     const onFailure = (response) => {
         alert('Login with Google failed: ', response.error);
     };

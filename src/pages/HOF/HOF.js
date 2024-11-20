@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import './HOF.css';
-import { HALLOFFAME_LIST_API_URL } from '../../constants/api';
+import { HALLOFFAME_LIST_API_URL, MAPPING_ID_TO_NAME_API_URL } from '../../constants/api';
 
 const HOF = () => {
     const [data, setData] = useState([]);
     const [courseList, setCourseList] = useState([]);
     const [selectedCourse, setSelectedCourse] = useState('');
     const [renderData, setRenderData] = useState([]);
+    const [courseNameList, setCourseNameList] = useState([]);
+    const [reverse, setReverse] = useState(false);
 
     useEffect(() => {
         fetchGPA();
@@ -32,7 +34,6 @@ const HOF = () => {
         try {
             if (data) {
                 console.log('data: ', data);
-                // thêm courseId vào courseList
                 let courseIdList = [];
                 if (data.data && Array.isArray(data.data.tier)) {
                     courseIdList = data.data.tier.map((item) => item.course_id);
@@ -52,6 +53,10 @@ const HOF = () => {
         setSelectedCourse(e.target.value);
     }
 
+    const handleReverseClick = () => {
+        setReverse(!reverse);
+    };
+
     useEffect(() => {
         fetchGPA();
     }, []);
@@ -69,15 +74,41 @@ const HOF = () => {
         console.log('render Data: ', renderData); // eslint-disable-next-line
     }, [selectedCourse]);
 
+    useEffect(() => {
+        const fetchCourseNames = async () => {
+            const courseNameList = await Promise.all(
+                // lần lượt lấy các course id và mapping sang course name
+                // -> promise all trả về mảng các course name theo đúng thứ tự
+                courseList.map(async (courseId) => {
+                    const response = await fetch(MAPPING_ID_TO_NAME_API_URL(courseId), {
+                        method: 'GET',
+                        headers: {
+                            Authorization: 'Bearer ' + localStorage.getItem('token'),
+                            'Content-Type': 'application/json',
+                        },
+                    });
+                    const data = await response.json();
+                    return data.course.Name;
+                }),
+            );
+            setCourseNameList(courseNameList);
+        };
+
+        fetchCourseNames(); // eslint-disable-next-line
+    }, [selectedCourse]);
     return (
         <div className="hof-container">
             <div className="filter-section">
                 <div className="filter-bar">
-                    <button className="fa-solid fa-bars filterIcon"></button>
+                    <button className="fa-solid fa-bars filterIcon" onClick={handleReverseClick}></button>
                     <select className="filter-dropdown" name="course" id="course" onChange={handleCourseChange}>
                         {courseList &&
-                            courseList.map((courseId) => {
-                                return <option value={courseId}>{courseId}</option>;
+                            courseList.map((courseId, index) => {
+                                return (
+                                    <option value={courseId} key={courseId}>
+                                        {courseNameList[index]}
+                                    </option>
+                                );
                             })}
                     </select>
                 </div>
@@ -85,7 +116,7 @@ const HOF = () => {
                 <h1 className="title">Hall of Fame</h1>
             </div>
             <div className="list">
-                {renderData.map((student, index) => {
+                {(reverse ? [...renderData].reverse() : renderData).map((student, index) => {
                     return (
                         <div className="list-item" key={index}>
                             <div className="rank">{index + 1}</div>
