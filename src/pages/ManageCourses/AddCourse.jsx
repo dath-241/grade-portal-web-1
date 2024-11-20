@@ -74,7 +74,7 @@ const AddCourse = () => {
             .catch((error) => {
                 console.error('Error:', error);
             });
-    }, []);
+    }, [ADMIN_API_URL]);
 
     const handleClassName = (selectedSemester) => {
         if (!selectedSemester) {
