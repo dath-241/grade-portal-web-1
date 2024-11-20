@@ -149,7 +149,6 @@ const AddCourse = () => {
 
         setTimeout(() => setShowSuccess(false), 3000); // Ẩn thông báo sau 3s
 
-        // Handle form submission logic here
         console.log('Course added:', { smt, className, courseTeacher, courseStudents });
         // Reset form
         setCourseTeacher(null);
