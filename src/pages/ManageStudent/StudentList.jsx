@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Table } from 'antd';
-import axios from 'axios';
+import { fetchAllStudentApi } from '../../apis/students';
 import StudentIcon from '../../assets/img/student.png';
 import { Link } from 'react-router-dom';
 function StudentList() {
@@ -9,17 +9,8 @@ function StudentList() {
     const [filteredStudents, setFilteredStudents] = useState([]);
     const [searchTerm, setSearchTerm] = useState('');
 
-    const fetchStudents = async () => {
-        try {
-            const response = await axios.get('http://localhost:4000/students');
-            setData(response.data);
-            setFilteredStudents(response.data);
-        } catch (error) {
-            console.error('Error fetching data:', error);
-        }
-    };
     useEffect(() => {
-        fetchStudents();
+        fetchAllStudentApi();
     }, []);
     const handleSearchStudents = (searchValue) => {
         if (!searchValue) {

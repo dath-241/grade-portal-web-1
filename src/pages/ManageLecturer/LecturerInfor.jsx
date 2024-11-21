@@ -44,7 +44,7 @@ const LecturerInfor = () => {
             const lecturer = await fetchLectureByIDApi(id);
             setLecturerInfo(lecturer);
         } catch (error) {
-            console.error('Erroe fetching', error);
+            console.error('Error fetching', error);
         }
     };
     useEffect(() => {

@@ -2,8 +2,8 @@ import { Button, Table, Typography, Modal } from 'antd';
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams, Link } from 'react-router-dom';
 import './StudentInfor.css';
-import axios from 'axios';
 import StudentIcon from '../../assets/img/student.png';
+import { fetchStudentByIdApi } from '../../apis/students';
 
 const { Title } = Typography;
 
@@ -83,21 +83,33 @@ const StudentInfor = () => {
     const { id } = useParams();
     const [studentInfo, setStudentInfo] = useState({});
 
+    // useEffect(() => {
+    //     const fetchStudentById = async () => {
+    //         try {
+    //             const response = await axios.get('http://localhost:4000/students');
+    //             const student = response.data.find((student) => student.studentId.toString() === id);
+    //             if (student) {
+    //                 setStudentInfo(student);
+    //             } else {
+    //                 console.log('Not found student');
+    //             }
+    //         } catch (error) {
+    //             console.error('Error fetching data:', error);
+    //         }
+    //     };
+    //     fetchStudentById();
+    // }, [id]);
+    const handleGetStudentByID = async () => {
+        try {
+            const student = await fetchStudentByIdApi(id);
+            setStudentInfo(student);
+        } catch (error) {
+            console.error('Error fetching', error);
+        }
+    };
     useEffect(() => {
-        const fetchStudentById = async () => {
-            try {
-                const response = await axios.get('http://localhost:4000/students');
-                const student = response.data.find((student) => student.studentId.toString() === id);
-                if (student) {
-                    setStudentInfo(student);
-                } else {
-                    console.log('Not found student');
-                }
-            } catch (error) {
-                console.error('Error fetching data:', error);
-            }
-        };
-        fetchStudentById();
+        handleGetStudentByID();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [id]);
     
     const data = [
@@ -158,7 +170,7 @@ const StudentInfor = () => {
                             to={'/management/student-list'}
                             className="font-roboto text-center text-sm font-semibold leading-5 text-gray-400"
                         >
-                            Danh sach sinh viên
+                            Danh sách sinh viên
                         </Link>
                         <div className="font-roboto text-center text-sm font-semibold leading-5 text-gray-400">/</div>
                         <li className="font-roboto text-center text-sm font-semibold leading-5 text-gray-400">
