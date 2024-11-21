@@ -20,8 +20,8 @@ import LecturerGradeInfo from '../pages/LecturerPages/GradeInfo';
 import FacultyList from '../pages/ManageCourses/FacultyList';
 import SubjectList from '../pages/ManageCourses/SubjectList ';
 import ClassList from '../pages/ManageCourses/ClassList ';
+import AddClass from '../pages/ManageCourses/AddClass';
 import AddCourse from '../pages/ManageCourses/AddCourse';
-
 const routes = [
     {
         path: '/',
@@ -116,6 +116,13 @@ const routes = [
         protected: true,
     },
     {
+        path: '/managerment/add-course',
+        component: AddCourse,
+        layout: true,
+        allowedRoles: ['admin'],
+        protected: true,
+    },
+    {
         path: '/management/class-list',
         component: ClassList,
         layout: true,
@@ -123,8 +130,8 @@ const routes = [
         protected: true,
     },
     {
-        path: '/managerment/add-course',
-        component: AddCourse,
+        path: '/managerment/add-class',
+        component: AddClass,
         layout: true,
         allowedRoles: ['admin'],
         protected: true,
