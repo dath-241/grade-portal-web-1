@@ -1,6 +1,7 @@
 import { Table, Modal } from 'antd';
 import React, { useState } from 'react';
 import Papa from 'papaparse';
+import { fetchLoadMarkApi } from '../apis/LoadMark.api';
 
 const LoadMark = () => {
     const [data, setData] = useState([]);
@@ -20,9 +21,7 @@ const LoadMark = () => {
 
     const handleFileChange = (event) => {
         const file = event.target.files[0];
-
-        console.log(error); // eslint-disable-line no-console
-        
+        console.log(error);
 
         if (file) {
             Papa.parse(file, {
@@ -85,6 +84,25 @@ const LoadMark = () => {
         },
     };
 
+    const uploadMarks = async () => {
+        try {
+            const response = await fetchLoadMarkApi(data);
+
+            if (response && response.status === 200) {
+                Modal.success({
+                    title: 'Thành công',
+                    content: 'Tải lên bảng điểm thành công!',
+                });
+                setData([]);
+            }
+        } catch (error) {
+            Modal.error({
+                title: 'Lỗi',
+                content: 'Có lỗi xảy ra khi tải lên bảng điểm.',
+            });
+        }
+    };
+
     return (
         <div className="flex flex-col items-center justify-center bg-white">
             <div
@@ -116,6 +134,7 @@ const LoadMark = () => {
             <button
                 type="button"
                 className="mb-2 me-2 rounded-lg border border-gray-200 bg-primary px-5 py-2.5 text-sm font-medium text-white shadow-inner hover:shadow-white focus:z-10 focus:outline-none focus:ring-4 focus:ring-gray-100 dark:border-gray-600 dark:bg-blue-950 dark:text-gray-400 dark:hover:bg-blue-900 dark:hover:text-white dark:focus:ring-gray-700"
+                onClick={uploadMarks}
             >
                 Tải lên
             </button>

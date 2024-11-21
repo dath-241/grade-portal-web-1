@@ -2,6 +2,7 @@ import { useParams } from 'react-router-dom';
 import Switch from './components/switch.component';
 import ContentBox from './components/content-box.component';
 import { useEffect, useState } from 'react';
+import { fetchClassByIdApi } from '../../apis/classInfo.api';
 
 function CourseInfo() {
     const { id } = useParams();
@@ -9,14 +10,12 @@ function CourseInfo() {
     const [courseInfo, setCourseInfo] = useState(null); // Initialize state to store course data
 
     useEffect(() => {
-        fetch(api)
-            .then((response) => response.json())
-            .then((json) => {
-                const course = json.find((course) => course.id === id);
-                setCourseInfo(course); // Update state once data is fetched
-            })
-            .catch((error) => console.error('Error fetching data:', error));
-    }, [id, api]);
+        fetchClassByIdApi(id)
+        .then((courseDetail) => {
+            setCourseInfo(courseDetail); // Update state once data is fetched
+        })
+        .catch((error) => console.error('Error fetching data:', error));
+}, [id]);
 
     if (!courseInfo) {
         return <div></div>;
