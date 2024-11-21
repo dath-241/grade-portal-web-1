@@ -89,13 +89,13 @@ function CoursePage() {
             ) : (
                 courses.map((course, index) => {                    
                     return (
-                        <Link to={`/lecturer-course/${course.id}/info`} key={index}>
+                        <Link to={`/lecturer-course/${course.ID}/info`} key={index}>
                             <CourseItem
                                 id={index}
-                                courseName={course.name}
-                                teacher={course.teacher}
-                                semester={course.semester}
-                                group={course.group}
+                                courseName={course.courseName}
+                                teacher={course.teacherName}
+                                semester={course.Semester}
+                                group={course.Name}
                             />
                         </Link>
                     );
