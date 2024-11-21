@@ -16,7 +16,7 @@ const AddCourse = () => {
     const [showSuccess, setShowSuccess] = useState(false);
     const [loading, setLoading] = useState(false);
     const ADMIN_API_URL = process.env.REACT_APP_ADMIN_API_URL;
-    
+
     const handleSubmit = async (e) => {
         e.preventDefault();
 
@@ -48,7 +48,7 @@ const AddCourse = () => {
             });
             setShowSuccess(true);
             setTimeout(() => setShowSuccess(false), 3000);
-    
+
             // Reset form
             setCourseCode('');
             setCourseName('');
@@ -72,27 +72,26 @@ const AddCourse = () => {
         <div className="rounded-lg bg-white p-8 shadow-lg">
             <h1 className="mb-6 text-2xl font-semibold">Thêm Khóa Học</h1>
             <form onSubmit={handleSubmit}>
-            <div className="grid grid-cols-2 gap-4 mb-4">
-                
-                <div className="mb-4">
-                    <label className="block text-sm font-medium">Mã Khóa Học:</label>
-                    <input
-                        type="text"
-                        value={courseCode}
-                        onChange={(e) => setCourseCode(e.target.value)}
-                        className="w-full rounded-md border border-gray-300 p-2"
-                    />
+                <div className="mb-4 grid grid-cols-2 gap-4">
+                    <div className="mb-4">
+                        <label className="block text-sm font-medium">Mã Khóa Học:</label>
+                        <input
+                            type="text"
+                            value={courseCode}
+                            onChange={(e) => setCourseCode(e.target.value)}
+                            className="w-full rounded-md border border-gray-300 p-2"
+                        />
+                    </div>
+                    <div className="mb-4">
+                        <label className="block text-sm font-medium">Tên Khóa Học:</label>
+                        <input
+                            type="text"
+                            value={courseName}
+                            onChange={(e) => setCourseName(e.target.value)}
+                            className="w-full rounded-md border border-gray-300 p-2"
+                        />
+                    </div>
                 </div>
-                <div className="mb-4">
-                    <label className="block text-sm font-medium">Tên Khóa Học:</label>
-                    <input
-                        type="text"
-                        value={courseName}
-                        onChange={(e) => setCourseName(e.target.value)}
-                        className="w-full rounded-md border border-gray-300 p-2"
-                    />
-                </div>
-            </div>
                 <div className="mb-4">
                     <label className="block text-sm font-medium">Mô Tả :</label>
                     <textarea
@@ -108,13 +107,13 @@ const AddCourse = () => {
                         value={credit}
                         onChange={(e) => {
                             const value = e.target.value;
-                            setCredit(value === '' ? '' : Math.max(0,  parseInt(value, 10)));
+                            setCredit(value === '' ? '' : Math.max(0, parseInt(value, 10)));
                         }}
                         className="w-full rounded-md border border-gray-300 p-2"
                     />
                 </div>
                 <h2 className="mb-6 text-xl font-semibold">Điểm thành phần</h2>
-                <div className="grid grid-cols-2 gap-4 mb-4">
+                <div className="mb-4 grid grid-cols-2 gap-4">
                     <div>
                         <label className="block text-sm font-medium">Điểm BT:</label>
                         <input
@@ -122,7 +121,7 @@ const AddCourse = () => {
                             value={bt}
                             onChange={(e) => {
                                 const value = e.target.value;
-                                setBt(value === '' ? '' : Math.max(0,  parseInt(value, 10)));
+                                setBt(value === '' ? '' : Math.max(0, parseInt(value, 10)));
                             }}
                             className="w-full rounded-md border border-gray-300 p-2"
                         />
@@ -134,13 +133,13 @@ const AddCourse = () => {
                             value={tn}
                             onChange={(e) => {
                                 const value = e.target.value;
-                                setTn(value === '' ? '' : Math.max(0,  parseInt(value, 10)));
+                                setTn(value === '' ? '' : Math.max(0, parseInt(value, 10)));
                             }}
                             className="w-full rounded-md border border-gray-300 p-2"
                         />
                     </div>
                 </div>
-                <div className="grid grid-cols-2 gap-4 mb-4">
+                <div className="mb-4 grid grid-cols-2 gap-4">
                     <div>
                         <label className="block text-sm font-medium">Điểm BTL:</label>
                         <input
@@ -148,7 +147,7 @@ const AddCourse = () => {
                             value={btl}
                             onChange={(e) => {
                                 const value = e.target.value;
-                                setBtl(value === '' ? '' : Math.max(0,  parseInt(value, 10)));
+                                setBtl(value === '' ? '' : Math.max(0, parseInt(value, 10)));
                             }}
                             className="w-full rounded-md border border-gray-300 p-2"
                         />
@@ -160,7 +159,7 @@ const AddCourse = () => {
                             value={gk}
                             onChange={(e) => {
                                 const value = e.target.value;
-                                setGk(value === '' ? '' : Math.max(0,  parseInt(value, 10)));
+                                setGk(value === '' ? '' : Math.max(0, parseInt(value, 10)));
                             }}
                             className="w-full rounded-md border border-gray-300 p-2"
                         />
@@ -173,7 +172,7 @@ const AddCourse = () => {
                         value={ck}
                         onChange={(e) => {
                             const value = e.target.value;
-                            setCk(value === '' ? '' : Math.max(0,  parseInt(value, 10)));
+                            setCk(value === '' ? '' : Math.max(0, parseInt(value, 10)));
                         }}
                         className="w-full rounded-md border border-gray-300 p-2"
                     />
@@ -191,7 +190,6 @@ const AddCourse = () => {
                     {loading ? 'Đang xử lý...' : 'Thêm Khóa Học'}
                 </button>
             </form>
-    
 
             {showSuccess && (
                 <div className="fixed inset-0 z-50 flex items-center justify-center bg-gray-700 bg-opacity-20 text-center">
