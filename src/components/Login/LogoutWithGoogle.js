@@ -10,6 +10,7 @@ function LogoutWithGoogle() {
     const handleLogout = () => {
         googleLogout();
         localStorage.removeItem('loginState');
+        sessionStorage.removeItem('userRole');
 
         setUserRole(null);
         navigate('/login');
