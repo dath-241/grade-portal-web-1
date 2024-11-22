@@ -20,7 +20,8 @@ const AddCourse = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        if (!courseCode || !courseName || !credit || !bt || !tn || !btl || !gk || !ck) {
+        if (courseCode === '' || courseName === '' || credit === ''
+    || bt === '' || tn === '' || btl === '' || gk === '' || ck === '') {
             setError('Vui lòng điền đầy đủ thông tin.');
             return;
         }
