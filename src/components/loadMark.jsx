@@ -2,10 +2,12 @@ import { Table, Modal } from 'antd';
 import React, { useState } from 'react';
 import Papa from 'papaparse';
 import { loadMarkApi } from '../apis/LoadMark.api';
+import upLoad from '../assets/img/upload.png';
 
 const LoadMark = () => {
     const [data, setData] = useState([]);
     const [error, setError] = useState('');
+    const [csvFile, setCsvFile] = useState(null); 
 
     const requiredColumns = [
         'STT',
@@ -21,39 +23,50 @@ const LoadMark = () => {
 
     const handleFileChange = (event) => {
         const file = event.target.files[0];
-        console.log(error);
-
         if (file) {
-            Papa.parse(file, {
-                header: true,
-                skipEmptyLines: true,
-                complete: (results) => {
-                    const columns = Object.keys(results.data[0]);
-                    const missingColumns = requiredColumns.filter(
-                        (col) => col !== 'Điểm lab' && !columns.includes(col),
-                    );
-
-                    if (missingColumns.length > 0) {
-                        setError('Các cột bị thiếu: ' + missingColumns.join(', '));
-                        Modal.error({
-                            title: 'Lỗi',
-                            content: `Tệp tải lên không đúng định dạng. Các cột bị thiếu: ${missingColumns.join(', ')}`,
-                        });
-                        return;
-                    }
-
-                    setData(results.data);
-                    setError('');
-                },
-                error: (err) => {
-                    setError('Có lỗi xảy ra khi đọc tệp CSV');
-                    Modal.error({
-                        title: 'Lỗi',
-                        content: 'Có lỗi xảy ra khi đọc tệp CSV.',
-                    });
-                },
-            });
+            if (!file.name.endsWith('.csv') || file.type !== 'text/csv') {
+                showError('Vui lòng chọn tệp CSV hợp lệ.');
+                return;
+            }
+            setCsvFile(file);
+            parseCSV(file);
         }
+    };
+
+    const parseCSV = (file) => {
+        Papa.parse(file, {
+            header: true,
+            skipEmptyLines: true,
+            complete: (results) => {
+                validateColumns(results.data);
+            },
+            error: () => {
+                showError('Có lỗi xảy ra khi đọc tệp CSV.');
+            },
+        });
+    };
+
+    const validateColumns = (parsedData) => {
+        const columns = Object.keys(parsedData[0]);
+        const missingColumns = requiredColumns.filter(
+            (col) => col !== 'Điểm lab' && !columns.includes(col),
+        );
+
+        if (missingColumns.length > 0) {
+            showError(`Tệp tải lên không đúng định dạng. Các cột bị thiếu: ${missingColumns.join(', ')}`);
+            return;
+        }
+
+        setData(parsedData);
+        setError('');
+    };
+
+    const showError = (message) => {
+        setError(message);
+        Modal.error({
+            title: 'Lỗi',
+            content: message,
+        });
     };
 
     const hasLabScores = data.some((record) => record['Điểm lab'] !== undefined && record['Điểm lab'] !== '');
@@ -85,36 +98,39 @@ const LoadMark = () => {
     };
 
     const uploadMarks = async () => {
+        if (!csvFile) {
+            showError('Không có tệp để tải lên.');
+            return;
+        }
+    
+        const formData = new FormData();
+        formData.append('file', csvFile); 
+    
         try {
-            const response = await loadMarkApi(data);
-
+            const response = await loadMarkApi(formData); 
+    
             if (response && response.status === 200) {
                 Modal.success({
                     title: 'Thành công',
                     content: 'Tải lên bảng điểm thành công!',
                 });
                 setData([]);
+                setCsvFile(null); 
             }
         } catch (error) {
-            Modal.error({
-                title: 'Lỗi',
-                content: 'Có lỗi xảy ra khi tải lên bảng điểm.',
-            });
+            console.error('Lỗi khi tải lên bảng điểm:', error.response ? error.response.data : error);
+            showError('Có lỗi xảy ra khi tải lên bảng điểm.');
         }
     };
 
     return (
-        <div className="flex flex-col items-center justify-center bg-white">
+ <div className="flex flex-col items-center justify-center bg-white">
             <div
                 className="flex h-64 w-3/5 cursor-pointer flex-col items-center justify-center rounded-lg border-2 border-dotted border-gray-400 p-10"
                 onClick={() => document.getElementById('fileInput').click()}
             >
                 <input type="file" id="fileInput" accept=".csv" className="hidden" onChange={handleFileChange} />
-                <img
-                    src="https://s3-alpha-sig.figma.com/img/362a/6e3f/9411054ec26261167f9b946d14f39954?Expires=1731283200&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=VLkVaM-5xIY8a8MiRhfitKeMxKwxs0fo9Uzg7QqCL65dwXI4U5ifxL8XZ5QZ1syYcfYpqQgKIkh6DAfOJOF0n-eQx0h4enq-Ds4PKPOtxNh7gFtln2-tBoABkj2Qk1yzMRASkUu8CCHbvqgC9i0jxB3TdZ23iQtFYBibq-4YaPG8Ev1qngNtqHBiW0xlEZ3n3I929d0iN8lx5BL505l0ZSgS2dyvQEcHYYxUxCZ6ihGhvgn-EBwestOIDDkYkHgIPp6jCu53WMCoIEaDSM0pQG8FaXNUbYYzTdS35oIRKkpowgXGIKXCT~nSyly1ZtCmouHg-PFOfHaIjCoHdZKuQg__"
-                    alt="Upload"
-                    className="mb-4 size-16"
-                />
+                <img src={upLoad} alt="Upload" className="mb-4 size-16" />
                 <p className="text-gray-600">Nhấp để tải lên tệp CSV</p>
             </div>
             {data.length > 0 && (
@@ -125,7 +141,7 @@ const LoadMark = () => {
                         components={components}
                         dataSource={data}
                         columns={columns}
-                        rowKey={(record, index) => index}
+                        rowKey={(record) => `${record.MSSV}-${record.STT}`}
                         pagination={false}
                     />
                 </div>
