@@ -117,7 +117,7 @@ const LoadMark = () => {
                 setData([]);
                 setCsvFile(null); 
             }
-        } catch (error) {
+        } catch (err) {
             console.error('Lỗi khi tải lên bảng điểm:', error.response ? error.response.data : error);
             showError('Có lỗi xảy ra khi tải lên bảng điểm.');
         }
