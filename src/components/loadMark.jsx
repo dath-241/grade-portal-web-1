@@ -1,7 +1,7 @@
 import { Table, Modal } from 'antd';
 import React, { useState } from 'react';
 import Papa from 'papaparse';
-import { fetchLoadMarkApi } from '../apis/LoadMark.api';
+import { loadMarkApi } from '../apis/LoadMark.api';
 
 const LoadMark = () => {
     const [data, setData] = useState([]);
@@ -86,7 +86,7 @@ const LoadMark = () => {
 
     const uploadMarks = async () => {
         try {
-            const response = await fetchLoadMarkApi(data);
+            const response = await loadMarkApi(data);
 
             if (response && response.status === 200) {
                 Modal.success({

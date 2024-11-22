@@ -2,7 +2,7 @@ import axios from 'axios';
 import {LECTURER_LOADMARK_API_URL} from '../constants/api';
 
 
-export const fetchLoadMarkApi = async (data) => {
+export const loadMarkApi = async (data) => {
     const token = localStorage.getItem('token'); 
 
     try {
