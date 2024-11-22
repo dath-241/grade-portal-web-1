@@ -6,8 +6,13 @@ import {
 } from '../constants/api';
 
 export const fetchAllLecturerApi = async () => {
+    const token = localStorage.getItem('token');
     try {
-        const response = await axios.get(LECTURER_LIST_API_URL);
+        const response = await axios.get(LECTURER_LIST_API_URL, {
+            header: {
+                Authorization: `Bearer ${token}`,
+            },
+        });
         console.log('Return data: ', response);
         return response.data;
     } catch (error) {
@@ -16,8 +21,13 @@ export const fetchAllLecturerApi = async () => {
 };
 
 export const fetchLectureByIDApi = async (id) => {
+    const token = localStorage.getItem('token');
     try {
-        const response = await axios.get(ACCOUNT_DETAIL_API_URL(id));
+        const response = await axios.get(ACCOUNT_DETAIL_API_URL(id), {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        });
         console.log('Return data: ', response);
         return response.data;
     } catch (error) {
