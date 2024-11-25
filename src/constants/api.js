@@ -8,6 +8,11 @@ export const LOGIN_USER_API = `${CLIENT_API_URL}/login`;
 export const LECTURER_LIST_API_URL = `${ADMIN_API_URL}/lecturers`;
 export const LECTURER_DETAIL_API_URL = (id) => `${ADMIN_API_URL}/lecturers/${id}`;
 
+
+export const LECTURER_LOADMARK_API_URL = `${CLIENT_API_URL}/resultScore/create`;
+
+
+
 export const HALLOFFAME_LIST_API_URL = `${ADMIN_API_URL}/HOF/all`;
 
 export const MAPPING_ID_TO_NAME_API_URL = (id) => `${CLIENT_API_URL}/course/${id}`;
@@ -22,5 +27,4 @@ export const GRADE_DETAIL_API_URL = (id) => `${CLIENT_API_URL}/resultScore/${id}
 export const TEACHER_DETAIL_API_URL = (id) => `${CLIENT_API_URL}/${id}`
 export const COURSE_DETAIL_API_URL = (id) => `${CLIENT_API_URL}/course/${id}`
 //----End API for Class List of Student----//
-
 
