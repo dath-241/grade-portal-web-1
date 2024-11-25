@@ -11,7 +11,7 @@ export const STUDENT_LIST_API_URL = `${ADMIN_API_URL}/account/student`;
 
 export const ACCOUNT_DETAIL_API_URL = (id) => `${ADMIN_API_URL}/account/${id}`;
 
-export const LECTURER_LIST_API_URL = `${ADMIN_API_URL}/lecturers`;
+// export const LECTURER_LIST_API_URL = `${ADMIN_API_URL}/lecturers`;
 export const LECTURER_DETAIL_API_URL = (id) => `${ADMIN_API_URL}/lecturers/${id}`;
 
 
