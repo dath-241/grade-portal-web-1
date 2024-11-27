@@ -83,29 +83,16 @@ const StudentInfor = () => {
     const { id } = useParams();
     const [studentInfo, setStudentInfo] = useState({});
 
-    // useEffect(() => {
-    //     const fetchStudentById = async () => {
-    //         try {
-    //             const response = await axios.get('http://localhost:4000/students');
-    //             const student = response.data.find((student) => student.studentId.toString() === id);
-    //             if (student) {
-    //                 setStudentInfo(student);
-    //             } else {
-    //                 console.log('Not found student');
-    //             }
-    //         } catch (error) {
-    //             console.error('Error fetching data:', error);
-    //         }
-    //     };
-    //     fetchStudentById();
-    // }, [id]);
     const handleGetStudentByID = async () => {
-        try {
-            const student = await fetchStudentByIdApi(id);
-            setStudentInfo(student);
-        } catch (error) {
-            console.error('Error fetching', error);
-        }
+        const studentData = await fetchStudentByIdApi(id);
+        const data = {
+            key: studentData.ID, 
+            id: studentData.Ms,
+            name: studentData.Name,
+            email: studentData.Email,
+            faculty: studentData.Faculty,
+        };
+        setStudentInfo(data);
     };
     useEffect(() => {
         handleGetStudentByID();
@@ -188,10 +175,10 @@ const StudentInfor = () => {
                     <div className="profile-info">
                         <div className="left">
                             <h2 className="text-2xl font-bold">Thông tin sinh viên:</h2>
-                            <p>Họ và tên: {studentInfo.surName + ' ' + studentInfo.name || 'Chưa có thông tin'}</p>
-                            <p>MSSV: {studentInfo.studentId || 'Chưa có thông tin'}</p>
+                            <p>Họ và tên: {studentInfo.name || 'Chưa có thông tin'}</p>
+                            <p>MSSV: {studentInfo.id || 'Chưa có thông tin'}</p>
                             <p>Email: {studentInfo.email || 'Chưa có thông tin'}</p>
-                            <p>Số điện thoại: 090123xxxx</p>
+                            {/* <p>Số điện thoại: 090123xxxx</p> */}
                             <p>Khoa: {studentInfo.faculty || 'Chưa có thông tin'}</p>
                         </div>
                         <div className="right left space-y-2 font-semibold">

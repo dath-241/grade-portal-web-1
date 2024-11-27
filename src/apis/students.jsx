@@ -10,7 +10,7 @@ export const fetchAllStudentApi = async () => {
         },
       });
       console.log('Return data: ', response);
-      return response.data;
+      return response.data.foundedUser;
   } catch (error) {
       console.error('Error fetching Student List:', error);
   }
@@ -24,8 +24,8 @@ export const fetchStudentByIdApi = async (id) => {
         Authorization: `Bearer ${token}`,
       },
     });
-    console.log('Return data: ', response);
-    return response.data;
+    console.log('Return data: ', response.data.account);
+    return response.data.account;
   } catch (error) {
       console.error('Error fetching Student Info', error);
   }

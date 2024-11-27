@@ -2,6 +2,8 @@
 const ADMIN_API_URL = process.env.REACT_APP_ADMIN_API_URL;
 const CLIENT_API_URL = process.env.REACT_APP_CLIENT_API_URL;
 
+export const LOGIN_ADMIN_API = `${ADMIN_API_URL}/login`;
+export const LOGIN_USER_API = `${CLIENT_API_URL}/login`;
 
 export const LECTURER_LIST_API_URL = `${ADMIN_API_URL}/account/teacher`;
 export const STUDENT_LIST_API_URL = `${ADMIN_API_URL}/account/student`;

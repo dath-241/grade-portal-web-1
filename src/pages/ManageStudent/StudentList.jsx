@@ -5,26 +5,43 @@ import StudentIcon from '../../assets/img/student.png';
 import { Link } from 'react-router-dom';
 function StudentList() {
     const [pageSize, setPageSize] = useState(10);
-    const [data, setData] = useState([]);
+    // const [data, setData] = useState([]);
+    const [students, setStudents] = useState([]);
     const [filteredStudents, setFilteredStudents] = useState([]);
     const [searchTerm, setSearchTerm] = useState('');
 
+    const handleGetStudents = async () => {
+        const lecturerData = await fetchAllStudentApi();
+        const formattedData = lecturerData.map((student) => ({
+            key: student.ID, // Mỗi hàng cần `key` duy nhất
+            id: student.ID,
+            ms: student.Ms,
+            name: student.Name,
+            email: student.Email,
+            faculty: student.Faculty,
+            surName: student.Name.split(' ')[0], // Lấy họ (hoặc điều chỉnh logic phù hợp)
+        }));
+        setStudents(formattedData);
+        setFilteredStudents(formattedData);
+    };
+    
     useEffect(() => {
-        fetchAllStudentApi();
+        handleGetStudents();
     }, []);
+
     const handleSearchStudents = (searchValue) => {
         if (!searchValue) {
-            return data.slice(0, pageSize);
+            return students.slice(0, pageSize);
         }
 
-        return data
+        return students
             .filter(
-                (data) =>
-                    data.studentId.toString().includes(searchValue) ||
-                    data.name.includes(searchValue) ||
-                    data.surName.includes(searchValue) ||
-                    data.email.includes(searchValue) ||
-                    data.faculty.includes(searchValue),
+                (students) =>
+                    students.id.toString().includes(searchValue) ||
+                    students.name.includes(searchValue) ||
+                    students.surName.includes(searchValue) ||
+                    students.email.includes(searchValue) ||
+                    students.faculty.includes(searchValue),
             )
             .slice(0, pageSize);
     };
@@ -33,14 +50,14 @@ function StudentList() {
         const value = e.target?.value;
         setSearchTerm(value);
         if (!value) {
-            setFilteredStudents(data);
+            setFilteredStudents(students);
         } else {
             setFilteredStudents(handleSearchStudents(value));
         }
     };
     const handlePageSizeChange = (value) => {
         setPageSize(value);
-        setData(handleSearchStudents());
+        setStudents(handleSearchStudents());
     };
 
     const paginationOptions = {
@@ -59,28 +76,28 @@ function StudentList() {
     const columns = [
         {
             title: <span style={{ fontWeight: '600' }}>MSSV</span>,
-            dataIndex: 'studentId',
-            render: (text, record) => renderRow(text, record, 'studentId'),
+            dataIndex: 'ms',
+            render: (text, record) => <Link to={`/management/lecturer-infor/${record.id}`}>{text}</Link>,
         },
         {
             title: <span style={{ fontWeight: '600' }}>Tên</span>,
             dataIndex: 'name',
-            render: (text, record) => renderRow(text, record, 'name'),
+            render: (text, record) => <Link to={`/management/lecturer-infor/${record.id}`}>{text}</Link>,
         },
         {
             title: <span style={{ fontWeight: '600' }}>Họ tên đệm</span>,
             dataIndex: 'surName',
-            render: (text, record) => renderRow(text, record, 'surName'),
+            render: (text, record) => <Link to={`/management/lecturer-infor/${record.id}`}>{text}</Link>,
         },
         {
             title: <span style={{ fontWeight: '600' }}>Email</span>,
             dataIndex: 'email',
-            render: (text, record) => renderRow(text, record, 'email'),
+            render: (text, record) => <Link to={`/management/lecturer-infor/${record.id}`}>{text}</Link>,
         },
         {
             title: <span style={{ fontWeight: '600' }}>Khoa</span>,
             dataIndex: 'faculty',
-            render: (text, record) => renderRow(text, record, 'faculty'),
+            render: (text, record) => <Link to={`/management/lecturer-infor/${record.id}`}>{text}</Link>,
         },
     ];
 
@@ -105,7 +122,7 @@ function StudentList() {
             {/* search */}
             <div className="my-6 flex justify-between">
                 <div className="relative mt-1 rounded-full bg-white px-4 py-2 shadow outline-none">
-                    <i class="fa-solid fa-magnifying-glass mr-2 text-gray-400"></i>
+                    <i className="fa-solid fa-magnifying-glass mr-2 text-gray-400"></i>
                     <input 
                         type="text" 
                         placeholder="Tìm kiếm" 

@@ -40,12 +40,15 @@ const LecturerInfor = () => {
     const [lecturerInfo, setLecturerInfo] = useState({});
 
     const handleGetLecturerByID = async () => {
-        try {
-            const lecturer = await fetchLectureByIDApi(id);
-            setLecturerInfo(lecturer);
-        } catch (error) {
-            console.error('Error fetching', error);
-        }
+        const lecturerData = await fetchLectureByIDApi(id);
+        const data = {
+            key: lecturerData.ID,
+            id: lecturerData.Ms,
+            name: lecturerData.Name,
+            email: lecturerData.Email,
+            faculty: lecturerData.Faculty,
+        };
+        setLecturerInfo(data);
     };
     useEffect(() => {
         handleGetLecturerByID();
@@ -134,10 +137,7 @@ const LecturerInfor = () => {
                         <div className="left space-y-2 font-semibold">
                             <p>
                                 Họ và tên:
-                                <span className="ml-2 font-normal">
-                                    {' '}
-                                    {lecturerInfo.surName + ' ' + lecturerInfo.name}
-                                </span>
+                                <span className="ml-2 font-normal"> {lecturerInfo.name}</span>
                             </p>
                             <p>
                                 Mã số: <span className="ml-2 font-normal"> {lecturerInfo.id}</span>
@@ -145,9 +145,9 @@ const LecturerInfor = () => {
                             <p>
                                 Email: <span className="ml-2 font-normal"> {lecturerInfo.email}</span>
                             </p>
-                            <p>
+                            {/* <p>
                                 Số điện thoại: <span className="ml-2 font-normal"> {lecturerInfo.phoneNumber}</span>
-                            </p>
+                            </p> */}
                             <p>
                                 Khoa: <span className="ml-2 font-normal"> {lecturerInfo.faculty}</span>
                             </p>
@@ -169,7 +169,7 @@ const LecturerInfor = () => {
                             onClick={showDeleteConfirm}
                             className="ml-auto mt-auto border-none bg-[#dc3545] font-medium shadow-inner transition-transform hover:shadow-third"
                         >
-                            Xóa SV
+                            Xóa GV
                         </Button>
                     </div>
                 </div>

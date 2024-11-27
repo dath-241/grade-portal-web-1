@@ -13,8 +13,17 @@ function LecturerList() {
 
     const handleGetLecturers = async () => {
         const lecturerData = await fetchAllLecturerApi();
-        setLecturers(lecturerData);
-        setFilteredLecturers(lecturerData);
+        const formattedData = lecturerData.map((lecturer) => ({
+            key: lecturer.ID,
+            ms: lecturer.Ms,
+            id: lecturer.ID,
+            name: lecturer.Name,
+            email: lecturer.Email,
+            faculty: lecturer.Faculty,
+            surName: lecturer.Name.split(' ')[0],
+        }));
+        setLecturers(formattedData);
+        setFilteredLecturers(formattedData);
     };
 
     useEffect(() => {
@@ -62,9 +71,9 @@ function LecturerList() {
 
     const columns = [
         {
-            title: <span style={{ fontWeight: '600' }}>MSSV</span>,
-            dataIndex: 'id',
-            render: (text, record) => <Link to={`/management/lecturer-info/${record.id}`}>{text}</Link>,
+            title: <span style={{ fontWeight: '600' }}>MSGV</span>,
+            dataIndex: 'ms',
+            render: (text, record) => <Link to={`/management/lecturer-infor/${record.id}`}>{text}</Link>,
         },
         {
             title: <span style={{ fontWeight: '600' }}>Tên</span>,
@@ -87,6 +96,7 @@ function LecturerList() {
             render: (text, record) => <Link to={`/management/lecturer-infor/${record.id}`}>{text}</Link>,
         },
     ];
+    
 
     return (
         <div className="">
@@ -109,7 +119,7 @@ function LecturerList() {
             {/* search */}
             <div className="my-6 flex justify-between">
                 <div className="relative mt-1 rounded-full bg-white px-4 py-2 shadow outline-none">
-                    <i class="fa-solid fa-magnifying-glass mr-2"></i>
+                    <i className="fa-solid fa-magnifying-glass mr-2"></i>
                     <input
                         type="text"
                         placeholder="Tìm kiếm"
