@@ -1,41 +1,41 @@
-import { Button, Table, Typography, Modal } from 'antd';
+// import { Button, Modal } from 'antd';
 import React, { useEffect, useState } from 'react';
-import { useNavigate, Link, useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import './LecturerInfor.css';
 import LecturerIcon from '../../assets/img/teacher.png';
 import { fetchLectureByIDApi } from '../../apis/lecturers';
 
-const { Title } = Typography;
+// const { Title } = Typography;
 
-const CourseTable = ({ data }) => {
-    const columns = [
-        {
-            title: 'Mã môn học',
-            dataIndex: 'code',
-            key: 'code',
-        },
-        {
-            title: 'Môn học',
-            dataIndex: 'subject',
-            key: 'subject',
-        },
-        {
-            title: 'Lớp học',
-            dataIndex: 'class',
-            key: 'class',
-        },
-        {
-            title: 'Số lượng sinh viên',
-            dataIndex: 'students',
-            key: 'students',
-        },
-    ];
+// const CourseTable = ({ data }) => {
+//     const columns = [
+//         {
+//             title: 'Mã môn học',
+//             dataIndex: 'code',
+//             key: 'code',
+//         },
+//         {
+//             title: 'Môn học',
+//             dataIndex: 'subject',
+//             key: 'subject',
+//         },
+//         {
+//             title: 'Lớp học',
+//             dataIndex: 'class',
+//             key: 'class',
+//         },
+//         {
+//             title: 'Số lượng sinh viên',
+//             dataIndex: 'students',
+//             key: 'students',
+//         },
+//     ];
 
-    return <Table className="custom-table" columns={columns} dataSource={data} pagination={false} />;
-};
+//     return <Table className="custom-table" columns={columns} dataSource={data} pagination={false} />;
+// };
 
 const LecturerInfor = () => {
-    const navigate = useNavigate();
+    // const navigate = useNavigate();
     const { id } = useParams();
     const [lecturerInfo, setLecturerInfo] = useState({});
 
@@ -55,58 +55,58 @@ const LecturerInfor = () => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [id]);
 
-    const data = [
-        {
-            key: '1',
-            code: '#50',
-            subject: 'Đồ án công nghệ phần mềm',
-            class: 'L07',
-            students: 80,
-        },
-        {
-            key: '2',
-            code: '#50',
-            subject: 'Mạng máy tính',
-            class: 'L09',
-            students: 80,
-        },
-        {
-            key: '3',
-            code: '#50',
-            subject: 'Công nghệ phần mềm',
-            class: 'L05',
-            students: 80,
-        },
-        {
-            key: '4',
-            code: '#50',
-            subject: 'Mô hình hóa',
-            class: 'L03',
-            students: 80,
-        },
-        {
-            key: '5',
-            code: '#50',
-            subject: 'Công nghệ phần mềm',
-            class: 'L02',
-            students: 80,
-        },
-    ];
+    // const data = [
+    //     {
+    //         key: '1',
+    //         code: '#50',
+    //         subject: 'Đồ án công nghệ phần mềm',
+    //         class: 'L07',
+    //         students: 80,
+    //     },
+    //     {
+    //         key: '2',
+    //         code: '#50',
+    //         subject: 'Mạng máy tính',
+    //         class: 'L09',
+    //         students: 80,
+    //     },
+    //     {
+    //         key: '3',
+    //         code: '#50',
+    //         subject: 'Công nghệ phần mềm',
+    //         class: 'L05',
+    //         students: 80,
+    //     },
+    //     {
+    //         key: '4',
+    //         code: '#50',
+    //         subject: 'Mô hình hóa',
+    //         class: 'L03',
+    //         students: 80,
+    //     },
+    //     {
+    //         key: '5',
+    //         code: '#50',
+    //         subject: 'Công nghệ phần mềm',
+    //         class: 'L02',
+    //         students: 80,
+    //     },
+    // ];
 
-    const showDeleteConfirm = () => {
-        Modal.confirm({
-            title: 'Xác nhận xóa giảng viên',
-            content: 'Bạn có chắc chắn muốn xóa giảng viên này?',
-            okText: 'Xác nhận',
-            cancelText: 'Đóng',
-            onOk() {
-                navigate('/home');
-            },
-            onCancel() {
-                console.log('Đóng modal');
-            },
-        });
-    };
+    // const showDeleteConfirm = () => {
+    //     Modal.confirm({
+    //         title: 'Xác nhận xóa giảng viên',
+    //         content: 'Bạn có chắc chắn muốn xóa giảng viên này?',
+    //         okText: 'Xác nhận',
+    //         cancelText: 'Đóng',
+    //         onOk() {
+    //             navigate('/home');
+    //         },
+    //         onCancel() {
+    //             console.log('Đóng modal');
+    //         },
+    //     });
+    // };
 
     return (
         <div className="lecturer">
@@ -160,7 +160,7 @@ const LecturerInfor = () => {
                                 Người tạo: <span className="ml-2 font-normal"> Admin 007</span>
                             </p>
                         </div>
-                        <Button
+                        {/* <Button
                             style={{
                                 backgroundColor: '#dc3545',
                                 borderColor: 'transparent',
@@ -170,13 +170,13 @@ const LecturerInfor = () => {
                             className="ml-auto mt-auto border-none bg-[#dc3545] font-medium shadow-inner transition-transform hover:shadow-third"
                         >
                             Xóa GV
-                        </Button>
+                        </Button> */}
                     </div>
                 </div>
-                <div className="course mt-4">
+                {/* <div className="course mt-4">
                     <Title level={3}>Danh sách môn học</Title>
                     <CourseTable data={data} />
-                </div>
+                </div> */}
             </div>
         </div>
     );

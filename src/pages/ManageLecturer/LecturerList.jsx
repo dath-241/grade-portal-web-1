@@ -11,6 +11,19 @@ function LecturerList() {
     const [lecturers, setLecturers] = useState([]);
     const [filteredLecturers, setFilteredLecturers] = useState([]);
 
+    const facultyMapping = {
+        'computerScienceEngineering': ['KHMT', 'KTMT'],
+        'mechanicalEngineering': ['CK'],
+        'chemicalEngineering': ['KTHH'],
+        'geoEngineering': ['KTDG'],
+        'environmentEngineering': ['MTTN'],
+        'transportationEngineering': ['KTGT'],
+        'industrialManagementEngineering': ['QLCN'],
+        'materialEngineering': ['CNVL'],
+        'civilEngineering': ['KTXD'],
+        'electicalEngineering': ['DDE'],
+    };
+    
     const handleGetLecturers = async () => {
         const lecturerData = await fetchAllLecturerApi();
         const formattedData = lecturerData.map((lecturer) => ({
@@ -38,23 +51,58 @@ function LecturerList() {
         return lecturers
             .filter(
                 (lecturer) =>
-                    lecturer.id.toString().toLowerCase().includes(searchValue) ||
+                    lecturer.ms.toString().toLowerCase().includes(searchValue) ||
                     lecturer.name.toLowerCase().includes(searchValue) ||
                     lecturer.surName.toLowerCase().includes(searchValue) ||
                     lecturer.email.toLowerCase().includes(searchValue) ||
                     lecturer.faculty.toLowerCase().includes(searchValue),
             )
             .slice(0, pageSize);
-    };
-
+    }; 
+    
     const handleSearch = (e) => {
-        const value = e.target?.value?.toLowerCase();
+        const value = e.target?.value;
         setSearchTerm(value);
         if (!value) {
             handleGetLecturers();
         } else {
             setFilteredLecturers(handleSearchLectures(value));
+            console.log("return data xyz: ", filteredLecturers);
         }
+    };
+
+    const handleFilterLectures = (faculty, source = lecturers) => {
+        if (!faculty) {
+            handleGetLecturers();
+        }
+
+        if (facultyMapping[faculty]) {
+            const filtered = source.filter((lecturer) => {
+                const normalizedLecturerFaculty = lecturer.faculty?.toLowerCase() || '';
+                return facultyMapping[faculty].some((facultyCode) =>
+                    normalizedLecturerFaculty.includes(facultyCode.toLowerCase())
+                );
+            });
+            return filtered;
+        }
+    };   
+    
+    const handleFilter = (faculty) => {
+        setFilteredLecturers(handleFilterLectures(faculty)); // Cập nhật lại danh sách giảng viên
+    };
+
+    const [formData, setFormData] = useState({
+        faculty: '',
+    });
+
+    const handleInputChange = (e) => {
+        const { id, value } = e.target;
+        setFormData({
+            ...formData,
+            [id]: value,
+        });
+
+        handleFilter(e.target.value);
     };
 
     const handlePageSizeChange = (value) => {
@@ -76,13 +124,8 @@ function LecturerList() {
             render: (text, record) => <Link to={`/management/lecturer-infor/${record.id}`}>{text}</Link>,
         },
         {
-            title: <span style={{ fontWeight: '600' }}>Tên</span>,
+            title: <span style={{ fontWeight: '600' }}>Họ và tên</span>,
             dataIndex: 'name',
-            render: (text, record) => <Link to={`/management/lecturer-infor/${record.id}`}>{text}</Link>,
-        },
-        {
-            title: <span style={{ fontWeight: '600' }}>Họ tên đệm</span>,
-            dataIndex: 'surName',
             render: (text, record) => <Link to={`/management/lecturer-infor/${record.id}`}>{text}</Link>,
         },
         {
@@ -130,11 +173,27 @@ function LecturerList() {
                 </div>
 
                 <div className="flex items-center rounded-full bg-white px-4 py-2 shadow">
-                    <i className="fa-solid fa-filter"></i>
-                    <div className="ml-4 flex items-center gap-2">
-                        <span>Khoa</span>
-                        <i className="fa-solid fa-angle-down mt-1"></i>
-                    </div>
+                    <select
+                        id="department"
+                        value={formData.department}
+                        onChange={(e) => {
+                            handleInputChange(e); // Giữ nguyên hàm này để cập nhật giá trị chọn
+                            handleFilter(e.target.value); // Thực hiện lọc giảng viên theo khoa
+                        }}
+                        className="ml-2 flex items-center gap-2"
+                    >
+                        <option value="">Chọn khoa</option>
+                        <option value="computerScienceEngineering">KHOA KHOA HỌC VÀ KỸ THUẬT MÁY TÍNH</option>
+                        <option value="mechanicalEngineering">KHOA CƠ KHÍ</option>
+                        <option value="chemicalEngineering">KHOA KỸ THUẬT HÓA HỌC</option>
+                        <option value="geoEngineering">KHOA KỸ THUẬT ĐỊA CHẤT VÀ DẦU KHÍ</option>
+                        <option value="environmentEngineering">KHOA MÔI TRƯỜNG VÀ TÀI NGUYÊN</option>
+                        <option value="transportationEngineering">KHOA KỸ THUẬT GIAO THÔNG</option>
+                        <option value="industrialManagementEngineering">KHOA QUẢN LÝ CÔNG NGHIỆP</option>
+                        <option value="materialEngineering">KHOA CÔNG NGHỆ VẬT LIỆU</option>
+                        <option value="civilEngineering">KHOA KỸ THUẬT XÂY DỰNG</option>
+                        <option value="electicalEngineering">KHOA ĐIỆN - ĐIỆN TỬ</option>
+                    </select>
                 </div>
             </div>
 

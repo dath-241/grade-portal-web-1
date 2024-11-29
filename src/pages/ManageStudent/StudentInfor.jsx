@@ -1,85 +1,85 @@
-import { Button, Table, Typography, Modal } from 'antd';
+// import { Button, Modal } from 'antd';
 import React, { useState, useEffect } from 'react';
-import { useNavigate, useParams, Link } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import './StudentInfor.css';
 import StudentIcon from '../../assets/img/student.png';
 import { fetchStudentByIdApi } from '../../apis/students';
 
-const { Title } = Typography;
+// const { Title } = Typography;
 
 
-const CourseTable = ({ data }) => {
-    const handleCheckResult = (subject) => {
-        const scores = {
-            quiz: 8.5,
-            btl: 9.0,
-            midterm: 7.5,
-            final: 8.0,
-        };
+// const CourseTable = ({ data }) => {
+//     const handleCheckResult = (subject) => {
+//         const scores = {
+//             quiz: 8.5,
+//             btl: 9.0,
+//             midterm: 7.5,
+//             final: 8.0,
+//         };
 
-        const content = (
-            <div>
-                <p>
-                    <strong>Môn học:</strong> {subject}
-                </p>
-                <p>
-                    <strong>Điểm Quiz:</strong> {scores.quiz}
-                </p>
-                <p>
-                    <strong>Điểm BTL:</strong> {scores.btl}
-                </p>
-                <p>
-                    <strong>Điểm thi giữa kỳ:</strong> {scores.midterm}
-                </p>
-                <p>
-                    <strong>Điểm thi cuối kỳ:</strong> {scores.final}
-                </p>
-            </div>
-        );
+//         const content = (
+//             <div>
+//                 <p>
+//                     <strong>Môn học:</strong> {subject}
+//                 </p>
+//                 <p>
+//                     <strong>Điểm Quiz:</strong> {scores.quiz}
+//                 </p>
+//                 <p>
+//                     <strong>Điểm BTL:</strong> {scores.btl}
+//                 </p>
+//                 <p>
+//                     <strong>Điểm thi giữa kỳ:</strong> {scores.midterm}
+//                 </p>
+//                 <p>
+//                     <strong>Điểm thi cuối kỳ:</strong> {scores.final}
+//                 </p>
+//             </div>
+//         );
 
-        Modal.info({
-            title: 'Thông tin điểm',
-            content: content,
-            onOk() {},
-        });
-    };
+//         Modal.info({
+//             title: 'Thông tin điểm',
+//             content: content,
+//             onOk() {},
+//         });
+//     };
 
-    const columns = [
-        {
-            title: 'Mã môn học',
-            dataIndex: 'code',
-            key: 'code',
-        },
-        {
-            title: 'Môn học',
-            dataIndex: 'subject',
-            key: 'subject',
-        },
-        {
-            title: 'Lớp học',
-            dataIndex: 'class',
-            key: 'class',
-        },
-        {
-            title: 'Kết quả học tập',
-            key: 'students',
-            render: (_, record) => (
-                <Button
-                    className="button shadow-inner transition-transform hover:shadow-white"
-                    type="primary"
-                    onClick={() => handleCheckResult(record.subject)}
-                >
-                    Kiểm tra
-                </Button>
-            ),
-        },
-    ];
+//     const columns = [
+//         {
+//             title: 'Mã môn học',
+//             dataIndex: 'code',
+//             key: 'code',
+//         },
+//         {
+//             title: 'Môn học',
+//             dataIndex: 'subject',
+//             key: 'subject',
+//         },
+//         {
+//             title: 'Lớp học',
+//             dataIndex: 'class',
+//             key: 'class',
+//         },
+//         {
+//             title: 'Kết quả học tập',
+//             key: 'students',
+//             render: (_, record) => (
+//                 <Button
+//                     className="button shadow-inner transition-transform hover:shadow-white"
+//                     type="primary"
+//                     onClick={() => handleCheckResult(record.subject)}
+//                 >
+//                     Kiểm tra
+//                 </Button>
+//             ),
+//         },
+//     ];
 
-    return <Table className="custom-table" columns={columns} dataSource={data} pagination={false} />;
-};
+//     return <Table className="custom-table" columns={columns} dataSource={data} pagination={false} />;
+// };
 
 const StudentInfor = () => {
-    const navigate = useNavigate();
+    // const navigate = useNavigate();
     const { id } = useParams();
     const [studentInfo, setStudentInfo] = useState({});
 
@@ -99,53 +99,53 @@ const StudentInfor = () => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [id]);
     
-    const data = [
-        {
-            key: '1',
-            code: '#50',
-            subject: 'Đồ án công nghệ phần mềm',
-            class: 'L07',
-        },
-        {
-            key: '2',
-            code: '#50',
-            subject: 'Mạng máy tính',
-            class: 'L09',
-        },
-        {
-            key: '3',
-            code: '#50',
-            subject: 'Công nghệ phần mềm',
-            class: 'L05',
-        },
-        {
-            key: '4',
-            code: '#50',
-            subject: 'Mô hình hóa',
-            class: 'L03',
-        },
-        {
-            key: '5',
-            code: '#50',
-            subject: 'Công nghệ phần mềm',
-            class: 'L02',
-        },
-    ];
+    // const data = [
+    //     {
+    //         key: '1',
+    //         code: '#50',
+    //         subject: 'Đồ án công nghệ phần mềm',
+    //         class: 'L07',
+    //     },
+    //     {
+    //         key: '2',
+    //         code: '#50',
+    //         subject: 'Mạng máy tính',
+    //         class: 'L09',
+    //     },
+    //     {
+    //         key: '3',
+    //         code: '#50',
+    //         subject: 'Công nghệ phần mềm',
+    //         class: 'L05',
+    //     },
+    //     {
+    //         key: '4',
+    //         code: '#50',
+    //         subject: 'Mô hình hóa',
+    //         class: 'L03',
+    //     },
+    //     {
+    //         key: '5',
+    //         code: '#50',
+    //         subject: 'Công nghệ phần mềm',
+    //         class: 'L02',
+    //     },
+    // ];
 
-    const showDeleteConfirm = () => {
-        Modal.confirm({
-            title: 'Xác nhận xóa sinh viên',
-            content: 'Bạn có chắc chắn muốn xóa sinh viên này?',
-            okText: 'Xác nhận',
-            cancelText: 'Đóng',
-            onOk() {
-                navigate('/home');
-            },
-            onCancel() {
-                console.log('Đóng modal');
-            },
-        });
-    };
+    // const showDeleteConfirm = () => {
+    //     Modal.confirm({
+    //         title: 'Xác nhận xóa sinh viên',
+    //         content: 'Bạn có chắc chắn muốn xóa sinh viên này?',
+    //         okText: 'Xác nhận',
+    //         cancelText: 'Đóng',
+    //         onOk() {
+    //             navigate('/home');
+    //         },
+    //         onCancel() {
+    //             console.log('Đóng modal');
+    //         },
+    //     });
+    // };
 
     return (
         <div className="student">
@@ -189,7 +189,7 @@ const StudentInfor = () => {
                                 Người tạo: <span className="ml-2 font-normal"> Admin 007</span>
                             </p>
                         </div>
-                        <Button
+                        {/* <Button
                             style={{
                                 backgroundColor: '#dc3545',
                                 borderColor: 'transparent',
@@ -199,13 +199,13 @@ const StudentInfor = () => {
                             className="ml-auto mt-auto border-none bg-[#dc3545] font-medium shadow-inner transition-transform  hover:shadow-third"
                         >
                             Xóa SV
-                        </Button>
+                        </Button> */}
                     </div>
                 </div>
-                <div className="course mt-4">
+                {/* <div className="course mt-4">
                     <Title level={3}>Báo cáo khóa học</Title>
                     <CourseTable data={data} />
-                </div>
+                </div> */}
             </div>
         </div>
     );

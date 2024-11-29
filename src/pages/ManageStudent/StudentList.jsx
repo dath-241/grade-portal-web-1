@@ -3,12 +3,25 @@ import { Table } from 'antd';
 import { fetchAllStudentApi } from '../../apis/students';
 import StudentIcon from '../../assets/img/student.png';
 import { Link } from 'react-router-dom';
+
 function StudentList() {
     const [pageSize, setPageSize] = useState(10);
-    // const [data, setData] = useState([]);
     const [students, setStudents] = useState([]);
     const [filteredStudents, setFilteredStudents] = useState([]);
     const [searchTerm, setSearchTerm] = useState('');
+
+    const facultyMapping = {
+        'computerScienceEngineering': ['KHMT', 'KTMT'],
+        'mechanicalEngineering': ['CK'],
+        'chemicalEngineering': ['KTHH'],
+        'geoEngineering': ['KTDG'],
+        'environmentEngineering': ['MTTN'],
+        'transportationEngineering': ['KTGT'],
+        'industrialManagementEngineering': ['QLCN'],
+        'materialEngineering': ['CNVL'],
+        'civilEngineering': ['KTXD'],
+        'electicalEngineering': ['DDE'],
+    };
 
     const handleGetStudents = async () => {
         const lecturerData = await fetchAllStudentApi();
@@ -27,7 +40,7 @@ function StudentList() {
     
     useEffect(() => {
         handleGetStudents();
-    }, []);
+    }, []);  
 
     const handleSearchStudents = (searchValue) => {
         if (!searchValue) {
@@ -37,14 +50,14 @@ function StudentList() {
         return students
             .filter(
                 (students) =>
-                    students.id.toString().includes(searchValue) ||
-                    students.name.includes(searchValue) ||
-                    students.surName.includes(searchValue) ||
-                    students.email.includes(searchValue) ||
-                    students.faculty.includes(searchValue),
+                    students.ms.toString().toLowerCase().includes(searchValue) ||
+                    students.name.toLowerCase().includes(searchValue) ||
+                    students.surName.toLowerCase().includes(searchValue) ||
+                    students.email.toLowerCase().includes(searchValue) ||
+                    students.faculty.toLowerCase().includes(searchValue),
             )
             .slice(0, pageSize);
-    };
+    };    
 
     const handleSearch = (e) => {
         const value = e.target?.value;
@@ -55,6 +68,41 @@ function StudentList() {
             setFilteredStudents(handleSearchStudents(value));
         }
     };
+
+    const handleFilterStudents = (faculty, source = students) => {
+        if (!faculty) {
+            handleGetStudents();
+        }
+
+        if (facultyMapping[faculty]) {
+            const filtered = source.filter((student) => {
+                const normalizedStudentFaculty = student.faculty?.toLowerCase() || '';
+                return facultyMapping[faculty].some((facultyCode) =>
+                    normalizedStudentFaculty.includes(facultyCode.toLowerCase())
+                );
+            });
+            return filtered;
+        }
+    }; 
+
+    const handleFilter = (faculty) => {
+        setFilteredStudents(handleFilterStudents(faculty)); // Cập nhật lại danh sách giảng viên
+    };
+
+    const [formData, setFormData] = useState({
+        faculty: '',
+    });
+
+    const handleInputChange = (e) => {
+        const { id, value } = e.target;
+        setFormData({
+            ...formData,
+            [id]: value,
+        });
+
+        handleFilter(e.target.value);
+    };
+    
     const handlePageSizeChange = (value) => {
         setPageSize(value);
         setStudents(handleSearchStudents());
@@ -66,12 +114,6 @@ function StudentList() {
         pageSizeOptions: ['5', '10', '20'],
         onShowSizeChange: (current, size) => handlePageSizeChange(size),
     };
-
-    const renderRow = (text, record, columnKey) => (
-        <Link to={`/management/student-infor/${record.studentId}`} style={{ display: 'block' }}>
-            <div style={{ padding: '8px 16px' }}>{record[columnKey]}</div>
-        </Link>
-    );
     
     const columns = [
         {
@@ -80,13 +122,8 @@ function StudentList() {
             render: (text, record) => <Link to={`/management/lecturer-infor/${record.id}`}>{text}</Link>,
         },
         {
-            title: <span style={{ fontWeight: '600' }}>Tên</span>,
+            title: <span style={{ fontWeight: '600' }}>Họ và tên</span>,
             dataIndex: 'name',
-            render: (text, record) => <Link to={`/management/lecturer-infor/${record.id}`}>{text}</Link>,
-        },
-        {
-            title: <span style={{ fontWeight: '600' }}>Họ tên đệm</span>,
-            dataIndex: 'surName',
             render: (text, record) => <Link to={`/management/lecturer-infor/${record.id}`}>{text}</Link>,
         },
         {
@@ -133,11 +170,29 @@ function StudentList() {
                 </div>
 
                 <div className="flex items-center rounded-full bg-white px-4 py-2 shadow">
-                    <i className="fa-solid fa-filter"></i>
+                    {/* <i className="fa-solid fa-filter"></i>
                     <div className="ml-4 flex items-center gap-2">
                         <span>Khoa</span>
                         <i className="fa-solid fa-angle-down mt-1"></i>
-                    </div>
+                    </div> */}
+                    <select
+                        id="department"
+                        value={formData.department}
+                        onChange={handleInputChange}
+                        className="ml-2 flex items-center gap-2"
+                    >
+                        <option value="">Chọn khoa</option>
+                        <option value="computerScienceEngineering">KHOA KHOA HỌC VÀ KỸ THUẬT MÁY TÍNH</option>
+                        <option value="mechanicalEngineering">KHOA CƠ KHÍ</option>
+                        <option value="chemicalEngineering">KHOA KỸ THUẬT HÓA HỌC</option>
+                        <option value="geoEngineering">KHOA KỸ THUẬT ĐỊA CHẤT VÀ DẦU KHÍ</option>
+                        <option value="environmentEngineering">KHOA MÔI TRƯỜNG VÀ TÀI NGUYÊN</option>
+                        <option value="transportationEngineering">KHOA KỸ THUẬT GIAO THÔNG</option>
+                        <option value="industrialManagementEngineering">KHOA QUẢN LÝ CÔNG NGHIỆP</option>
+                        <option value="materialEngineering">KHOA CÔNG NGHỆ VẬT LIỆU</option>
+                        <option value="civilEngineering">KHOA KỸ THUẬT XÂY DỰNG</option>
+                        <option value="electicalEngineering">KHOA ĐIỆN - ĐIỆN TỬ</option>
+                    </select>
                 </div>
             </div>
 
