@@ -7,7 +7,6 @@ import { fetchStudentByIdApi } from '../../apis/students';
 
 // const { Title } = Typography;
 
-
 // const CourseTable = ({ data }) => {
 //     const handleCheckResult = (subject) => {
 //         const scores = {
@@ -86,7 +85,7 @@ const StudentInfor = () => {
     const handleGetStudentByID = async () => {
         const studentData = await fetchStudentByIdApi(id);
         const data = {
-            key: studentData.ID, 
+            key: studentData.ID,
             id: studentData.Ms,
             name: studentData.Name,
             email: studentData.Email,
@@ -98,7 +97,7 @@ const StudentInfor = () => {
         handleGetStudentByID();
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [id]);
-    
+
     // const data = [
     //     {
     //         key: '1',

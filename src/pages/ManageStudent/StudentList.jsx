@@ -3,109 +3,57 @@ import { Table } from 'antd';
 import { fetchAllStudentApi } from '../../apis/students';
 import StudentIcon from '../../assets/img/student.png';
 import { Link } from 'react-router-dom';
+import { searchData, filterData } from '../../utils/searchfilter';
+
+const facultyMapping = {
+    computerScienceEngineering: 'KHMT-KTMT',
+    mechanicalEngineering: 'CK',
+    chemicalEngineering: 'KTHH',
+    geoEngineering: 'KTDG',
+    environmentEngineering: 'MTTN',
+    transportationEngineering: 'KTGT',
+    industrialManagementEngineering: 'QLCN',
+    materialEngineering: 'CNVL',
+    civilEngineering: 'KTXD',
+    electicalEngineering: 'DDE',
+};
 
 function StudentList() {
     const [pageSize, setPageSize] = useState(10);
     const [students, setStudents] = useState([]);
-    const [filteredStudents, setFilteredStudents] = useState([]);
     const [searchTerm, setSearchTerm] = useState('');
+    const [filter, setFilter] = useState('');
+    const searchedStudents = searchData(students, searchTerm, ['ms', 'name', 'email', 'faculty']);
+    const filterStudents = filterData(searchedStudents, filter, 'faculty');
 
-    const facultyMapping = {
-        'computerScienceEngineering': ['KHMT', 'KTMT'],
-        'mechanicalEngineering': ['CK'],
-        'chemicalEngineering': ['KTHH'],
-        'geoEngineering': ['KTDG'],
-        'environmentEngineering': ['MTTN'],
-        'transportationEngineering': ['KTGT'],
-        'industrialManagementEngineering': ['QLCN'],
-        'materialEngineering': ['CNVL'],
-        'civilEngineering': ['KTXD'],
-        'electicalEngineering': ['DDE'],
-    };
-
-    const handleGetStudents = async () => {
-        const lecturerData = await fetchAllStudentApi();
-        const formattedData = lecturerData.map((student) => ({
-            key: student.ID, // Mỗi hàng cần `key` duy nhất
-            id: student.ID,
-            ms: student.Ms,
-            name: student.Name,
-            email: student.Email,
-            faculty: student.Faculty,
-            surName: student.Name.split(' ')[0], // Lấy họ (hoặc điều chỉnh logic phù hợp)
-        }));
-        setStudents(formattedData);
-        setFilteredStudents(formattedData);
-    };
-    
     useEffect(() => {
+        const handleGetStudents = async () => {
+            const lecturerData = await fetchAllStudentApi();
+            const formattedData = lecturerData.map((student) => ({
+                key: student.ID, // Mỗi hàng cần `key` duy nhất
+                id: student.ID,
+                ms: student.Ms,
+                name: student.Name,
+                email: student.Email,
+                faculty: student.Faculty,
+            }));
+            setStudents(formattedData);
+        };
         handleGetStudents();
-    }, []);  
+    }, []);
 
-    const handleSearchStudents = (searchValue) => {
-        if (!searchValue) {
-            return students.slice(0, pageSize);
-        }
-
-        return students
-            .filter(
-                (students) =>
-                    students.ms.toString().toLowerCase().includes(searchValue) ||
-                    students.name.toLowerCase().includes(searchValue) ||
-                    students.surName.toLowerCase().includes(searchValue) ||
-                    students.email.toLowerCase().includes(searchValue) ||
-                    students.faculty.toLowerCase().includes(searchValue),
-            )
-            .slice(0, pageSize);
-    };    
-
-    const handleSearch = (e) => {
+    const handleSearchChange = (e) => {
         const value = e.target?.value;
         setSearchTerm(value);
-        if (!value) {
-            setFilteredStudents(students);
-        } else {
-            setFilteredStudents(handleSearchStudents(value));
-        }
     };
 
-    const handleFilterStudents = (faculty, source = students) => {
-        if (!faculty) {
-            handleGetStudents();
-        }
-
-        if (facultyMapping[faculty]) {
-            const filtered = source.filter((student) => {
-                const normalizedStudentFaculty = student.faculty?.toLowerCase() || '';
-                return facultyMapping[faculty].some((facultyCode) =>
-                    normalizedStudentFaculty.includes(facultyCode.toLowerCase())
-                );
-            });
-            return filtered;
-        }
-    }; 
-
-    const handleFilter = (faculty) => {
-        setFilteredStudents(handleFilterStudents(faculty)); // Cập nhật lại danh sách giảng viên
+    const handleFilterChange = (e) => {
+        const filterKey = e.target.value;
+        setFilter(facultyMapping[filterKey]);
     };
 
-    const [formData, setFormData] = useState({
-        faculty: '',
-    });
-
-    const handleInputChange = (e) => {
-        const { id, value } = e.target;
-        setFormData({
-            ...formData,
-            [id]: value,
-        });
-
-        handleFilter(e.target.value);
-    };
-    
     const handlePageSizeChange = (value) => {
         setPageSize(value);
-        setStudents(handleSearchStudents());
     };
 
     const paginationOptions = {
@@ -114,27 +62,27 @@ function StudentList() {
         pageSizeOptions: ['5', '10', '20'],
         onShowSizeChange: (current, size) => handlePageSizeChange(size),
     };
-    
+
     const columns = [
         {
             title: <span style={{ fontWeight: '600' }}>MSSV</span>,
             dataIndex: 'ms',
-            render: (text, record) => <Link to={`/management/lecturer-infor/${record.id}`}>{text}</Link>,
+            render: (text, record) => <Link to={`/management/student-infor/${record.id}`}>{text}</Link>,
         },
         {
             title: <span style={{ fontWeight: '600' }}>Họ và tên</span>,
             dataIndex: 'name',
-            render: (text, record) => <Link to={`/management/lecturer-infor/${record.id}`}>{text}</Link>,
+            render: (text, record) => <Link to={`/management/student-infor/${record.id}`}>{text}</Link>,
         },
         {
             title: <span style={{ fontWeight: '600' }}>Email</span>,
             dataIndex: 'email',
-            render: (text, record) => <Link to={`/management/lecturer-infor/${record.id}`}>{text}</Link>,
+            render: (text, record) => <Link to={`/management/student-infor/${record.id}`}>{text}</Link>,
         },
         {
             title: <span style={{ fontWeight: '600' }}>Khoa</span>,
             dataIndex: 'faculty',
-            render: (text, record) => <Link to={`/management/lecturer-infor/${record.id}`}>{text}</Link>,
+            render: (text, record) => <Link to={`/management/student-infor/${record.id}`}>{text}</Link>,
         },
     ];
 
@@ -142,9 +90,9 @@ function StudentList() {
         <div className="">
             {/* header */}
             <div className="flex justify-between">
-            <div className="flex">
+                <div className="flex">
                     <div className="flex items-center">
-                        <img src={StudentIcon} alt="course" className="h-24 w-24 p-2 mt-2" />
+                        <img src={StudentIcon} alt="course" className="mt-2 h-24 w-24 p-2" />
                         <h1 className="text-3xl font-semibold">Sinh viên</h1>
                     </div>
                 </div>
@@ -160,12 +108,12 @@ function StudentList() {
             <div className="my-6 flex justify-between">
                 <div className="relative mt-1 rounded-full bg-white px-4 py-2 shadow outline-none">
                     <i className="fa-solid fa-magnifying-glass mr-2 text-gray-400"></i>
-                    <input 
-                        type="text" 
-                        placeholder="Tìm kiếm" 
+                    <input
+                        type="text"
+                        placeholder="Tìm kiếm"
                         className="outline-none"
                         value={searchTerm}
-                        onChange={handleSearch}
+                        onChange={handleSearchChange}
                     />
                 </div>
 
@@ -175,12 +123,7 @@ function StudentList() {
                         <span>Khoa</span>
                         <i className="fa-solid fa-angle-down mt-1"></i>
                     </div> */}
-                    <select
-                        id="department"
-                        value={formData.department}
-                        onChange={handleInputChange}
-                        className="ml-2 flex items-center gap-2"
-                    >
+                    <select id="department" onChange={handleFilterChange} className="ml-2 flex items-center gap-2">
                         <option value="">Chọn khoa</option>
                         <option value="computerScienceEngineering">KHOA KHOA HỌC VÀ KỸ THUẬT MÁY TÍNH</option>
                         <option value="mechanicalEngineering">KHOA CƠ KHÍ</option>
@@ -199,7 +142,7 @@ function StudentList() {
             {/* table */}
             <Table
                 columns={columns}
-                dataSource={filteredStudents}
+                dataSource={filterStudents}
                 pagination={paginationOptions}
                 scroll={{
                     x: 900,

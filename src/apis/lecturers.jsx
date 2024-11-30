@@ -1,9 +1,6 @@
 //List all lecturer's apis
 import axios from 'axios';
-import {
-    ACCOUNT_DETAIL_API_URL,
-    LECTURER_LIST_API_URL,
-} from '../constants/api';
+import { ACCOUNT_DETAIL_API_URL, LECTURER_LIST_API_URL } from '../constants/api';
 
 export const fetchAllLecturerApi = async () => {
     const token = localStorage.getItem('token');
@@ -11,7 +8,7 @@ export const fetchAllLecturerApi = async () => {
     try {
         const response = await axios.get(LECTURER_LIST_API_URL, {
             headers: {
-                Authorization: `Bearer ${token}`, 
+                Authorization: `Bearer ${token}`,
             },
         });
         console.log('Return data: ', response.data.foundedUser);
@@ -35,4 +32,3 @@ export const fetchLectureByIDApi = async (id) => {
         console.error('Error fetching Lecturer Info', error);
     }
 };
-

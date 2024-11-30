@@ -136,8 +136,7 @@ const LecturerInfor = () => {
                     <div className="profile-info">
                         <div className="left space-y-2 font-semibold">
                             <p>
-                                Họ và tên:
-                                <span className="ml-2 font-normal"> {lecturerInfo.name}</span>
+                                Họ và tên: <span className="ml-2 font-normal"> {lecturerInfo.name}</span>
                             </p>
                             <p>
                                 Mã số: <span className="ml-2 font-normal"> {lecturerInfo.id}</span>

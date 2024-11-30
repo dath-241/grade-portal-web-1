@@ -1,113 +1,59 @@
 import React, { useState, useEffect } from 'react';
 import { Table } from 'antd';
 import { fetchAllLecturerApi } from '../../apis/lecturers';
-
 import LecturerIcon from '../../assets/img/teacher.png';
 import { Link } from 'react-router-dom';
+import { searchData, filterData } from '../../utils/searchfilter';
+
+const facultyMapping = {
+    computerScienceEngineering: 'KHMT-KTMT',
+    mechanicalEngineering: 'CK',
+    chemicalEngineering: 'KTHH',
+    geoEngineering: 'KTDG',
+    environmentEngineering: 'MTTN',
+    transportationEngineering: 'KTGT',
+    industrialManagementEngineering: 'QLCN',
+    materialEngineering: 'CNVL',
+    civilEngineering: 'KTXD',
+    electicalEngineering: 'DDE',
+};
 
 function LecturerList() {
     const [pageSize, setPageSize] = useState(10);
     const [searchTerm, setSearchTerm] = useState('');
     const [lecturers, setLecturers] = useState([]);
-    const [filteredLecturers, setFilteredLecturers] = useState([]);
-
-    const facultyMapping = {
-        'computerScienceEngineering': ['KHMT', 'KTMT'],
-        'mechanicalEngineering': ['CK'],
-        'chemicalEngineering': ['KTHH'],
-        'geoEngineering': ['KTDG'],
-        'environmentEngineering': ['MTTN'],
-        'transportationEngineering': ['KTGT'],
-        'industrialManagementEngineering': ['QLCN'],
-        'materialEngineering': ['CNVL'],
-        'civilEngineering': ['KTXD'],
-        'electicalEngineering': ['DDE'],
-    };
-    
-    const handleGetLecturers = async () => {
-        const lecturerData = await fetchAllLecturerApi();
-        const formattedData = lecturerData.map((lecturer) => ({
-            key: lecturer.ID,
-            ms: lecturer.Ms,
-            id: lecturer.ID,
-            name: lecturer.Name,
-            email: lecturer.Email,
-            faculty: lecturer.Faculty,
-            surName: lecturer.Name.split(' ')[0],
-        }));
-        setLecturers(formattedData);
-        setFilteredLecturers(formattedData);
-    };
+    const [filter, setFilter] = useState('');
+    const searchedLecturers = searchData(lecturers, searchTerm, ['ms', 'name', 'email', 'faculty']);
+    const filteredLecturers = filterData(searchedLecturers, filter, 'faculty');
 
     useEffect(() => {
+        const handleGetLecturers = async () => {
+            const lecturerData = await fetchAllLecturerApi();
+            const formattedData = lecturerData.map((lecturer) => ({
+                key: lecturer.ID,
+                ms: lecturer.Ms,
+                id: lecturer.ID,
+                name: lecturer.Name,
+                email: lecturer.Email,
+                faculty: lecturer.Faculty,
+            }));
+            setLecturers(formattedData);
+        };
         handleGetLecturers();
     }, []);
 
-    const handleSearchLectures = (searchValue) => {
-        if (!searchValue) {
-            return lecturers.slice(0, pageSize);
-        }
-
-        return lecturers
-            .filter(
-                (lecturer) =>
-                    lecturer.ms.toString().toLowerCase().includes(searchValue) ||
-                    lecturer.name.toLowerCase().includes(searchValue) ||
-                    lecturer.surName.toLowerCase().includes(searchValue) ||
-                    lecturer.email.toLowerCase().includes(searchValue) ||
-                    lecturer.faculty.toLowerCase().includes(searchValue),
-            )
-            .slice(0, pageSize);
-    }; 
-    
-    const handleSearch = (e) => {
+    const handleSearchChange = (e) => {
         const value = e.target?.value;
         setSearchTerm(value);
-        if (!value) {
-            handleGetLecturers();
-        } else {
-            setFilteredLecturers(handleSearchLectures(value));
-            console.log("return data xyz: ", filteredLecturers);
-        }
     };
 
-    const handleFilterLectures = (faculty, source = lecturers) => {
-        if (!faculty) {
-            handleGetLecturers();
-        }
-
-        if (facultyMapping[faculty]) {
-            const filtered = source.filter((lecturer) => {
-                const normalizedLecturerFaculty = lecturer.faculty?.toLowerCase() || '';
-                return facultyMapping[faculty].some((facultyCode) =>
-                    normalizedLecturerFaculty.includes(facultyCode.toLowerCase())
-                );
-            });
-            return filtered;
-        }
-    };   
-    
-    const handleFilter = (faculty) => {
-        setFilteredLecturers(handleFilterLectures(faculty)); // Cập nhật lại danh sách giảng viên
-    };
-
-    const [formData, setFormData] = useState({
-        faculty: '',
-    });
-
-    const handleInputChange = (e) => {
-        const { id, value } = e.target;
-        setFormData({
-            ...formData,
-            [id]: value,
-        });
-
-        handleFilter(e.target.value);
+    const handleFilterChange = (e) => {
+        const filterKey = e.target.value;
+        setFilter(facultyMapping[filterKey]);
     };
 
     const handlePageSizeChange = (value) => {
         setPageSize(value);
-        setLecturers(handleSearchLectures());
     };
 
     const paginationOptions = {
@@ -139,7 +85,6 @@ function LecturerList() {
             render: (text, record) => <Link to={`/management/lecturer-infor/${record.id}`}>{text}</Link>,
         },
     ];
-    
 
     return (
         <div className="">
@@ -168,20 +113,12 @@ function LecturerList() {
                         placeholder="Tìm kiếm"
                         className="outline-none"
                         value={searchTerm}
-                        onChange={handleSearch}
+                        onChange={handleSearchChange}
                     />
                 </div>
 
                 <div className="flex items-center rounded-full bg-white px-4 py-2 shadow">
-                    <select
-                        id="department"
-                        value={formData.department}
-                        onChange={(e) => {
-                            handleInputChange(e); // Giữ nguyên hàm này để cập nhật giá trị chọn
-                            handleFilter(e.target.value); // Thực hiện lọc giảng viên theo khoa
-                        }}
-                        className="ml-2 flex items-center gap-2"
-                    >
+                    <select id="department" onChange={handleFilterChange} className="ml-2 flex items-center gap-2">
                         <option value="">Chọn khoa</option>
                         <option value="computerScienceEngineering">KHOA KHOA HỌC VÀ KỸ THUẬT MÁY TÍNH</option>
                         <option value="mechanicalEngineering">KHOA CƠ KHÍ</option>
