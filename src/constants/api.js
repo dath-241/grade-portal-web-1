@@ -28,3 +28,5 @@ export const TEACHER_DETAIL_API_URL = (id) => `${CLIENT_API_URL}/${id}`
 export const COURSE_DETAIL_API_URL = (id) => `${CLIENT_API_URL}/course/${id}`
 //----End API for Class List of Student----//
 
+export const CREATE_ACCOUNT_API_URL = `${ADMIN_API_URL}/account/create`;
+
