@@ -3,7 +3,6 @@ import Switch from './components/switch.component';
 import ContentBox from './components/content-box.component';
 import { useEffect, useState} from 'react';
 import { fetchClassByIdApi } from '../../apis/classInfo.api';
-
 function CourseInfo() {
     const { id } = useParams();
     const [courseInfo, setCourseInfo] = useState(null);
