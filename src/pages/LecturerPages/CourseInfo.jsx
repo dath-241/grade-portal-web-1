@@ -6,18 +6,34 @@ import { fetchClassByIdApi } from '../../apis/classInfo.api';
 
 function CourseInfo() {
     const { id } = useParams();
-    const [courseInfo, setCourseInfo] = useState(null); // Initialize state to store course data
+    const [courseInfo, setCourseInfo] = useState(null);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
 
     useEffect(() => {
-        fetchClassByIdApi(id)
-        .then((courseDetail) => {
-            setCourseInfo(courseDetail); 
-        })
-        .catch((error) => console.error('Error fetching data:', error));
-}, [id]);
+        const fetchCourseInfo = async () => {
+            try {
+                const response = await fetchClassByIdApi(id);
+                setCourseInfo(response);
+                setLoading(false);
+            } catch (error) {
+                setError(error);
+            } 
+        }
+        fetchCourseInfo();
+    }, [id]);
+
+    if (loading) {
+        return <div>Loading...</div>;
+    }
+  
+
+    if (error) {
+        return <div>Error: {error.message}</div>; 
+    }
 
     if (!courseInfo) {
-        return <div></div>;
+        return <div>No course information found.</div>; 
     }
 
     return (
@@ -27,10 +43,10 @@ function CourseInfo() {
             </div>
             <div className="w-[1100px]">
                 <Switch id={id} active="info" />
-                <ContentBox title="Thông tin chung" courseInfo={courseInfo} type="info" />
+                <ContentBox title="Thông tin chung" courseInfo={courseInfo} />
             </div>
         </div>
-    );
+ );
 }
 
 export default CourseInfo;

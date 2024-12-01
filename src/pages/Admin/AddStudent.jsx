@@ -91,10 +91,16 @@ function AddStudent() {
                             className="border-gray items-start rounded-md border bg-gray-100 p-2"
                         >
                             <option value="">Chọn khoa</option>
-                            <option value="computerScience">Khoa học máy tính</option>
-                            <option value="computerEngineering">Kỹ thuật máy tính</option>
-                            <option value="chemicalEngineering">Kỹ thuật hóa học</option>
-                            <option value="nuclearEngineering">Kỹ thuật hạt nhân</option>
+                            <option value="computerScienceEngineering">KHOA KHOA HỌC VÀ KỸ THUẬT MÁY TÍNH</option>
+                            <option value="mechanicalEngineering">KHOA CƠ KHÍ</option>
+                            <option value="chemicalEngineering">KHOA KỸ THUẬT HÓA HỌC</option>
+                            <option value="geoEngineering">KHOA KỸ THUẬT ĐỊA CHẤT VÀ DẦU KHÍ</option>
+                            <option value="environmentEngineering">KHOA MÔI TRƯỜNG VÀ TÀI NGUYÊN</option>
+                            <option value="transportationEngineering">KHOA KỸ THUẬT GIAO THÔNG</option>
+                            <option value="industrialManagementEngineering">KHOA QUẢN LÝ CÔNG NGHIỆP</option>
+                            <option value="materialEngineering">KHOA CÔNG NGHỆ VẬT LIỆU</option>
+                            <option value="civilEngineering">KHOA KỸ THUẬT XÂY DỰNG</option>
+                            <option value="electicalEngineering">KHOA ĐIỆN - ĐIỆN TỬ</option>
                         </select>
                     </div>
 

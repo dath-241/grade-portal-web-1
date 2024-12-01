@@ -7,23 +7,15 @@ function ContentBox({ courseInfo, title }) {
                 <ul className="flex flex-col gap-[10px]">
                     <li className="flex text-lg">
                         <div className="font-semibold">Lớp : </div>
-                        <div className="ml-[5px]">{courseInfo.class}</div>
+                        <div className="ml-[5px]">{courseInfo.Name}</div>
                     </li>
                     <li className="flex text-lg">
                         <div className="font-semibold">Giảng viên : </div>
-                        <div className="ml-[5px]">{courseInfo.teacher}</div>
-                    </li>
-                    <li className="flex text-lg">
-                        <div className="font-semibold">Số tín chỉ : </div>
-                        <div className="ml-[5px]">{courseInfo.credit}</div>
-                    </li>
-                    <li className="flex text-lg">
-                        <div className="font-semibold">Trạng thái : </div>
-                        <div className="ml-[5px]">{courseInfo.status}</div>
+                        <div className="ml-[5px]">{courseInfo.teacherName}</div>
                     </li>
                     <li className="flex text-lg">
                         <div className="font-semibold">Học kì : </div>
-                        <div className="ml-[5px]">{courseInfo.semester}</div>
+                        <div className="ml-[5px]">{courseInfo.Semester}</div>
                     </li>
                 </ul>
             </div>

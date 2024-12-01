@@ -1,25 +1,22 @@
-//List all lecturer's apis
-
 import axios from 'axios';
-import { ACCOUNT_DETAIL_API_URL, LECTURER_LIST_API_URL } from '../constants/api';
+import { STUDENT_LIST_API_URL, ACCOUNT_DETAIL_API_URL } from '../constants/api';
 
-export const fetchAllLecturerApi = async () => {
+export const fetchAllStudentApi = async () => {
     const token = localStorage.getItem('token');
-    console.log(token);
     try {
-        const response = await axios.get(LECTURER_LIST_API_URL, {
+        const response = await axios.get(STUDENT_LIST_API_URL, {
             headers: {
                 Authorization: `Bearer ${token}`,
             },
         });
-        console.log('Return data: ', response.data.foundedUser);
+        console.log('Return data: ', response);
         return response.data.foundedUser;
     } catch (error) {
-        console.error('Error fetching Lecturer List', error);
+        console.error('Error fetching Student List:', error);
     }
 };
 
-export const fetchLectureByIDApi = async (id) => {
+export const fetchStudentByIdApi = async (id) => {
     const token = localStorage.getItem('token');
     try {
         const response = await axios.get(ACCOUNT_DETAIL_API_URL(id), {
@@ -27,10 +24,9 @@ export const fetchLectureByIDApi = async (id) => {
                 Authorization: `Bearer ${token}`,
             },
         });
-        console.log('Return data: yyyy', response.data.account);
+        console.log('Return data: ', response.data.account);
         return response.data.account;
     } catch (error) {
-        console.error('Error fetching Lecturer Info', error);
+        console.error('Error fetching Student Info', error);
     }
 };
-
