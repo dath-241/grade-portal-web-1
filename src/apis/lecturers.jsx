@@ -5,14 +5,12 @@ import { ACCOUNT_DETAIL_API_URL, LECTURER_LIST_API_URL } from '../constants/api'
 
 export const fetchAllLecturerApi = async () => {
     const token = localStorage.getItem('token');
-    console.log(token);
     try {
         const response = await axios.get(LECTURER_LIST_API_URL, {
             headers: {
                 Authorization: `Bearer ${token}`,
             },
         });
-        console.log('Return data: ', response.data.foundedUser);
         return response.data.foundedUser;
     } catch (error) {
         console.error('Error fetching Lecturer List', error);
@@ -27,7 +25,6 @@ export const fetchLectureByIDApi = async (id) => {
                 Authorization: `Bearer ${token}`,
             },
         });
-        console.log('Return data: yyyy', response.data.account);
         return response.data.account;
     } catch (error) {
         console.error('Error fetching Lecturer Info', error);

@@ -30,7 +30,6 @@ function AddTeacher() {
             return;
         }
         setError('');
-        setShowSuccess(true);
         const Data = [formData];
 
         const token = localStorage.getItem('token');
@@ -41,8 +40,12 @@ function AddTeacher() {
                     Authorization: `Bearer ${token}`,
                 },
             })
-            .then((response) => {
-                console.log('Teacher created');
+            .then((response) => {                
+                if(!response.data.accessAccount){
+                    setError('Lỗi khi tạo tài khoản');                
+                    return;
+                }
+                setShowSuccess(true);
             })
             .catch((error) => {
                 console.error('Error:', error);
@@ -54,17 +57,17 @@ function AddTeacher() {
     return (
         <div className="flex h-full flex-col pb-2">
             <div>
-                <Link to="/controller" className="rounded-lg px-2 py-2 text-gray-600 hover:text-black">
+                <Link to="/management" className="rounded-lg px-2 py-2 text-gray-600 hover:text-black">
                     Bảng điều khiển
                 </Link>
                 <p className="text-gray inline-block px-2 py-2">/</p>
-                <Link to="/home" className="rounded-lg px-2 py-2 text-gray-600 hover:text-black">
+                <Link to="/management/lecturer-list" className="rounded-lg px-2 py-2 text-gray-600 hover:text-black">
                     Giảng viên
                 </Link>
                 <p className="text-gray inline-block px-2 py-2">/</p>
-                <Link to="/home" className="text-gray rounded-lg px-2 py-2">
+                <span className="text-gray rounded-lg px-2 py-2">
                     Thêm GV
-                </Link>
+                </span>
             </div>
             <div className="flex-1 rounded-lg bg-white p-8">
                 <h1 className="text-3xl font-semibold">Thêm giảng viên</h1>

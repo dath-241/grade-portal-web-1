@@ -33,7 +33,6 @@ function Header() {
     function adminHeader() {
         return (
             <ul className="headerNav mr-6 flex gap-4 font-medium">
-                <p>Admin header</p>
                 <Link to="/home" className="rounded-lg px-4 py-2 text-white hover:bg-primary">
                     Trang chủ
                 </Link>
@@ -52,7 +51,6 @@ function Header() {
     function studentHeader() {
         return (
             <ul className="headerNav mr-6 flex gap-4 font-medium">
-                <p>Student header</p>
                 <Link to="/home" className="rounded-lg px-4 py-2 text-white hover:bg-primary">
                     Trang chủ
                 </Link>
@@ -71,7 +69,6 @@ function Header() {
     function teacherHeader() {
         return (
             <ul className="headerNav mr-6 flex gap-4 font-medium">
-                <p>Teacher header</p>
                 <Link to="/home" className="rounded-lg px-4 py-2 text-white hover:bg-primary">
                     Trang chủ
                 </Link>

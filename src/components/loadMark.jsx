@@ -1,5 +1,5 @@
 import { Table, Modal } from 'antd';
-import React, { useEffect, useState } from 'react';
+import React, {  useState } from 'react';
 import Papa from 'papaparse';
 import { loadMarkApi } from '../apis/LoadMark.api';
 import upLoad from '../assets/img/upload.png';
@@ -137,7 +137,8 @@ const LoadMark = () => {
         }
     };
 
-
+    console.log(error); // eslint-disable-line
+    
     return (
         <div className="flex flex-col items-center justify-center bg-white">
             <div
