@@ -49,6 +49,11 @@ function SubjectList() {
                     </nav>
                     <div className="font-roboto ml-2 mt-1 text-3xl font-semibold leading-none text-black">Khóa học</div>
                 </h1>
+                <Link to="/managerment/add-course" className="ml-auto font-semibold">
+                    <div className="mt-8 size-fit cursor-pointer rounded-lg bg-primary px-4 py-2 text-white shadow-inner hover:shadow-white">
+                        Tạo môn học
+                    </div>
+                </Link>
             </div>
             <div className="ml-16 mr-8 mt-4">
                 <SearchBar onSearch={handleSearch} />

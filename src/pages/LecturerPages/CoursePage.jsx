@@ -1,29 +1,33 @@
 import { useEffect, useRef, useState } from 'react';
 import CourseItem from './components/course.component';
 import { Link } from 'react-router-dom';
+import { fetchAllClassApi } from '../../apis/classInfo.api';
 
 function CoursePage() {
-    const api = 'http://localhost:3000/course';
     const [courses, setCourses] = useState([]);
     const courseList = useRef([]);
+    const [loading,setLoading] = useState(true)
     useEffect(() => {
-        fetch(api)
-            .then((response) => {
-                return response.json();
-            })
-            .then((json) => {
-                courseList.current = json;
-                setCourses(json);
-            });
+        fetchAllClassApi()
+        .then(classList =>{
+            courseList.current = classList
+            setLoading(false)
+            setCourses(classList)
+        })
+        .catch(()=>{
+            setLoading(false)
+            console.log("Error when fetching data")
+        })
     }, []);
+
     const course_list = courseList.current;
-    const semeters = ['Tất cả học kì', ...new Set(course_list.map((course) => course.semester))];
+    const semeters = ['Tất cả học kì', ...new Set(course_list.map((course) => course.Semester))];
     const changeHandler = (event) => {
         if (event.target.value === '') {
             setCourses(course_list);
         } else {
             const courseFind = course_list.filter((course) =>
-                course.name.trim().toLowerCase().includes(event.target.value.trim().toLowerCase()),
+                course.courseName.trim().toLowerCase().includes(event.target.value.trim().toLowerCase()),
             );
             setCourses(courseFind);
         }
@@ -32,7 +36,7 @@ function CoursePage() {
         if (event.target.value === '') {
             setCourses(course_list);
         } else {
-            const courseFind = course_list.filter((course) => course.semester.trim() === event.target.value.trim());
+            const courseFind = course_list.filter((course) => course.Semester.trim() === event.target.value.trim());
             setCourses(courseFind);
         }
     };
@@ -40,6 +44,13 @@ function CoursePage() {
     //     document.querySelector('#course').value = '';
     //     setCourses(course_list);
     // };
+    if(loading){
+        return(
+            <div className="flex justify-center items-center min-h-screen text-lg font-semibold">
+                Đang tải dữ liệu ...
+            </div>
+        )
+    }
     return (
         <div className="mx-auto max-w-[70%]">
             <div className="my-6 text-3xl font-semibold">Các khoá học của tôi</div>
@@ -78,13 +89,13 @@ function CoursePage() {
             ) : (
                 courses.map((course, index) => {                    
                     return (
-                        <Link to={`/lecturer-course/${course.id}/info`} key={index}>
+                        <Link to={`/lecturer-course/${course.ID}/info`} key={index}>
                             <CourseItem
                                 id={index}
-                                courseName={course.name}
-                                teacher={course.teacher}
-                                semester={course.semester}
-                                group={course.group}
+                                courseName={course.courseName}
+                                teacher={course.teacherName}
+                                semester={course.Semester}
+                                group={course.Name}
                             />
                         </Link>
                     );

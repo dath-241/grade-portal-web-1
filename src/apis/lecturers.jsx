@@ -1,4 +1,5 @@
 //List all lecturer's apis
+
 import axios from 'axios';
 import { ACCOUNT_DETAIL_API_URL, LECTURER_LIST_API_URL } from '../constants/api';
 
@@ -32,3 +33,4 @@ export const fetchLectureByIDApi = async (id) => {
         console.error('Error fetching Lecturer Info', error);
     }
 };
+
