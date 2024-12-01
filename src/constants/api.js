@@ -9,11 +9,16 @@ export const LECTURER_LIST_API_URL = `${ADMIN_API_URL}/lecturers`;
 export const LECTURER_DETAIL_API_URL = (id) => `${ADMIN_API_URL}/lecturers/${id}`;
 
 
+export const LECTURER_LOADMARK_API_URL = `${CLIENT_API_URL}/resultScore/create`;
+
+
+
 export const HALLOFFAME_LIST_API_URL = `${ADMIN_API_URL}/HOF/all`;
 
 export const MAPPING_ID_TO_NAME_API_URL = (id) => `${CLIENT_API_URL}/course/${id}`;
 
 export const CREATE_CLASS_API_URL = `${ADMIN_API_URL}/class/create`;
+export const COURSE_ADMIN_LIST_API_URL = `${ADMIN_API_URL}/course/create`;
 
 //----Start API for Class List of Student----//
 export const CLASS_LIST_API_URL = `${CLIENT_API_URL}/class/account`
@@ -23,4 +28,5 @@ export const TEACHER_DETAIL_API_URL = (id) => `${CLIENT_API_URL}/${id}`
 export const COURSE_DETAIL_API_URL = (id) => `${CLIENT_API_URL}/course/${id}`
 //----End API for Class List of Student----//
 
+export const CREATE_ACCOUNT_API_URL = `${ADMIN_API_URL}/account/create`;
 
