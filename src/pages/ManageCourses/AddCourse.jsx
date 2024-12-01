@@ -20,8 +20,16 @@ const AddCourse = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        if (courseCode === '' || courseName === '' || credit === ''
-    || bt === '' || tn === '' || btl === '' || gk === '' || ck === '') {
+        if (
+            courseCode === '' ||
+            courseName === '' ||
+            credit === '' ||
+            bt === '' ||
+            tn === '' ||
+            btl === '' ||
+            gk === '' ||
+            ck === ''
+        ) {
             setError('Vui lòng điền đầy đủ thông tin.');
             return;
         }
@@ -70,12 +78,12 @@ const AddCourse = () => {
     };
 
     return (
-        <div className="rounded-lg bg-white p-8 shadow-lg">
-            <h1 className="mb-6 text-2xl font-semibold">Thêm Khóa Học</h1>
-            <form onSubmit={handleSubmit}>
+        <div className="mx-auto w-3/5 rounded-lg bg-white p-8 shadow-lg">
+            <h1 className="mb-6 text-2xl font-semibold">Thêm môn học</h1>
+            <form onSubmit={handleSubmit} className="">
                 <div className="mb-4 grid grid-cols-2 gap-4">
                     <div className="mb-4">
-                        <label className="block text-sm font-medium">Mã Khóa Học:</label>
+                        <label className="block text-base font-medium">Mã môn học:</label>
                         <input
                             type="text"
                             value={courseCode}
@@ -84,7 +92,7 @@ const AddCourse = () => {
                         />
                     </div>
                     <div className="mb-4">
-                        <label className="block text-sm font-medium">Tên Khóa Học:</label>
+                        <label className="block text-base font-medium">Tên môn học:</label>
                         <input
                             type="text"
                             value={courseName}
@@ -94,7 +102,7 @@ const AddCourse = () => {
                     </div>
                 </div>
                 <div className="mb-4">
-                    <label className="block text-sm font-medium">Mô Tả :</label>
+                    <label className="block text-base font-medium">Mô Tả :</label>
                     <textarea
                         value={courseDesc}
                         onChange={(e) => setCourseDesc(e.target.value)}
@@ -102,7 +110,7 @@ const AddCourse = () => {
                     ></textarea>
                 </div>
                 <div className="mb-4">
-                    <label className="block text-sm font-medium">Số Tín Chỉ:</label>
+                    <label className="block text-base font-medium">Số Tín Chỉ:</label>
                     <input
                         type="number"
                         value={credit}
@@ -110,13 +118,13 @@ const AddCourse = () => {
                             const value = e.target.value;
                             setCredit(value === '' ? '' : Math.max(0, parseInt(value, 10)));
                         }}
-                        className="w-full rounded-md border border-gray-300 p-2"
+                        className="w-[calc(50%-0.5rem)] rounded-md border border-gray-300 p-2"
                     />
                 </div>
-                <h2 className="mb-6 text-xl font-semibold">Điểm thành phần</h2>
+                <h2 className="mb-4 mt-8 text-xl font-semibold">Điểm thành phần</h2>
                 <div className="mb-4 grid grid-cols-2 gap-4">
                     <div>
-                        <label className="block text-sm font-medium">Điểm BT:</label>
+                        <label className="block text-base font-medium">Điểm BT:</label>
                         <input
                             type="number"
                             value={bt}
@@ -128,7 +136,7 @@ const AddCourse = () => {
                         />
                     </div>
                     <div>
-                        <label className="block text-sm font-medium">Điểm TN:</label>
+                        <label className="block text-base font-medium">Điểm TN:</label>
                         <input
                             type="number"
                             value={tn}
@@ -142,7 +150,7 @@ const AddCourse = () => {
                 </div>
                 <div className="mb-4 grid grid-cols-2 gap-4">
                     <div>
-                        <label className="block text-sm font-medium">Điểm BTL:</label>
+                        <label className="block text-base font-medium">Điểm BTL:</label>
                         <input
                             type="number"
                             value={btl}
@@ -154,7 +162,7 @@ const AddCourse = () => {
                         />
                     </div>
                     <div>
-                        <label className="block text-sm font-medium">Điểm GK:</label>
+                        <label className="block text-base font-medium">Điểm GK:</label>
                         <input
                             type="number"
                             value={gk}
@@ -167,7 +175,7 @@ const AddCourse = () => {
                     </div>
                 </div>
                 <div className="mb-4">
-                    <label className="block text-sm font-medium">Điểm CK:</label>
+                    <label className="block text-base font-medium">Điểm CK:</label>
                     <input
                         type="number"
                         value={ck}
@@ -175,28 +183,30 @@ const AddCourse = () => {
                             const value = e.target.value;
                             setCk(value === '' ? '' : Math.max(0, parseInt(value, 10)));
                         }}
-                        className="w-full rounded-md border border-gray-300 p-2"
+                        className="w-[calc(50%-0.5rem)] rounded-md border border-gray-300 p-2"
                     />
                 </div>
 
                 {error && <div className="mb-4 text-red-500">{error}</div>}
 
-                <button
-                    type="submit"
-                    disabled={loading}
-                    className={`rounded-xl px-4 py-2 font-medium text-white shadow-inner ${
-                        loading ? 'bg-gray-400' : 'bg-primary hover:shadow-white'
-                    }`}
-                >
-                    {loading ? 'Đang xử lý...' : 'Thêm Khóa Học'}
-                </button>
+                <div className="flex items-center">
+                    <button
+                        type="submit"
+                        disabled={loading}
+                        className={`pytext-base mx-auto mt-6 rounded-xl px-4 py-2 font-medium text-white shadow-inner ${
+                            loading ? 'bg-gray-400' : 'bg-primary hover:shadow-white'
+                        }`}
+                    >
+                        {loading ? 'Đang xử lý...' : 'Thêm môn học'}
+                    </button>
+                </div>
             </form>
 
             {showSuccess && (
                 <div className="fixed inset-0 z-50 flex items-center justify-center bg-gray-700 bg-opacity-20 text-center">
-                    <div className="mx-6 w-full max-w-md rounded-lg bg-[#ffffff] px-4 py-8 text-2xl font-medium text-black shadow-lg">
+                    <div className="text-2text-base mx-6 w-full max-w-md rounded-lg bg-[#ffffff] px-4 py-8 font-medium text-black shadow-lg">
                         <img src={tick} alt="success" className="mx-auto mb-2 h-10 w-10" />
-                        Thêm khóa học thành công!
+                        Thêm môn học thành công!
                     </div>
                 </div>
             )}

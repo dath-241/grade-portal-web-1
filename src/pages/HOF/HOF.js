@@ -33,7 +33,6 @@ const HOF = () => {
     async function setCourseListData() {
         try {
             if (data) {
-                console.log('data: ', data);
                 let courseIdList = [];
                 if (data.data && Array.isArray(data.data.tier)) {
                     courseIdList = data.data.tier.map((item) => item.course_id);
@@ -42,7 +41,6 @@ const HOF = () => {
                 if (courseIdList.length > 0 && !selectedCourse) {
                     setSelectedCourse(courseIdList[0]);
                 }
-                console.log('courseIdList: ', courseIdList);
             }
         } catch (error) {
             console.log('Error while setting course data: ', error);
@@ -66,7 +64,6 @@ const HOF = () => {
     }, [data]);
 
     useEffect(() => {
-        console.log('selectedCourse: ', selectedCourse);
         if (data && data.data && data.data.tier) {
             const renderCourse = data.data.tier.find((element) => element.course_id === selectedCourse);
             if (renderCourse) setRenderData(renderCourse.data);

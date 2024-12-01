@@ -68,7 +68,7 @@ function AddTeacher() {
                 <span className="text-gray rounded-lg px-2 py-2">Thêm SV</span>
             </div>
             <div className="flex-1 rounded-lg bg-white p-8">
-                <h1 className="text-3xl font-semibold">Thêm giảng viên</h1>
+                <h1 className="text-3xl font-semibold">Thêm sinh viên</h1>
 
                 <form className="grid grid-cols-2 grid-rows-2 gap-12 px-40 pt-8" onSubmit={handleSubmit}>
                     <div className="flex flex-col gap-2">
