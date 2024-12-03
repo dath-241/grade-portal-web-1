@@ -9,11 +9,11 @@ export const fetchAllCoursesApi = async () => {
                 Authorization: `Bearer ${token}`,
             },
         });
-        return response.data.courses; 
+        return response.data.allCourse; 
     } catch (error) {
         console.error('Error fetching Course List:', error);
         throw error; 
-        }
+    }
 };
 
 export const fetchClassByIDApi = async (id) => {
@@ -24,8 +24,9 @@ export const fetchClassByIDApi = async (id) => {
                 Authorization: `Bearer ${token}`,
             },
         });
-        return response.data.account;
+        return response.data.classes;
     } catch (error) {
-        console.error('Error fetching Class Info', error);
+        console.error('Error fetching Class Info:', error);
+        throw error; 
     }
 };

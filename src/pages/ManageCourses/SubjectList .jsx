@@ -5,6 +5,7 @@ import { fetchAllCoursesApi} from '../../apis/Course_Class.jsx';
 import { fetchClassByIDApi } from '../../apis/Course_Class.jsx';
 function SubjectList() {
     const [course, setCourse] = useState([]);
+    const [originalCourses, setOriginalCourses] = useState([]);
     const navigate = useNavigate();
     useEffect(() => {
         const handleGetCourses = async () => {
@@ -17,35 +18,48 @@ function SubjectList() {
                             return {
                                 key: course.ID,
                                 id: course.ID,
-                                ms: course.ms,
-                                name: course.name,
-                                desc: course.desc,
-                                credit: course.credit,
-                                classCount: classes ? classes.length : 0, 
+                                ms: course.MS,
+                                name: course.Name,
+                                desc: course.Desc,
+                                credit: course.Credit,
+                                classCount: Array.isArray(classes) ? classes.length : 0,
                             };
                         } catch (error) {
+                            console.error(`Error fetching classes for course ID: ${course.ID}`, error);
                             return {
                                 key: course.ID,
                                 id: course.ID,
-                                ms: course.ms,
-                                name: course.name,
-                                desc: course.desc,
-                                credit: course.credit,
+                                ms: course.MS,
+                                name: course.Name,
+                                desc: course.Desc,
+                                credit: course.Credit,
                                 classCount: 0, 
                             };
                         }
                     })
                 );
+                setOriginalCourses(coursesWithClassCount);
                 setCourse(coursesWithClassCount);
             } catch (error) {
                 console.error('Error fetching courses:', error);
-            } finally {
             }
         };
+    
         handleGetCourses();
     }, []);
+    
     const handleSearch = (query) => {
         console.log('Tìm kiếm với từ khóa:', query);
+        if (query) {
+            const filteredCourses = originalCourses.filter(course => 
+                course.name.toLowerCase().includes(query.toLowerCase()) || 
+                course.ms.toLowerCase().includes(query.toLowerCase()) ||
+                course.classCount.toString().includes(query.toLowerCase())
+            );
+            setCourse(filteredCourses);
+        } else {
+            setCourse(originalCourses);
+        }
     };
     
     return (

@@ -4,18 +4,15 @@ const SearchBar = ({ onSearch }) => {
     const [query, setQuery] = useState('');
 
     const handleInputChange = (e) => {
-        setQuery(e.target.value);
-    };
-
-    const handleSubmit = (e) => {
-        e.preventDefault();
+        const value = e.target.value;
+        setQuery(value);
         if (onSearch) {
-            onSearch(query);
+            onSearch(value); 
         }
     };
 
     return (
-        <form onSubmit={handleSubmit} className="flex relative items-center">
+        <div className="flex relative items-center">
             {query === '' && (
                 <div className="absolute left-2 top-1/2 transform -translate-y-1/2 text-gray-400 p-2">
                     <svg width="15" height="14" viewBox="0 0 15 14" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -49,7 +46,7 @@ const SearchBar = ({ onSearch }) => {
                 placeholder="     Tìm kiếm..."
                 className="border rounded-[24px] px-4 py-2 w-[340px] focus:outline-none"
             />
-        </form>
+        </div>
     );
 };
 
