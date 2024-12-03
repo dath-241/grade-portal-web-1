@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import tick from '../../assets/img/tick.png';
-
+import { CREATE_COURSE_ADMIN_API_URL } from '../../constants/api';
 const AddCourse = () => {
     const [courseCode, setCourseCode] = useState('');
     const [courseName, setCourseName] = useState('');
@@ -15,8 +15,6 @@ const AddCourse = () => {
     const [error, setError] = useState('');
     const [showSuccess, setShowSuccess] = useState(false);
     const [loading, setLoading] = useState(false);
-    const ADMIN_API_URL = process.env.REACT_APP_ADMIN_API_URL;
-
     const handleSubmit = async (e) => {
         e.preventDefault();
 
@@ -50,7 +48,7 @@ const AddCourse = () => {
         const token = localStorage.getItem('token');
 
         try {
-            await axios.post(`${ADMIN_API_URL}/course/create`, courseData, {
+            await axios.post(CREATE_COURSE_ADMIN_API_URL, courseData, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },

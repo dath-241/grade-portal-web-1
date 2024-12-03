@@ -18,8 +18,9 @@ export const HALLOFFAME_LIST_API_URL = `${ADMIN_API_URL}/HOF/all`;
 export const MAPPING_ID_TO_NAME_API_URL = (id) => `${CLIENT_API_URL}/course/${id}`;
 
 export const CREATE_CLASS_API_URL = `${ADMIN_API_URL}/class/create`;
-export const COURSE_ADMIN_LIST_API_URL = `${ADMIN_API_URL}/course/create`;
-
+export const CLASS_LIST_BY_COURSE = (id) => `${ADMIN_API_URL}/class/course/${id}`;
+export const CREATE_COURSE_ADMIN_API_URL = `${ADMIN_API_URL}/course/create`;
+export const COURSE_ADMIN_LIST_API_URL = `${ADMIN_API_URL}/course/all`;
 
 //----Start API for Class List of Student----//
 export const CLASS_LIST_API_URL = `${CLIENT_API_URL}/class/account`

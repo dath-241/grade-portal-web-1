@@ -116,14 +116,14 @@ const routes = [
         protected: true,
     },
     {
-        path: '/managerment/add-course',
+        path: '/management/add-course',
         component: AddCourse,
         layout: true,
         allowedRoles: ['admin'],
         protected: true,
     },
     {
-        path: '/management/class-list',
+        path: '/management/class-list/:id',
         component: ClassList,
         layout: true,
         allowedRoles: ['admin'],
