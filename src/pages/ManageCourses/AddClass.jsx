@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import tick from '../../assets/img/tick.png';
 import axios from 'axios';
-
+import { CREATE_CLASS_API_URL, COURSE_ADMIN_LIST_API_URL, LECTURER_LIST_API_URL, STUDENT_LIST_API_URL, CLASS_LIST_BY_COURSE} from '../../constants/api';
 const AddClass = () => {
     const [filteredMembers, setFilteredMembers] = useState([]);
     const [courseTeacher, setCourseTeacher] = useState(null);
@@ -20,7 +20,7 @@ const AddClass = () => {
         const token = localStorage.getItem('token');
 
         axios
-            .get(`${ADMIN_API_URL}/account/teacher`, {
+            .get(LECTURER_LIST_API_URL, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
@@ -34,7 +34,7 @@ const AddClass = () => {
             });
 
         axios
-            .get(`${ADMIN_API_URL}/account/student`, {
+            .get(STUDENT_LIST_API_URL, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
@@ -48,7 +48,7 @@ const AddClass = () => {
             });
 
         axios
-            .get(`${ADMIN_API_URL}/class/course/${courseId}`, {
+            .get(CLASS_LIST_BY_COURSE(courseId), {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
@@ -62,7 +62,7 @@ const AddClass = () => {
             });
 
         axios
-            .get(`${ADMIN_API_URL}/course/all`, {
+            .get(COURSE_ADMIN_LIST_API_URL, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
@@ -135,7 +135,7 @@ const AddClass = () => {
 
         const token = localStorage.getItem('token');
         axios
-            .post(`${ADMIN_API_URL}/class/create`, classData, {
+            .post(CREATE_CLASS_API_URL, classData, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },

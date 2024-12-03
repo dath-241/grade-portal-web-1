@@ -1,31 +1,53 @@
 import SearchBar from './Searchbar.jsx';
-import { Link } from 'react-router-dom';
-
+import { useNavigate, Link} from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { fetchAllCoursesApi} from '../../apis/Course_Class.jsx';
+import { fetchClassByIDApi } from '../../apis/Course_Class.jsx';
 function SubjectList() {
+    const [course, setCourse] = useState([]);
+    const navigate = useNavigate();
+    useEffect(() => {
+        const handleGetCourses = async () => {
+            try {
+                const courseData = await fetchAllCoursesApi();
+                const coursesWithClassCount = await Promise.all(
+                    courseData.map(async (course) => {
+                        try {
+                            const classes = await fetchClassByIDApi(course.ID);
+                            return {
+                                key: course.ID,
+                                id: course.ID,
+                                ms: course.ms,
+                                name: course.name,
+                                desc: course.desc,
+                                credit: course.credit,
+                                classCount: classes ? classes.length : 0, 
+                            };
+                        } catch (error) {
+                            return {
+                                key: course.ID,
+                                id: course.ID,
+                                ms: course.ms,
+                                name: course.name,
+                                desc: course.desc,
+                                credit: course.credit,
+                                classCount: 0, 
+                            };
+                        }
+                    })
+                );
+                setCourse(coursesWithClassCount);
+            } catch (error) {
+                console.error('Error fetching courses:', error);
+            } finally {
+            }
+        };
+        handleGetCourses();
+    }, []);
     const handleSearch = (query) => {
         console.log('Tìm kiếm với từ khóa:', query);
     };
-    const monHocData = [
-        { maMonHoc: 'COXXXXX', Mon: 'Cộng nghệ phần mềm', soLuongLop: 3 },
-        { maMonHoc: 'COXXXXX', Mon: 'Đồ án cộng nghệ phần mềm', soLuongLop: 2 },
-        { maMonHoc: 'COXXXXX', Mon: 'Mạng máy tính', soLuongLop: 4 },
-        { maMonHoc: 'COXXXXX', Mon: 'Cộng nghệ phần mềm', soLuongLop: 3 },
-        { maMonHoc: 'COXXXXX', Mon: 'Đồ án cộng nghệ phần mềm', soLuongLop: 2 },
-        { maMonHoc: 'COXXXXX', Mon: 'Mạng máy tính', soLuongLop: 4 },
-        { maMonHoc: 'COXXXXX', Mon: 'Cộng nghệ phần mềm', soLuongLop: 3 },
-        { maMonHoc: 'COXXXXX', Mon: 'Đồ án cộng nghệ phần mềm', soLuongLop: 2 },
-        { maMonHoc: 'COXXXXX', Mon: 'Mạng máy tính', soLuongLop: 4 },
-        { maMonHoc: 'COXXXXX', Mon: 'Cộng nghệ phần mềm', soLuongLop: 3 },
-        { maMonHoc: 'COXXXXX', Mon: 'Đồ án cộng nghệ phần mềm', soLuongLop: 2 },
-        { maMonHoc: 'COXXXXX', Mon: 'Mạng máy tính', soLuongLop: 4 },
-        { maMonHoc: 'COXXXXX', Mon: 'Cộng nghệ phần mềm', soLuongLop: 3 },
-        { maMonHoc: 'COXXXXX', Mon: 'Đồ án cộng nghệ phần mềm', soLuongLop: 2 },
-        { maMonHoc: 'COXXXXX', Mon: 'Mạng máy tính', soLuongLop: 4 },
-        { maMonHoc: 'COXXXXX', Mon: 'Cộng nghệ phần mềm', soLuongLop: 3 },
-        { maMonHoc: 'COXXXXX', Mon: 'Đồ án cộng nghệ phần mềm', soLuongLop: 2 },
-        { maMonHoc: 'COXXXXX', Mon: 'Mạng máy tính', soLuongLop: 4 },
-        // Thêm các môn học khác nếu cần
-    ];
+    
     return (
         <div>
             <div className="flex">
@@ -49,7 +71,7 @@ function SubjectList() {
                     </nav>
                     <div className="font-roboto ml-2 mt-1 text-3xl font-semibold leading-none text-black">Khóa học</div>
                 </h1>
-                <Link to="/managerment/add-course" className="ml-auto font-semibold">
+                <Link to="/management/add-course" className="ml-auto font-semibold">
                     <div className="mt-8 size-fit cursor-pointer rounded-lg bg-primary px-4 py-2 text-white shadow-inner hover:shadow-white">
                         Tạo môn học
                     </div>
@@ -79,19 +101,19 @@ function SubjectList() {
                             <tr>
                                 <th className="border-b border-gray-300 px-4 py-2 text-start">Mã môn học</th>
                                 <th className="border-b border-gray-300 px-4 py-2 text-start">Tên môn học</th>
-                                <th className="border-b border-gray-300 px-4 py-2 text-start">Số lượng lớp</th>
+                                <th className="border-b border-gray-300 px-4 py-2 text-start">Số lượng lớp </th>
                             </tr>
                         </thead>
                         <tbody>
-                            {monHocData.map((monHoc, index) => (
-                                <tr key={index} className="">
-                                    <td className="px-4 py-2">{monHoc.maMonHoc}</td>
-                                    <td className="px-4 py-2">
-                                        <Link to={`/management/class-list`} className="hover:underline">
-                                            {monHoc.Mon}
-                                        </Link>
-                                    </td>
-                                    <td className="px-4 py-2">{monHoc.soLuongLop}</td>
+                            {course.map((COURSE, index) => (
+                                <tr
+                                    key={index}
+                                    className="cursor-pointer hover:bg-gray-100"
+                                    onClick={() => navigate(`/management/class-list/${COURSE.key}`)}
+                                >
+                                    <td className="px-4 py-2">{COURSE.ms}</td>
+                                    <td className="px-4 py-2">{COURSE.name}</td>
+                                    <td className="px-4 py-2">{COURSE.classCount}</td>
                                 </tr>
                             ))}
                         </tbody>

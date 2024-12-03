@@ -1,30 +1,41 @@
 import SearchBar from './Searchbar.jsx';
-import { Link } from 'react-router-dom';
-
+import { Link, useParams} from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { fetchClassByIDApi} from '../../apis/Course_Class.jsx';
+import { fetchLectureByIDApi } from '../../apis/lecturers.jsx';
 function ClassList() {
+    const [Class, setClass] = useState([]);
+    const {id} = useParams();
+    useEffect(() => {
+        const handleGetCourses = async () => {
+            try {
+                const fetchedClassData = await fetchClassByIDApi(id);
+                const Data = await Promise.all(
+                    fetchedClassData.map(async (classItem) => {
+                        const teacherData = await fetchLectureByIDApi(classItem.teacher_id); 
+                        return {
+                            semester: classItem.semester,
+                            name: classItem.name,
+                            course_id: classItem.course_id,
+                            studentCount: classItem.listStudent_ms?.length || 0,
+                            teacher_id: classItem.teacher_id,
+                            teacher_name: teacherData.Name, 
+                            teacher_email: teacherData.Email,
+                        };
+                    })
+                );
+                setClass(Data); 
+            } catch (error) {
+                console.error('Error fetching courses or lecturers:', error);
+            }
+        };
+
+        handleGetCourses();
+    }, [id]);
     const handleSearch = (query) => {
         console.log('Tìm kiếm với từ khóa:', query);
     };
-    const monHocData = [
-        { malop: 'L04', giangvien: 'Nguyễn Văn A', email: 'nguyenvana@hcmut.edu.vn', soluongsv: 99 },
-        { malop: 'L04', giangvien: 'Nguyễn Văn A', email: 'nguyenvana@hcmut.edu.vn', soluongsv: 99 },
-        { malop: 'L04', giangvien: 'Nguyễn Văn A', email: 'nguyenvana@hcmut.edu.vn', soluongsv: 99 },
-        { malop: 'L04', giangvien: 'Nguyễn Văn A', email: 'nguyenvana@hcmut.edu.vn', soluongsv: 99 },
-        { malop: 'L04', giangvien: 'Nguyễn Văn A', email: 'nguyenvana@hcmut.edu.vn', soluongsv: 99 },
-        { malop: 'L04', giangvien: 'Nguyễn Văn A', email: 'nguyenvana@hcmut.edu.vn', soluongsv: 99 },
-        { malop: 'L04', giangvien: 'Nguyễn Văn A', email: 'nguyenvana@hcmut.edu.vn', soluongsv: 99 },
-        { malop: 'L04', giangvien: 'Nguyễn Văn A', email: 'nguyenvana@hcmut.edu.vn', soluongsv: 99 },
-        { malop: 'L04', giangvien: 'Nguyễn Văn A', email: 'nguyenvana@hcmut.edu.vn', soluongsv: 99 },
-        { malop: 'L04', giangvien: 'Nguyễn Văn A', email: 'nguyenvana@hcmut.edu.vn', soluongsv: 99 },
-        { malop: 'L04', giangvien: 'Nguyễn Văn A', email: 'nguyenvana@hcmut.edu.vn', soluongsv: 99 },
-        { malop: 'L04', giangvien: 'Nguyễn Văn A', email: 'nguyenvana@hcmut.edu.vn', soluongsv: 99 },
-        { malop: 'L04', giangvien: 'Nguyễn Văn A', email: 'nguyenvana@hcmut.edu.vn', soluongsv: 99 },
-        { malop: 'L04', giangvien: 'Nguyễn Văn A', email: 'nguyenvana@hcmut.edu.vn', soluongsv: 99 },
-        { malop: 'L04', giangvien: 'Nguyễn Văn A', email: 'nguyenvana@hcmut.edu.vn', soluongsv: 99 },
-        { malop: 'L04', giangvien: 'Nguyễn Văn A', email: 'nguyenvana@hcmut.edu.vn', soluongsv: 99 },
-        { malop: 'L04', giangvien: 'Nguyễn Văn A', email: 'nguyenvana@hcmut.edu.vn', soluongsv: 99 },
-        { malop: 'L04', giangvien: 'Nguyễn Văn A', email: 'nguyenvana@hcmut.edu.vn', soluongsv: 99 },
-    ];
+    
     return (
         <div>
             <div className="flex items-center">
@@ -52,7 +63,7 @@ function ClassList() {
                             <div className="font-roboto text-center text-sm font-semibold leading-5 text-gray-400">
                                 /
                             </div>
-                            <li className="font-roboto text-center text-sm leading-5 text-black">Cộng nghệ phần mềm</li>
+                            <li className="font-roboto text-center text-sm leading-5 text-black">Công nghệ phần mềm</li>
                         </ul>
                     </nav>
                     <div className="font-roboto ml-2 mt-1 text-3xl font-semibold leading-none text-black">Khóa học</div>
@@ -93,16 +104,15 @@ function ClassList() {
                             </tr>
                         </thead>
                         <tbody>
-                            {monHocData.map((monHoc, index) => (
-                                <tr key={index} className="">
-                                    <td className="px-4 py-2">
-                                        <Link to={`/Course1/Course2/Course3`} className="hover:underline">
-                                            {monHoc.malop}
-                                        </Link>
-                                    </td>
-                                    <td className="px-4 py-2">{monHoc.giangvien}</td>
-                                    <td className="px-4 py-2">{monHoc.email}</td>
-                                    <td className="px-4 py-2">{monHoc.soluongsv}</td>
+                            {Class.map((CLASS, index) => (
+                                <tr
+                                    key={index}
+                                    className="cursor-pointer hover:bg-gray-100"
+                                >
+                                    <td className="px-4 py-2">{CLASS.name}</td>
+                                    <td className="px-4 py-2">{CLASS.teacher_name}</td>
+                                    <td className="px-4 py-2">{CLASS.teacher_email}</td>
+                                    <td className="px-4 py-2">{CLASS.studentCount}</td>
                                 </tr>
                             ))}
                         </tbody>
