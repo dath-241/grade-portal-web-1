@@ -82,7 +82,7 @@ function ClassList() {
                     <div className="font-roboto ml-2 mt-1 text-3xl font-semibold leading-none text-black">Khóa học</div>
                 </h1>
 
-                <Link to="/managerment/add-class" className="ml-auto font-semibold">
+                <Link to="/management/add-class" className="ml-auto font-semibold">
                     <div className="size-fit cursor-pointer rounded-lg bg-primary px-4 py-2 text-white shadow-inner hover:shadow-white">
                         Tạo lớp học
                     </div>
