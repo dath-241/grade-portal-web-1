@@ -123,14 +123,14 @@ const routes = [
         protected: true,
     },
     {
-        path: '/management/class-list',
+        path: '/management/class-list/:id',
         component: ClassList,
         layout: true,
         allowedRoles: ['admin'],
         protected: true,
     },
     {
-        path: '/managerment/add-class',
+        path: '/management/add-class',
         component: AddClass,
         layout: true,
         allowedRoles: ['admin'],
