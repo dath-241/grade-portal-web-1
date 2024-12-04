@@ -5,6 +5,7 @@ import { fetchClassByIDApi} from '../../apis/Course_Class.jsx';
 import { fetchLectureByIDApi } from '../../apis/lecturers.jsx';
 function ClassList() {
     const [Class, setClass] = useState([]);
+    const [originalClass, setOriginalClass] = useState([]);
     const {id} = useParams();
     useEffect(() => {
         const handleGetCourses = async () => {
@@ -12,18 +13,19 @@ function ClassList() {
                 const fetchedClassData = await fetchClassByIDApi(id);
                 const Data = await Promise.all(
                     fetchedClassData.map(async (classItem) => {
-                        const teacherData = await fetchLectureByIDApi(classItem.teacher_id); 
+                        const teacherData = await fetchLectureByIDApi(classItem.TeacherId); 
                         return {
-                            semester: classItem.semester,
-                            name: classItem.name,
+                            semester: classItem.Semester,
+                            name: classItem.Name,
                             course_id: classItem.course_id,
-                            studentCount: classItem.listStudent_ms?.length || 0,
-                            teacher_id: classItem.teacher_id,
-                            teacher_name: teacherData.Name, 
-                            teacher_email: teacherData.Email,
+                            studentCount: classItem.ListStudentMs?.length || 0,
+                            teacher_id: classItem.TeacherId,
+                            teacher_name: teacherData.Name || 'N/A', 
+                            teacher_email: teacherData.Email || 'N/A',
                         };
                     })
                 );
+                setOriginalClass(Data);
                 setClass(Data); 
             } catch (error) {
                 console.error('Error fetching courses or lecturers:', error);
@@ -34,6 +36,17 @@ function ClassList() {
     }, [id]);
     const handleSearch = (query) => {
         console.log('Tìm kiếm với từ khóa:', query);
+        if (query) {
+            const filteredCourses = originalClass.filter(Class => 
+                Class.name.toLowerCase().includes(query.toLowerCase()) || 
+                Class.teacher_name.toLowerCase().includes(query.toLowerCase()) || 
+                Class.teacher_email.toLowerCase().includes(query.toLowerCase()) || 
+                Class.studentCount.toString().includes(query.toLowerCase())
+            );
+            setClass(filteredCourses);
+        } else {
+            setClass(originalClass);
+        }
     };
     
     return (
@@ -69,7 +82,7 @@ function ClassList() {
                     <div className="font-roboto ml-2 mt-1 text-3xl font-semibold leading-none text-black">Khóa học</div>
                 </h1>
 
-                <Link to="/managerment/add-class" className="ml-auto font-semibold">
+                <Link to="/management/add-class" className="ml-auto font-semibold">
                     <div className="size-fit cursor-pointer rounded-lg bg-primary px-4 py-2 text-white shadow-inner hover:shadow-white">
                         Tạo lớp học
                     </div>

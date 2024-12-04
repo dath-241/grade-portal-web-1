@@ -116,7 +116,7 @@ const routes = [
         protected: true,
     },
     {
-        path: '/managerment/add-course',
+        path: '/management/add-course',
         component: AddCourse,
         layout: true,
         allowedRoles: ['admin'],
