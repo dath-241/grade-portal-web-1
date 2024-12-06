@@ -179,7 +179,6 @@ const AddClass = () => {
         setCourseTeacher(null);
         setCourseStudents([]);
         setFilteredMembers([]);
-        // setReload(!reload); // Load lại trang
         window.location.reload();
     };
 
