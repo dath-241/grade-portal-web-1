@@ -231,40 +231,42 @@ const AddClass = () => {
                 </div>
 
                 <div className="flex flex-col gap-6 text-center md:flex-row">
-                    <div className="flex-1 max-h-64 md:max-h-96 overflow-y-auto">
+                    <div className="flex-1">
                         <h2 className="mb-4 text-xl font-semibold">Danh Sách Thành Viên</h2>
-                        <table className="min-w-full rounded-md table-auto">
-                            <thead>
-                                <tr className="bg-gray-100">
-                                    <th className="border-b px-4 py-2">Mã số</th>
-                                    <th className="border-b px-4 py-2">Tên</th>
-                                    <th className="border-b px-4 py-2">Hành Động</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {filteredMembers &&
-                                    filteredMembers.map((member, index) => (
-                                        <tr key={index} className="hover:bg-gray-50">
-                                            <td className="border-b px-4 py-2">{member.Ms}</td>
-                                            <td className="border-b px-4 py-2">{member.Name}</td>
-                                            <td className="border-b px-4 py-2">
-                                                <button
-                                                    type="button"
-                                                    onClick={() =>
-                                                        addMemberToCourse(
-                                                            member,
-                                                            member.Role === 'teacher' ? 'teacher' : 'student',
-                                                        )
-                                                    }
-                                                    className="rounded-md bg-blue-500 px-2 py-1 text-white hover:bg-blue-600"
-                                                >
-                                                    Thêm
-                                                </button>
-                                            </td>
-                                        </tr>
-                                    ))}
-                            </tbody>
-                        </table>
+                        <div className="max-h-64 overflow-y-auto md:max-h-96">
+                            <table className="min-w-full table-auto rounded-md">
+                                <thead>
+                                    <tr className="bg-gray-100">
+                                        <th className="border-b px-4 py-2">Mã số</th>
+                                        <th className="border-b px-4 py-2">Tên</th>
+                                        <th className="border-b px-4 py-2">Hành Động</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {filteredMembers &&
+                                        filteredMembers.map((member, index) => (
+                                            <tr key={index} className="hover:bg-gray-50">
+                                                <td className="border-b px-4 py-2">{member.Ms}</td>
+                                                <td className="border-b px-4 py-2">{member.Name}</td>
+                                                <td className="border-b px-4 py-2">
+                                                    <button
+                                                        type="button"
+                                                        onClick={() =>
+                                                            addMemberToCourse(
+                                                                member,
+                                                                member.Role === 'teacher' ? 'teacher' : 'student',
+                                                            )
+                                                        }
+                                                        className="rounded-md bg-blue-500 px-2 py-1 text-white hover:bg-blue-600"
+                                                    >
+                                                        Thêm
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        ))}
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
 
                     <div className="flex flex-1 flex-col gap-4">
@@ -291,24 +293,26 @@ const AddClass = () => {
                         {error && !courseTeacher && <span className="text-red-500">{error}</span>}
 
                         <h2 className="mb-4 text-xl font-semibold">Sinh Viên Trong Lớp</h2>
-                        <table className="min-w-full rounded-md">
-                            <tbody>
-                                {courseStudents.map((member, index) => (
-                                    <tr key={index} className="hover:bg-gray-50">
-                                        <td className="border-b px-4 py-2">{member.Ms}</td>
-                                        <td className="border-b px-4 py-2">{member.Name}</td>
-                                        <td className="border-b px-4 py-2">
-                                            <button
-                                                onClick={() => removeStudentFromCourse(member)}
-                                                className="rounded-md bg-red-500 px-2 py-1 text-white hover:bg-red-600"
-                                            >
-                                                Xóa
-                                            </button>
-                                        </td>
-                                    </tr>
-                                ))}
-                            </tbody>
-                        </table>
+                        <div className="max-h-36 overflow-y-auto md:max-h-56">
+                            <table className="min-w-full table-auto rounded-md">
+                                <tbody>
+                                    {courseStudents.map((member, index) => (
+                                        <tr key={index} className="hover:bg-gray-50">
+                                            <td className="border-b px-4 py-2">{member.Ms}</td>
+                                            <td className="border-b px-4 py-2">{member.Name}</td>
+                                            <td className="border-b px-4 py-2">
+                                                <button
+                                                    onClick={() => removeStudentFromCourse(member)}
+                                                    className="rounded-md bg-red-500 px-2 py-1 text-white hover:bg-red-600"
+                                                >
+                                                    Xóa
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </table>
+                        </div>
                         {error && courseStudents.length === 0 && <span className="text-red-500">{error}</span>}
                     </div>
                 </div>
