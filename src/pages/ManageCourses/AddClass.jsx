@@ -1,13 +1,22 @@
 import React, { useEffect, useState } from 'react';
 import tick from '../../assets/img/tick.png';
 import axios from 'axios';
-import { CREATE_CLASS_API_URL, COURSE_ADMIN_LIST_API_URL, LECTURER_LIST_API_URL, STUDENT_LIST_API_URL, CLASS_LIST_BY_COURSE} from '../../constants/api';
+import {
+    CREATE_CLASS_API_URL,
+    COURSE_ADMIN_LIST_API_URL,
+    LECTURER_LIST_API_URL,
+    STUDENT_LIST_API_URL,
+    CLASS_LIST_BY_COURSE,
+} from '../../constants/api';
+import { useParams } from 'react-router-dom';
+import close from '../../assets/img/close.png';
 const AddClass = () => {
     const [filteredMembers, setFilteredMembers] = useState([]);
     const [courseTeacher, setCourseTeacher] = useState(null);
     const [courseStudents, setCourseStudents] = useState([]);
     const [error, setError] = useState('');
     const [showSuccess, setShowSuccess] = useState(false);
+    const [showFail, setShowFail] = useState(false);
     const [teachersList, setTeachersList] = useState([]);
     const [studentsList, setStudentsList] = useState([]);
     const [classList, setClassList] = useState([]);
@@ -15,8 +24,12 @@ const AddClass = () => {
     const [courseList, setCourseList] = useState([]);
     const [smt, setSmt] = useState('');
     const ADMIN_API_URL = process.env.REACT_APP_ADMIN_API_URL;
-    const courseId = '672b86fd226ae67ef9aaa045';
+
+    const id = useParams();
+
     useEffect(() => {
+        console.log('ID:', id);
+
         const token = localStorage.getItem('token');
 
         axios
@@ -48,7 +61,7 @@ const AddClass = () => {
             });
 
         axios
-            .get(CLASS_LIST_BY_COURSE(courseId), {
+            .get(CLASS_LIST_BY_COURSE(id.id), {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
@@ -74,7 +87,7 @@ const AddClass = () => {
             .catch((error) => {
                 console.error('Error:', error);
             });
-    }, [ADMIN_API_URL]);
+    }, [ADMIN_API_URL, id]);
 
     const handleClassName = (selectedSemester) => {
         if (!selectedSemester) {
@@ -82,12 +95,17 @@ const AddClass = () => {
             return;
         }
         let classIndex = 1;
+        if (!classList.classes) {
+            setClassName(`L0${classIndex}`);
+            return;
+        }
         for (let i = 0; i < classList.classes.length; i++) {
             if (classList.classes[i].Semester === selectedSemester) {
                 classIndex++;
             }
         }
         setClassName(`L0${classIndex}`);
+        console.log('Class name:', className);
     };
     const handleFilter = (type) => {
         setError('');
@@ -121,12 +139,11 @@ const AddClass = () => {
             return;
         }
         setError('');
-        setShowSuccess(true); // Hiển thị thông báo thành công
 
         const classData = {
             semester: smt,
             name: className,
-            course_id: courseId,
+            course_id: id.id,
             listStudent_ms: courseStudents.map((student) => student.Ms),
             teacher_id: courseTeacher.ID,
         };
@@ -142,18 +159,28 @@ const AddClass = () => {
             })
             .then((response) => {
                 console.log('Class created:', response.data);
+                if (response.data.code === 'error') {
+                    setShowFail(true); // Hiển thị thông báo thất bại
+                    setShowSuccess(false); // Ẩn thông báo thành công
+                } else {
+                    setShowSuccess(true); // Hiển thị thông báo thành công
+                    setShowFail(false); // Ẩn thông báo thất bại
+                }
             })
             .catch((error) => {
                 console.error('Error:', error);
+                setShowFail(true); // Hiển thị thông báo thất bại
             });
-
-        setTimeout(() => setShowSuccess(false), 3000); // Ẩn thông báo sau 3s
+        setTimeout(() => setShowSuccess(false), 2000); // Ẩn thông báo sau 3s
+        setTimeout(() => setShowFail(false), 2000); // Ẩn thông báo sau 3s
 
         console.log('Course added:', { smt, className, courseTeacher, courseStudents });
         // Reset form
         setCourseTeacher(null);
         setCourseStudents([]);
         setFilteredMembers([]);
+        // setReload(!reload); // Load lại trang
+        window.location.reload();
     };
 
     return (
@@ -187,7 +214,10 @@ const AddClass = () => {
                 <div className="mb-6 flex gap-4">
                     <button
                         type="button"
-                        onClick={() => handleFilter('teacher')}
+                        onClick={() => {
+                            handleFilter('teacher');
+                            console.log('teacher');
+                        }}
                         className="rounded-xl bg-primary px-4 py-2 font-medium text-white shadow-inner hover:shadow-white"
                     >
                         Giảng Viên
@@ -202,10 +232,9 @@ const AddClass = () => {
                 </div>
 
                 <div className="flex flex-col gap-6 text-center md:flex-row">
-                    {/* Bảng danh sách thành viên */}
-                    <div className="flex-1">
+                    <div className="flex-1 max-h-64 md:max-h-96 overflow-y-auto">
                         <h2 className="mb-4 text-xl font-semibold">Danh Sách Thành Viên</h2>
-                        <table className="min-w-full rounded-md">
+                        <table className="min-w-full rounded-md table-auto">
                             <thead>
                                 <tr className="bg-gray-100">
                                     <th className="border-b px-4 py-2">Mã số</th>
@@ -215,8 +244,8 @@ const AddClass = () => {
                             </thead>
                             <tbody>
                                 {filteredMembers &&
-                                    filteredMembers.map((member) => (
-                                        <tr key={member.Ms} className="hover:bg-gray-50">
+                                    filteredMembers.map((member, index) => (
+                                        <tr key={index} className="hover:bg-gray-50">
                                             <td className="border-b px-4 py-2">{member.Ms}</td>
                                             <td className="border-b px-4 py-2">{member.Name}</td>
                                             <td className="border-b px-4 py-2">
@@ -239,7 +268,6 @@ const AddClass = () => {
                         </table>
                     </div>
 
-                    {/* Bảng giảng viên và sinh viên trong lớp */}
                     <div className="flex flex-1 flex-col gap-4">
                         <h2 className="mb-4 text-xl font-semibold">Giảng Viên Trong Lớp</h2>
                         <table className="min-w-full rounded-md bg-white">
@@ -261,12 +289,13 @@ const AddClass = () => {
                                 )}
                             </tbody>
                         </table>
+                        {error && !courseTeacher && <span className="text-red-500">{error}</span>}
 
                         <h2 className="mb-4 text-xl font-semibold">Sinh Viên Trong Lớp</h2>
                         <table className="min-w-full rounded-md">
                             <tbody>
-                                {courseStudents.map((member) => (
-                                    <tr key={member.Ms} className="hover:bg-gray-50">
+                                {courseStudents.map((member, index) => (
+                                    <tr key={index} className="hover:bg-gray-50">
                                         <td className="border-b px-4 py-2">{member.Ms}</td>
                                         <td className="border-b px-4 py-2">{member.Name}</td>
                                         <td className="border-b px-4 py-2">
@@ -281,6 +310,7 @@ const AddClass = () => {
                                 ))}
                             </tbody>
                         </table>
+                        {error && courseStudents.length === 0 && <span className="text-red-500">{error}</span>}
                     </div>
                 </div>
                 <div className="mt-24 flex justify-center justify-items-center">
@@ -297,6 +327,14 @@ const AddClass = () => {
                     <div className="mx-6 w-full max-w-md rounded-lg bg-[#ffffff] px-4 py-8 text-2xl font-medium text-black shadow-lg">
                         <img src={tick} alt="success" className="mx-auto mb-2 h-10 w-10" />
                         Thêm lớp thành công!
+                    </div>
+                </div>
+            )}
+            {showFail && (
+                <div className="fixed inset-0 z-50 flex items-center justify-center bg-gray-700 bg-opacity-20 text-center">
+                    <div className="mx-6 w-full max-w-md rounded-lg bg-[#ffffff] px-4 py-8 text-2xl font-medium text-black shadow-lg">
+                        <img src={close} alt="fail" className="mx-auto mb-2 h-10 w-10" />
+                        Thêm lớp thất bại!
                     </div>
                 </div>
             )}

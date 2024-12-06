@@ -130,7 +130,7 @@ const routes = [
         protected: true,
     },
     {
-        path: '/management/add-class',
+        path: '/management/add-class/:id',
         component: AddClass,
         layout: true,
         allowedRoles: ['admin'],
