@@ -25,6 +25,7 @@ npm install
 ```
 ## Tài liệu tham khảo
 
+Tài liệu tham khảo ở [đây](./documents/)
 
 ## Báo cáo môn học
 
