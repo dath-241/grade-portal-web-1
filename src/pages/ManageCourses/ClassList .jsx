@@ -76,7 +76,6 @@ function ClassList() {
                             <div className="font-roboto text-center text-sm font-semibold leading-5 text-gray-400">
                                 /
                             </div>
-                            <li className="font-roboto text-center text-sm leading-5 text-black">Công nghệ phần mềm</li>
                         </ul>
                     </nav>
                     <div className="font-roboto ml-2 mt-1 text-3xl font-semibold leading-none text-black">Khóa học</div>

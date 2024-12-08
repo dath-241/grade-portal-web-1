@@ -11,7 +11,7 @@ function GradeInfo() {
             <div className="w-[1100px]">
                 <Switch id={id} active="grade" />
                 
-                <div className="my-[10px] ml-[100px] h-[500px] rounded-[20px] border-[1px] bg-white p-[10px] shadow-md">
+                <div className="my-[10px] ml-[100px]  rounded-[20px] border-[1px] bg-white p-[10px] shadow-md">
                     <div className="ml-[30px] text-2xl font-semibold">Điểm số</div>
                     <hr className="my-[10px] ml-[30px] w-[900px]" />
                     <div className="mt-6">

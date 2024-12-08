@@ -1,13 +1,15 @@
 import { Table, Modal } from 'antd';
-import React, {  useState } from 'react';
+import React, { useState, } from 'react';
+import { useParams } from 'react-router-dom';
 import Papa from 'papaparse';
-import { loadMarkApi } from '../apis/LoadMark.api';
+import { loadMarkApi, updateMarkApi } from '../apis/LoadMark.api';
 import upLoad from '../assets/img/upload.png';
 
 const LoadMark = () => {
     const [data, setData] = useState([]);
     const [error, setError] = useState('');
-    const [csvFile, setCsvFile] = useState(null); 
+    const [csvFile, setCsvFile] = useState(null);
+    const classId = useParams().id;
 
     const requiredColumns = [
         'STT',
@@ -19,10 +21,9 @@ const LoadMark = () => {
         'Điểm BTL',
         'Điểm thi giữa kỳ',
         'Điểm thi cuối kỳ',
-    ]; 
+    ];
 
     const handleFileChange = (event) => {
-        console.log(event.target.files);
         setCsvFile(event.target.files[0]);
         if (event.target.files[0]) {
             if (!event.target.files[0].name.endsWith('.csv') || event.target.files[0].type !== 'text/csv') {
@@ -48,9 +49,7 @@ const LoadMark = () => {
 
     const validateColumns = (parsedData) => {
         const columns = Object.keys(parsedData[0]);
-        const missingColumns = requiredColumns.filter(
-            (col) => col !== 'Điểm lab' && !columns.includes(col),
-        );
+        const missingColumns = requiredColumns.filter((col) => col !== 'Điểm lab' && !columns.includes(col));
 
         if (missingColumns.length > 0) {
             showError(`Tệp tải lên không đúng định dạng. Các cột bị thiếu: ${missingColumns.join(', ')}`);
@@ -98,47 +97,97 @@ const LoadMark = () => {
     };
 
     const convert = (parsedData) => {
-        return parsedData.map(record => ({
+        return parsedData.map((record) => ({
             MSSV: record.MSSV,
             Data: {
-                BT: [record['Điểm bài tập']] || null, 
-                TB: [record['Điểm lab']] || null, 
-                BTL: [record['Điểm BTL']] || null, 
-                GK: record['Điểm thi giữa kỳ'] || null, 
-                CK: record['Điểm thi cuối kỳ'] || null, 
-            }
+                BT: [parseFloat(record['Điểm bài tập'])] || null,
+                TN: [parseFloat(record['Điểm lab'])] || null,
+                BTL: [parseFloat(record['Điểm BTL'])] || null,
+                GK: parseFloat(record['Điểm thi giữa kỳ']) || null,
+                CK: parseFloat(record['Điểm thi cuối kỳ']) || null,
+            },
         }));
     };
 
     const handleUpLoad = async (event) => {
         event.preventDefault();
+    
         if (!csvFile) {
             showError('Không có tệp để tải lên.');
             return;
         }
     
-        try {
-            const file = convert(data); 
-            const response = await loadMarkApi(file); 
-            console.log(response.data);
+        const file = convert(data);
+        const fileMark = {
+            score: file,
+            class_id: classId,
+        };
     
-            if (response && response.status === 200) {
+        try {
+            const response = await loadMarkApi(fileMark);
+            handleSuccess(response, 'Tải lên bảng điểm thành công!');
+        } catch (err) {
+            
+            if(err.response.data.code === 'success') {
                 Modal.success({
                     title: 'Thành công',
-                    content: 'Tải lên bảng điểm thành công!',
+                    content: 'Cập nhật bảng điểm thành công!',
                 });
-                
                 setData([]);
-                setCsvFile(null); }
-            
-        } catch (err) {
-            console.error('Error uploading file', err.response ? err.response.data : err);
-            showError('Có lỗi xảy ra khi tải lên bảng điểm.');
+                setCsvFile(null);
+                return;
+            }
+            await handleUploadError(err, fileMark);
         }
     };
+    
+    // Handle successful API responses
+    const handleSuccess = (response, successMessage) => {        
+        if (response && response.code === 'success') {
+            Modal.success({
+                title: 'Thành công',
+                content: successMessage,
+            });
+    
+            setData([]);
+            setCsvFile(null);
+        }
+    };
+    
+    // Handle upload errors
+    const handleUploadError = async (err, fileMark) => {        
+        if (err.response) {
+            const errorMsg = err.response.data.msg;            
+    
+            if (errorMsg === 'Bảng ghi của lớp học này đã được lưu trong database trước đó') {
+                try {
+                    const response = await updateMarkApi(fileMark, classId);
+                    handleSuccess(response, 'Cập nhật bảng điểm thành công!');
+                } catch (updateErr) {
+
+                    if(updateErr.response.data.code === 'success') {
+                        Modal.success({
+                            title: 'Thành công',
+                            content: 'Cập nhật bảng điểm thành công!',
+                        });
+                        setData([]);
+                        setCsvFile(null);
+                        return;
+                    }
+
+                    showError(updateErr.response ? updateErr.response.data.msg : 'Có lỗi xảy ra');
+                }
+            } else {
+                showError(errorMsg);
+            }
+        } else {
+            showError('Có lỗi xảy ra.');
+        }
+    };
+    
 
     console.log(error); // eslint-disable-line
-    
+
     return (
         <div className="flex flex-col items-center justify-center bg-white">
             <div
@@ -158,7 +207,7 @@ const LoadMark = () => {
                         dataSource={data}
                         columns={columns}
                         rowKey={(record) => `${record.MSSV}-${record.STT}`}
-                        pagination={false}
+                        pagination={true}
                     />
                 </div>
             )}
@@ -166,7 +215,7 @@ const LoadMark = () => {
             <button
                 type="button"
                 className="mb-2 me-2 rounded-lg border border-gray-200 bg-primary px-5 py-2.5 text-sm font-medium text-white shadow-inner hover:shadow-white focus:z-10 focus:outline-none focus:ring-4 focus:ring-gray-100 dark:border-gray-600 dark:bg-blue-950 dark:text-gray-400 dark:hover:bg-blue-900 dark:hover:text-white dark:focus:ring-gray-700"
-                onClick={handleUpLoad} 
+                onClick={handleUpLoad}
             >
                 Tải lên
             </button>

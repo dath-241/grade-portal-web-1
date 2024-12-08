@@ -28,7 +28,6 @@ const AddClass = () => {
     const id = useParams();
 
     useEffect(() => {
-        console.log('ID:', id);
 
         const token = localStorage.getItem('token');
 
@@ -179,7 +178,9 @@ const AddClass = () => {
         setCourseTeacher(null);
         setCourseStudents([]);
         setFilteredMembers([]);
-        window.location.reload();
+        setTimeout(() => {
+            window.location.reload(); 
+        }, 1500);
     };
 
     return (

@@ -13,6 +13,7 @@ function CoursePage() {
             courseList.current = classList
             setLoading(false)
             setCourses(classList)
+            
         })
         .catch(()=>{
             setLoading(false)
@@ -40,10 +41,7 @@ function CoursePage() {
             setCourses(courseFind);
         }
     };
-    // const clickHandler = () => {
-    //     document.querySelector('#course').value = '';
-    //     setCourses(course_list);
-    // };
+    
     if(loading){
         return(
             <div className="flex justify-center items-center min-h-screen text-lg font-semibold">
