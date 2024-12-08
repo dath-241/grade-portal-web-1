@@ -13,7 +13,6 @@ function CoursePage() {
             courseList.current = classList
             setLoading(false)
             setCourses(classList)
-            console.log(classList);
             
         })
         .catch(()=>{

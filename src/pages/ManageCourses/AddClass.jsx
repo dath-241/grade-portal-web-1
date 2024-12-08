@@ -178,7 +178,9 @@ const AddClass = () => {
         setCourseTeacher(null);
         setCourseStudents([]);
         setFilteredMembers([]);
-        window.location.reload();
+        setTimeout(() => {
+            window.location.reload(); 
+        }, 1500);
     };
 
     return (
