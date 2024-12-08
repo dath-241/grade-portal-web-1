@@ -1,5 +1,5 @@
 import { Table, Modal } from 'antd';
-import React, { useState, use } from 'react';
+import React, { useState, } from 'react';
 import { useParams } from 'react-router-dom';
 import Papa from 'papaparse';
 import { loadMarkApi, updateMarkApi } from '../apis/LoadMark.api';
