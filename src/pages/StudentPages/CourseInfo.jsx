@@ -17,11 +17,11 @@ function CourseInfo() {
         return <div></div>;
     }
     return (
-        <div className="mx-6 flex flex-col items-center">
+        <div className="flex flex-col justify-center mx-auto w-1/2">
             <div className="my-[10px] flex justify-center text-3xl font-semibold text-[#012193]">
                 {courseInfo.courseName}
             </div>
-            <div className="w-[1100px]">
+            <div className="flex flex-col justify-center">
                 <Switch id={id} active="info" />
                 <ContentBox title="Thông tin chung" courseInfo={courseInfo} type="info" />
             </div>
