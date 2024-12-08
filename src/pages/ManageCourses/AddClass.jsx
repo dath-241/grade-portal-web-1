@@ -28,7 +28,6 @@ const AddClass = () => {
     const id = useParams();
 
     useEffect(() => {
-        console.log('ID:', id);
 
         const token = localStorage.getItem('token');
 

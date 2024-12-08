@@ -1,15 +1,13 @@
 import axios from 'axios';
 import { LECTURER_LOADMARK_API_URL } from '../constants/api';
 
-export const loadMarkApi = async (file) => {
+export const loadMarkApi = async (file) => {    
     const token = localStorage.getItem('token');
     const formData = new FormData();
-    if (file) {
-        formData.append('file', file);
-    }
+
 
     try {  
-        const response = await axios.post(LECTURER_LOADMARK_API_URL, formData, {
+        const response = await axios.post(LECTURER_LOADMARK_API_URL, file, {
             headers: {
                 Authorization: `Bearer ${token}`,
             },

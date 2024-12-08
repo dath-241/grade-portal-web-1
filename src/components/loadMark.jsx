@@ -1,5 +1,6 @@
 import { Table, Modal } from 'antd';
-import React, {  useState } from 'react';
+import React, {  useState, use } from 'react';
+import { useParams } from 'react-router-dom';
 import Papa from 'papaparse';
 import { loadMarkApi } from '../apis/LoadMark.api';
 import upLoad from '../assets/img/upload.png';
@@ -8,6 +9,8 @@ const LoadMark = () => {
     const [data, setData] = useState([]);
     const [error, setError] = useState('');
     const [csvFile, setCsvFile] = useState(null); 
+    const classId = useParams().id;
+    
 
     const requiredColumns = [
         'STT',
@@ -22,7 +25,6 @@ const LoadMark = () => {
     ]; 
 
     const handleFileChange = (event) => {
-        console.log(event.target.files);
         setCsvFile(event.target.files[0]);
         if (event.target.files[0]) {
             if (!event.target.files[0].name.endsWith('.csv') || event.target.files[0].type !== 'text/csv') {
@@ -98,6 +100,7 @@ const LoadMark = () => {
     };
 
     const convert = (parsedData) => {
+        console.log('parsedData:', parsedData);
         return parsedData.map(record => ({
             MSSV: record.MSSV,
             Data: {
@@ -119,7 +122,12 @@ const LoadMark = () => {
     
         try {
             const file = convert(data); 
-            const response = await loadMarkApi(file); 
+            const fileMark = {
+                score: file,
+                class_id: classId,
+            }
+            
+            const response = await loadMarkApi(fileMark); 
             console.log(response.data);
     
             if (response && response.status === 200) {
@@ -137,10 +145,12 @@ const LoadMark = () => {
         }
     };
 
+    
+
     console.log(error); // eslint-disable-line
     
     return (
-        <div className="flex flex-col items-center justify-center bg-white">
+        <div className="flex  flex-col items-center justify-center bg-white">
             <div
                 className="flex h-64 w-3/5 cursor-pointer flex-col items-center justify-center rounded-lg border-2 border-dotted border-gray-400 p-10"
                 onClick={() => document.getElementById('fileInput').click()}
@@ -150,7 +160,7 @@ const LoadMark = () => {
                 <p className="text-gray-600">Nhấp để tải lên tệp CSV</p>
             </div>
             {data.length > 0 && (
-                <div style={{ marginTop: '20px', width: '80%' }}>
+                <div style={{ marginTop: '20px', width: '80%'  }} >
                     <h2 className="text-center text-2xl font-semibold text-blue-950">BẢNG ĐIỂM CỦA SINH VIÊN</h2>
                     <br />
                     <Table
@@ -158,7 +168,7 @@ const LoadMark = () => {
                         dataSource={data}
                         columns={columns}
                         rowKey={(record) => `${record.MSSV}-${record.STT}`}
-                        pagination={false}
+                        pagination={true}                    
                     />
                 </div>
             )}

@@ -4,9 +4,8 @@ import logo from '../../assets/img/logoBK.png';
 import LogoutWithGoogle from '../Login/LogoutWithGoogle';
 import { useContext } from 'react';
 import { UserContext } from '../Login/UserContext';
+import avatar from '../../assets/img/bgCourses/bgCourses3.jpg'
 
-const avatarURL =
-    'https://c4.wallpaperflare.com/wallpaper/821/698/393/anime-naruto-akatsuki-naruto-deidara-naruto-wallpaper-preview.jpg';
 
 function Header() {
     const [avatarPopup, setAvatarPopup] = useState(false);
@@ -96,9 +95,9 @@ function Header() {
                 {userRole === 'student' && studentHeader()}
                 <div className="flex items-center">
                     <img
-                        src={avatarURL}
+                        src={avatar}
                         alt="avatar"
-                        className="size-[45px] cursor-pointer rounded-full object-cover"
+                        className="size-[45px] cursor-pointer rounded-full object-cover border-2"
                         onClick={() => setAvatarPopup(!avatarPopup)}
                     />
                 </div>
