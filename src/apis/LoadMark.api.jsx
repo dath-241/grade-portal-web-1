@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { LECTURER_LOADMARK_API_URL } from '../constants/api';
+import { LECTURER_LOADMARK_API_URL, LECTURER_UPLOAD_API_URL } from '../constants/api';
 import { LECTURER_UPDATEMARK_API_URL } from '../constants/api';
 
 export const loadMarkApi = async (file) => {
@@ -18,6 +18,21 @@ export const loadMarkApi = async (file) => {
         throw error;
     }
 };
+
+export const loadLinkUrl = async (body) => {
+    const token = localStorage.getItem('token');
+    try {
+        const response = await axios.post(LECTURER_UPLOAD_API_URL, body, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        });
+        return response.data;
+    } catch (error) {
+        console.error('Error uploading file', error.response ? error.response.data : error);
+        throw error;
+    }
+}
 
 export const updateMarkApi = async (file, id) => {
     const token = localStorage.getItem('token');

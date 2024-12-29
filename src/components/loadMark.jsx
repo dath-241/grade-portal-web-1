@@ -2,13 +2,14 @@ import { Table, Modal } from 'antd';
 import React, { useState, } from 'react';
 import { useParams } from 'react-router-dom';
 import Papa from 'papaparse';
-import { loadMarkApi, updateMarkApi } from '../apis/LoadMark.api';
+import { loadLinkUrl, loadMarkApi, updateMarkApi } from '../apis/LoadMark.api';
 import upLoad from '../assets/img/upload.png';
 
 const LoadMark = () => {
     const [data, setData] = useState([]);
     const [error, setError] = useState('');
     const [csvFile, setCsvFile] = useState(null);
+    const [linkUrl, setLinkUrl] = useState("");
     const classId = useParams().id;
 
     const requiredColumns = [
@@ -32,6 +33,9 @@ const LoadMark = () => {
             }
             parseCSV(event.target.files[0]);
         }
+    };
+    const handleLinkChange = (e) => {
+        setLinkUrl(e.target.value);
     };
 
     const parseCSV = (file) => {
@@ -111,61 +115,83 @@ const LoadMark = () => {
 
     const handleUpLoad = async (event) => {
         event.preventDefault();
-    
-        if (!csvFile) {
+        if (!csvFile && linkUrl === "") {
             showError('Không có tệp để tải lên.');
             return;
         }
-    
-        const file = convert(data);
-        const fileMark = {
-            score: file,
-            class_id: classId,
-        };
-    
-        try {
-            const response = await loadMarkApi(fileMark);
-            handleSuccess(response, 'Tải lên bảng điểm thành công!');
-        } catch (err) {
-            
-            if(err.response.data.code === 'success') {
-                Modal.success({
-                    title: 'Thành công',
-                    content: 'Cập nhật bảng điểm thành công!',
-                });
-                setData([]);
-                setCsvFile(null);
-                return;
+        if (linkUrl !== "") {
+            const body = {
+                link_url: linkUrl,
+                class_id: classId,
+            };
+            try {
+                const response = await loadLinkUrl(body);
+                handleSuccess(response, 'Tải lên bảng điểm thành công!');
+            } catch (err) {
+                if (err.response.data.code === 'success') {
+                    Modal.success({
+                        title: 'Thành công',
+                        content: 'Cập nhật bảng điểm thành công!',
+                    });
+                    setLinkUrl("");
+                    setData([]);
+                    setCsvFile(null);
+                    return;
+                }
+                await handleUploadError(err, body);
             }
-            await handleUploadError(err, fileMark);
+        } else {
+            const file = convert(data);
+            const fileMark = {
+                score: file,
+                class_id: classId,
+            };
+
+            try {
+                const response = await loadMarkApi(fileMark);
+                handleSuccess(response, 'Tải lên bảng điểm thành công!');
+            } catch (err) {
+
+                if (err.response.data.code === 'success') {
+                    Modal.success({
+                        title: 'Thành công',
+                        content: 'Cập nhật bảng điểm thành công!',
+                    });
+                    setLinkUrl("");
+                    setData([]);
+                    setCsvFile(null);
+                    return;
+                }
+                await handleUploadError(err, fileMark);
+            }
         }
     };
-    
+
     // Handle successful API responses
-    const handleSuccess = (response, successMessage) => {        
+    const handleSuccess = (response, successMessage) => {
         if (response && response.code === 'success') {
             Modal.success({
                 title: 'Thành công',
                 content: successMessage,
             });
-    
+            setLinkUrl("");
             setData([]);
             setCsvFile(null);
         }
     };
-    
+
     // Handle upload errors
-    const handleUploadError = async (err, fileMark) => {        
+    const handleUploadError = async (err, fileMark) => {
         if (err.response) {
-            const errorMsg = err.response.data.msg;            
-    
+            const errorMsg = err.response.data.msg;
+
             if (errorMsg === 'Bảng ghi của lớp học này đã được lưu trong database trước đó') {
                 try {
                     const response = await updateMarkApi(fileMark, classId);
                     handleSuccess(response, 'Cập nhật bảng điểm thành công!');
                 } catch (updateErr) {
 
-                    if(updateErr.response.data.code === 'success') {
+                    if (updateErr.response.data.code === 'success') {
                         Modal.success({
                             title: 'Thành công',
                             content: 'Cập nhật bảng điểm thành công!',
@@ -184,10 +210,10 @@ const LoadMark = () => {
             showError('Có lỗi xảy ra.');
         }
     };
-    
+
 
     console.log(error); // eslint-disable-line
-
+    console.log(linkUrl)
     return (
         <div className="flex flex-col items-center justify-center bg-white">
             <div
@@ -211,6 +237,19 @@ const LoadMark = () => {
                     />
                 </div>
             )}
+            <div className='flex flex-col items-center justify-center w-2/5'>
+                <label htmlFor="link_url">link url</label>
+                <input
+                    type="text"
+                    id="link_url"
+                    name='link-url'
+                    className='border-[2px] w-full border-black rounded-[12px] px-[20px]'
+                    placeholder='Nhập link url điểm'
+                    value={linkUrl}
+                    onChange={handleLinkChange}
+                />
+            </div>
+
             <br />
             <button
                 type="button"
