@@ -1,5 +1,5 @@
 import { Table, Modal } from 'antd';
-import React, { useState, } from 'react';
+import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import Papa from 'papaparse';
 import { loadLinkUrl, loadMarkApi, updateMarkApi } from '../apis/LoadMark.api';
@@ -163,6 +163,7 @@ const LoadMark = () => {
                     return;
                 }
                 await handleUploadError(err, fileMark);
+
             }
         }
     };
@@ -175,6 +176,7 @@ const LoadMark = () => {
                 content: successMessage,
             });
             setLinkUrl("");
+
             setData([]);
             setCsvFile(null);
         }
@@ -190,7 +192,6 @@ const LoadMark = () => {
                     const response = await updateMarkApi(fileMark, classId);
                     handleSuccess(response, 'Cập nhật bảng điểm thành công!');
                 } catch (updateErr) {
-
                     if (updateErr.response.data.code === 'success') {
                         Modal.success({
                             title: 'Thành công',
@@ -216,6 +217,19 @@ const LoadMark = () => {
     console.log(linkUrl)
     return (
         <div className="flex flex-col items-center justify-center bg-white">
+             <div className='flex flex-col items-center justify-center w-2/5 mb-[30px]'>
+                <label htmlFor="link_url" className='font-bold'>NHẬP LINK URL TẠI ĐÂY</label>
+                <input
+                    type="text"
+                    id="link_url"
+                    name='link-url'
+                    className='border-[2px] w-full border-black rounded-[12px] px-[20px]'
+                    placeholder='Nhập link url điểm'
+                    value={linkUrl}
+                    onChange={handleLinkChange}
+                />
+            </div>
+
             <div
                 className="flex h-64 w-3/5 cursor-pointer flex-col items-center justify-center rounded-lg border-2 border-dotted border-gray-400 p-10"
                 onClick={() => document.getElementById('fileInput').click()}
@@ -237,18 +251,7 @@ const LoadMark = () => {
                     />
                 </div>
             )}
-            <div className='flex flex-col items-center justify-center w-2/5'>
-                <label htmlFor="link_url">link url</label>
-                <input
-                    type="text"
-                    id="link_url"
-                    name='link-url'
-                    className='border-[2px] w-full border-black rounded-[12px] px-[20px]'
-                    placeholder='Nhập link url điểm'
-                    value={linkUrl}
-                    onChange={handleLinkChange}
-                />
-            </div>
+           
 
             <br />
             <button
