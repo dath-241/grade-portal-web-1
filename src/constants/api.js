@@ -12,6 +12,7 @@ export const ACCOUNT_DETAIL_API_URL = (id) => `${ADMIN_API_URL}/account/${id}`;
 
 export const LECTURER_LOADMARK_API_URL = `${CLIENT_API_URL}/resultScore/create`;
 export const LECTURER_UPDATEMARK_API_URL = (id) => `${CLIENT_API_URL}/resultScore/${id}`;
+export const LECTURER_SHEETMARK_API_URL = `${CLIENT_API_URL}/resultScore/upload`;
 
 export const HALLOFFAME_LIST_API_URL = `${ADMIN_API_URL}/HOF/all`;
 

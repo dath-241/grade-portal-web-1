@@ -1,9 +1,11 @@
 import { Table, Modal } from 'antd';
-import React, { useState, } from 'react';
+import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import Papa from 'papaparse';
 import { loadMarkApi, updateMarkApi } from '../apis/LoadMark.api';
 import upLoad from '../assets/img/upload.png';
+import { LECTURER_SHEETMARK_API_URL } from '../constants/api';
+import axios from 'axios';
 
 const LoadMark = () => {
     const [data, setData] = useState([]);
@@ -111,24 +113,23 @@ const LoadMark = () => {
 
     const handleUpLoad = async (event) => {
         event.preventDefault();
-    
+
         if (!csvFile) {
             showError('Không có tệp để tải lên.');
             return;
         }
-    
+
         const file = convert(data);
         const fileMark = {
             score: file,
             class_id: classId,
         };
-    
+
         try {
             const response = await loadMarkApi(fileMark);
             handleSuccess(response, 'Tải lên bảng điểm thành công!');
         } catch (err) {
-            
-            if(err.response.data.code === 'success') {
+            if (err.response.data.code === 'success') {
                 Modal.success({
                     title: 'Thành công',
                     content: 'Cập nhật bảng điểm thành công!',
@@ -140,32 +141,31 @@ const LoadMark = () => {
             await handleUploadError(err, fileMark);
         }
     };
-    
+
     // Handle successful API responses
-    const handleSuccess = (response, successMessage) => {        
+    const handleSuccess = (response, successMessage) => {
         if (response && response.code === 'success') {
             Modal.success({
                 title: 'Thành công',
                 content: successMessage,
             });
-    
+
             setData([]);
             setCsvFile(null);
         }
     };
-    
+
     // Handle upload errors
-    const handleUploadError = async (err, fileMark) => {        
+    const handleUploadError = async (err, fileMark) => {
         if (err.response) {
-            const errorMsg = err.response.data.msg;            
-    
+            const errorMsg = err.response.data.msg;
+
             if (errorMsg === 'Bảng ghi của lớp học này đã được lưu trong database trước đó') {
                 try {
                     const response = await updateMarkApi(fileMark, classId);
                     handleSuccess(response, 'Cập nhật bảng điểm thành công!');
                 } catch (updateErr) {
-
-                    if(updateErr.response.data.code === 'success') {
+                    if (updateErr.response.data.code === 'success') {
                         Modal.success({
                             title: 'Thành công',
                             content: 'Cập nhật bảng điểm thành công!',
@@ -184,12 +184,48 @@ const LoadMark = () => {
             showError('Có lỗi xảy ra.');
         }
     };
-    
+
+    const handleLinkSheetPage = () => {
+        const token = localStorage.getItem('token');
+        const url = document.getElementById('urlInput').value;
+
+        axios
+            .post(LECTURER_SHEETMARK_API_URL, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+                url: url,
+                class_id: classId,
+            })
+            .then((response) => {
+                console.log('response');
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+    };
 
     console.log(error); // eslint-disable-line
 
     return (
         <div className="flex flex-col items-center justify-center bg-white">
+            <div className="mb-12 mr-auto pl-8">
+                <label className="select-none rounded-md bg-primary px-4 py-2 text-white shadow-sm" htmlFor="urlInput">
+                    URL
+                </label>
+                <input
+                    id="urlInput"
+                    type="text"
+                    onKeyDown={(e) => {
+                        if (e.key === 'Enter') {
+                            handleLinkSheetPage();
+                        }
+                    }}
+                    placeholder="Nhập đường dẫn đến trang chứa điểm"
+                    className="ml-3 w-[320px] rounded-md border border-gray-300 px-4 py-2 shadow-sm"
+                />
+            </div>
+
             <div
                 className="flex h-64 w-3/5 cursor-pointer flex-col items-center justify-center rounded-lg border-2 border-dotted border-gray-400 p-10"
                 onClick={() => document.getElementById('fileInput').click()}
